@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>fkie_message_filters</name>
+  <version>1.0.0</version>
+  <description>Improved ROS message filters</description>
+
+  <maintainer email="timo.roehling@fkie.fraunhofer.de">Timo Röhling</maintainer>
+  <author email="timo.roehling@fkie.fraunhofer.de">Timo Röhling</author>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>image_transport</depend>
+  <depend>roscpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>tf2_ros</depend>
+  <test_depend>rosunit</test_depend>
+</package>
