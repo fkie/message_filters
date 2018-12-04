@@ -40,6 +40,9 @@ ROS callback queues for convenient workload scheduling.
 Available Filters
 -----------------
 
+See the [API documentation](https://fkie.github.io/message_filters/) for more
+details.
+
 * `Buffer`: Store and forward data
 * `CameraPublisher`: Publish consumed data to a ROS camera topic
 * `CameraSubscriber`: Subscribe to a ROS camera topic as data provider
