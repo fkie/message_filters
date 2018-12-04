@@ -229,6 +229,11 @@ void ApproximateTime<IOs...>::discard_expired_at(const ros::Time& cutoff) noexce
         ros::Time stamp = helpers::access_ros_header_stamp(std::get<0>(queue.front()));
         if (stamp <= cutoff) queue.pop_front(); else break;
     }
+    if (!head && !queue.empty())
+    {
+        head = queue.front();
+        queue.pop_front();
+    }
 }
 
 template<typename... IOs>
