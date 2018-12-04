@@ -1,0 +1,5 @@
+<map id="fkie_message_filters::Source&lt; Outputs &gt;" name="fkie_message_filters::Source&lt; Outputs &gt;">
+<area shape="rect" id="node3" href="$classfkie__message__filters_1_1Filter.html" title="Filter\&lt; IO\&lt; Inputs...\l \&gt;, IO\&lt; Outputs... \&gt; \&gt;" alt="" coords="5,184,156,225"/>
+<area shape="rect" id="node2" href="$classfkie__message__filters_1_1FilterBase.html" title="Base class for filters. " alt="" coords="9,5,152,47"/>
+<area shape="rect" id="node4" href="$classfkie__message__filters_1_1UserFilter.html" title="Generic filter with user&#45;defined callback function. " alt="" coords="9,273,152,329"/>
+</map>

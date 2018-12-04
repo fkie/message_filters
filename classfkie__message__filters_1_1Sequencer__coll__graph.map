@@ -1,0 +1,6 @@
+<map id="fkie_message_filters::Sequencer&lt; Inputs &gt;" name="fkie_message_filters::Sequencer&lt; Inputs &gt;">
+<area shape="rect" id="node2" href="$classfkie__message__filters_1_1Filter.html" title="fkie_message_filters\l::Filter\&lt; IO\&lt; Inputs...\l \&gt;, IO\&lt; Inputs... \&gt; \&gt;" alt="" coords="425,31,571,87"/>
+<area shape="rect" id="node3" href="$classfkie__message__filters_1_1Sink.html" title="Base class for data consumers. " alt="" coords="203,5,370,47"/>
+<area shape="rect" id="node4" href="$classfkie__message__filters_1_1FilterBase.html" title="Base class for filters. " alt="" coords="5,39,148,80"/>
+<area shape="rect" id="node5" href="$classfkie__message__filters_1_1Source.html" title="fkie_message_filters\l::Source\&lt; IO\&lt; Inputs... \&gt; \&gt;" alt="" coords="196,71,377,112"/>
+</map>

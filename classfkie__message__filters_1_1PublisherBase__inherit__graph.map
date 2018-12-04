@@ -1,0 +1,5 @@
+<map id="fkie_message_filters::PublisherBase" name="fkie_message_filters::PublisherBase">
+<area shape="rect" id="node2" href="$classfkie__message__filters_1_1CameraPublisher.html" title="Publish consumed data to a ROS camera topic. " alt="" coords="215,5,358,47"/>
+<area shape="rect" id="node3" href="$classfkie__message__filters_1_1ImagePublisher.html" title="Publish consumed data to a ROS image topic. " alt="" coords="215,71,358,112"/>
+<area shape="rect" id="node4" href="$classfkie__message__filters_1_1Publisher.html" title="Publish consumed data on a ROS topic. " alt="" coords="196,136,377,177"/>
+</map>

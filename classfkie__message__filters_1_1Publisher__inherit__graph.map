@@ -1,0 +1,5 @@
+<map id="fkie_message_filters::Publisher&lt; M, Translate &gt;" name="fkie_message_filters::Publisher&lt; M, Translate &gt;">
+<area shape="rect" id="node2" href="$classfkie__message__filters_1_1PublisherBase.html" title="Base class for ROS publishers in a filter pipeline. " alt="" coords="197,5,340,47"/>
+<area shape="rect" id="node3" href="$classfkie__message__filters_1_1Sink.html" title="fkie_message_filters\l::Sink\&lt; Translate\&lt; M\l \&gt;::FilterType \&gt;" alt="" coords="196,71,341,127"/>
+<area shape="rect" id="node4" href="$classfkie__message__filters_1_1FilterBase.html" title="Base class for filters. " alt="" coords="5,79,148,120"/>
+</map>

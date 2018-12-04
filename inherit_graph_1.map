@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classfkie__message__filters_1_1combiner__policies_1_1PolicyBase.html" title="fkie_message_filters\l::combiner_policies::\lPolicyBase\&lt; IOs... \&gt;" alt="" coords="5,85,151,141"/>
+<area shape="rect" id="node2" href="$classfkie__message__filters_1_1combiner__policies_1_1ApproximateTime.html" title="Approximate time policy. " alt="" coords="199,5,368,61"/>
+<area shape="rect" id="node3" href="$classfkie__message__filters_1_1combiner__policies_1_1ExactTime.html" title="Exact time policy. " alt="" coords="212,85,355,141"/>
+<area shape="rect" id="node4" href="$classfkie__message__filters_1_1combiner__policies_1_1Fifo.html" title="First&#45;In&#45;First&#45;Out policy. " alt="" coords="212,165,355,221"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="fkie_message_filters::ImageSubscriber" name="fkie_message_filters::ImageSubscriber">
+<area shape="rect" id="node2" href="$classfkie__message__filters_1_1SubscriberBase.html" title="Base class for ROS subscribers in a filter pipeline. " alt="" coords="205,5,348,47"/>
+<area shape="rect" id="node3" href="$classfkie__message__filters_1_1Source.html" title="fkie_message_filters\l::Source\&lt; sensor_msgs\l::ImageConstPtr \&gt;" alt="" coords="196,71,357,127"/>
+<area shape="rect" id="node4" href="$classfkie__message__filters_1_1FilterBase.html" title="Base class for filters. " alt="" coords="5,79,148,120"/>
+</map>
