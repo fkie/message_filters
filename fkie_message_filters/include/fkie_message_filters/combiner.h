@@ -40,6 +40,15 @@ namespace combiner_policies
  * together. The combiner provides a policy-driven way to aggregate data from multiple sources into a single sink.
  * Policies can be anything from a simple FIFO to an elaborate approximate time stamp synchronization.
  *
+ * Input tuples will be flattened, so given two input filters (M1,M2) and
+ * (M3,M4), the output is a 4-tuple (M1,M2,M3,M4) and not a nested 2-tuple
+ * ((M1,M2),(M3,M4)).
+ * Furthermore, policies which examine data generally look at the first
+ * element of an input tuple only. In this example, the timing policies
+ * would match the input tuples based on M1 and M3.
+ * You can prepend a Selector filter to swap the element order if you
+ * need a different element examined, or the Divider filter to match all elements independently.
+ *
  * \code
  * namespace mf = fkie_message_filters;
  *
@@ -56,6 +65,7 @@ namespace combiner_policies
  * combiner.connect_to_sources(buf1, buf2);
  * combiner.connect_to_sink(out);
  * \endcode
+ *
  * \sa combiner_policies, Divider, Selector
  */
 #ifndef DOXYGEN

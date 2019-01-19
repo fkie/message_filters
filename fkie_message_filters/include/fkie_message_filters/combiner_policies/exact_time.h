@@ -38,8 +38,12 @@ namespace combiner_policies
  * data types must have an accessible ROS header, which is determined with the ros::message_traits templates.
  *
  * The policy will discard unmatched data if it reaches a configurable age limit or exceeds the maximum queue size.
- * The resulting timestamps will be strictly increasing; remaining data with older timestamps will be discarded
- * whenever new data is emitted.
+ * The resulting timestamps will be strictly increasing if at least one of the inputs receives messages in correct temporal order.
+ * Remaining inputs with older timestamps will be discarded whenever matched data is emitted.
+ *
+ * The filter will not output any data at all if the time lag between two inputs is larger than the maximum permissible age,
+ * or if the time lag requires more messages to be buffered than the maximum queue size permits. By default, the filter
+ * will buffer arbitrary many messages for at most one second.
  */
 template<typename... IOs>
 class ExactTime : public PolicyBase<IOs...>
@@ -50,8 +54,6 @@ public:
     using typename PolicyBase<IOs...>::IncomingTuples;
     using typename PolicyBase<IOs...>::OutgoingTuple;
     /** \brief Constructor.
-     *
-     * \arg \c max_age maximum age of any data in the queue
      *
      * \nothrow
      */

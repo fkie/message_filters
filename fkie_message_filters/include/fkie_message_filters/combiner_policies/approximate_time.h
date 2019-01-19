@@ -74,6 +74,7 @@ namespace combiner_policies
  * If messages arrive out of order (i.e. a message on a topic has a time stamp that is earlier than the previously
  * received one), all queues are flushed and the policy restarts from scratch. If messages need to be dropped because the
  * maximum queue size or the message age limit is exceeded, the pivot element is chosen again from the new queue heads.
+ * By default, the policy will buffer arbitrary many messages for at most one second.
  */
 template<typename... IOs>
 class ApproximateTime : public PolicyBase<IOs...>
@@ -103,7 +104,7 @@ public:
     /** \brief Set maximum queue size.
      *
      * \arg \c queue_size maximum queue size per slot (zero means unlimited)
-     * \arg \c max_age the maximum age of any data in the queue
+     * \arg \c max_age the maximum age of any data in the queue (\c none means unlimited)
      *
      * \nothrow
      */
@@ -120,7 +121,7 @@ public:
      * If it is known in advance that messages from a certain source cannot arrive closer together
      * than \a min_dist, the policy can conclude earlier that a set of matched messages is optimal,
      * thereby reducing the introduced lag. A typical example would be a camera with fixed frame rate F,
-     * where the minimum distance betwen consecutive messages can be assumed to be at least \c 0.5/F.
+     * where the minimum distance between consecutive messages can be assumed to be at least \c 0.5/F.
      *
      * \arg \c i the input source slot
      * \arg \c min_dist the minimum temporal distance between consecutive messages
