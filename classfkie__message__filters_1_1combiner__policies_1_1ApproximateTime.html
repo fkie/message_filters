@@ -173,7 +173,7 @@ class fkie_message_filters::combiner_policies::ApproximateTime&lt; IOs &gt;</h3>
 <li>For all other input queues except the pivot, advance to the next message until the timedelta to the pivot message is minimal. Proving optimality depends on the minimum message distance and the fact that on every topic, messages will arrive in time stamp order. If the queue is exhausted and, at least theoretically, the next message could still be closer to the pivot, wait for the next message to arrive. </li>
 <li>Once all input queues have reached their optimum, send the resulting set. If the set violates the user-specified timespan constraint, drop the pivot element instead, and restart from scratch with the remaining messages.</li>
 </ul>
-<p>If messages arrive out of order (i.e. a message on a topic has a time stamp that is earlier than the previously received one), all queues are flushed and the policy restarts from scratch. If messages need to be dropped because the maximum queue size or the message age limit is exceeded, the pivot element is chosen again from the new queue heads. </p>
+<p>If messages arrive out of order (i.e. a message on a topic has a time stamp that is earlier than the previously received one), all queues are flushed and the policy restarts from scratch. If messages need to be dropped because the maximum queue size or the message age limit is exceeded, the pivot element is chosen again from the new queue heads. By default, the policy will buffer arbitrary many messages for at most one second. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a5d27d8c312c6f600e41170df3bf0fcc6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5d27d8c312c6f600e41170df3bf0fcc6">&#9670;&nbsp;</a></span>MaybeOutgoingTuples</h2>
@@ -430,7 +430,7 @@ template&lt;typename... IOs&gt; </div>
 <p>Set maximum queue size. </p>
 <ul>
 <li><code>queue_size</code> maximum queue size per slot (zero means unlimited) </li>
-<li><code>max_age</code> the maximum age of any data in the queue</li>
+<li><code>max_age</code> the maximum age of any data in the queue (<code>none</code> means unlimited)</li>
 </ul>
 <dl class="section user"><dt>Exceptions</dt><dd>Does not throw any exceptions. </dd></dl>
 
@@ -507,7 +507,7 @@ template&lt;typename... IOs&gt; </div>
 </div><div class="memdoc">
 
 <p>Set the minimum distance between consecutive messages on a source. </p>
-<p>If it is known in advance that messages from a certain source cannot arrive closer together than <em>min_dist</em>, the policy can conclude earlier that a set of matched messages is optimal, thereby reducing the introduced lag. A typical example would be a camera with fixed frame rate F, where the minimum distance betwen consecutive messages can be assumed to be at least <code>0.5/F</code>.</p>
+<p>If it is known in advance that messages from a certain source cannot arrive closer together than <em>min_dist</em>, the policy can conclude earlier that a set of matched messages is optimal, thereby reducing the introduced lag. A typical example would be a camera with fixed frame rate F, where the minimum distance between consecutive messages can be assumed to be at least <code>0.5/F</code>.</p>
 <ul>
 <li><code>i</code> the input source slot </li>
 <li><code>min_dist</code> the minimum temporal distance between consecutive messages</li>
