@@ -116,7 +116,7 @@ void ApproximateTime<IOs...>::add(std::unique_lock<std::mutex>& lock, const std:
             /* The pivot slot will never advance, because it must be part of the next set.
              * For all other slots, we try to improve and see if we reached an optimum.
              * If we could still improve with a later message, we stop here for now. */
-            if (try_to_improve_at<N>()) return;
+            if (can_still_improve_at<N>()) return;
         }
         /* The current slot cannot improve, but maybe some other slot can */
         if (can_still_improve()) return;
@@ -166,7 +166,7 @@ void ApproximateTime<IOs...>::emit_heads(std::unique_lock<std::mutex>& lock)
 
 template<typename... IOs>
 template<std::size_t N>
-bool ApproximateTime<IOs...>::try_to_improve_at() noexcept
+bool ApproximateTime<IOs...>::can_still_improve_at() noexcept
 {
     // Check we can improve the current set by advancing in slot N
     auto& head = std::get<N>(heads_);
@@ -202,7 +202,7 @@ bool ApproximateTime<IOs...>::can_still_improve() noexcept
         {
             if (I != pivot_)
             {
-                if (this->try_to_improve_at<I>()) result = true;
+                if (this->can_still_improve_at<I>()) result = true;
             }
         }
     );

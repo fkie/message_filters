@@ -148,7 +148,7 @@ private:
     template<std::size_t N>
     void prune_queue_at(std::size_t queue_size) noexcept;
     template<std::size_t N>
-    bool try_to_improve_at() noexcept;
+    bool can_still_improve_at() noexcept;
     bool can_still_improve() noexcept;
     ros::Duration pivot_timedelta(const ros::Time& ts) noexcept;
     ros::Duration heads_timespan() noexcept;
