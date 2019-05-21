@@ -69,7 +69,7 @@ enum class BufferPolicy
  * mf::Buffer<mf::Subscriber<M>::Output> buffer(mf::BufferPolicy::Queue, 10);
  * mf::SimpleUserFilter<mf::Subscriber<M>::Output> flt;
  *
- * std::thread t([&buffer]{ buffer.process(); });
+ * std::thread t([&buffer]{ buffer.spin(); });
  * flt.set_processing_function(...);
  * mf::chain(sub, buffer, flt);
  * ros::spin();

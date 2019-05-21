@@ -35,8 +35,40 @@ class UserFilter;
  *
  * You can implement your own filter logic and integrate it with the filter pipeline. For this, you need to define
  * your own function that takes the Inputs and a CallbackFunction as arguments. The function will be called by
- * the generic filter, and expects you to feed back the processed data using the callback function.
- *
+ * the generic filter, and expects you to feed back the processed data using the callback function. Typically, your
+ * code will look similar to this:
+ * 
+ * \code
+ * namespace mf = fkie_message_filters;
+ * using InBuffer = mf::Buffer<T1, T2>;
+ * using OutBuffer = mf::Buffer<T3, T4>;
+ * using MyFilter = mf::UserFilter<InBuffer::Output, OutBuffer::Input>;
+ * 
+ * void my_processing_func(const T1& t1, const T2& t2, const MyFilter::CallbackFunction& cb)
+ * {
+ *     // Process the inputs t1 and t2 and prepare the outputs t3 and t4
+ *     T3 t3;
+ *     T4 t4;
+ *     // ...
+ * 
+ *     // Feed the outputs back into the filter pipeline
+ *     cb(t3, t4);
+ * }
+ * \endcode
+ * 
+ * Set up your filter pipeline like this:
+ * \code
+ * InBuffer in;
+ * MyFilter flt;
+ * OutBuffer out;
+ * 
+ * flt.set_processing_function(my_processing_func);
+ * mf::chain(in, flt, out);
+ * \endcode
+ * 
+ * In your processing function, you can call the callback function as often as you want, or even not at all. There is
+ * no requirement that each input produces exactly one output.
+ * 
  * The filter will throw a std::bad_function_call exception if it is invoked without a user-defined processing function.
  */
 #ifndef DOXYGEN

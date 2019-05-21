@@ -34,27 +34,30 @@ namespace combiner_policies
 /** \brief Approximate time policy.
  *
  * This is a policy for the Combiner class. It will associate data from the connected sources, but unlike ExactTime,
- * it can match messages even when their ROS header timestamps are different. If an input has multiple data elements,
- * the first one is considered only. The examined data types must have an accessible ROS header, which is determined
- * with the ros::message_traits templates.
+ * it can match messages even when their ROS header timestamps do not match perfectly. Each input source can itself
+ * be a tuple, but only the first element of each tuple will be examined to determine the timestamp. It must have
+ * an accessible ROS header, which is determined using the ros::message_traits template.
  *
- * The policy employs a simplified version of the
+ * The policy employs a modified version of the
  * ROS <a href="http://wiki.ros.org/message_filters/ApproximateTime">ApproximateTime</a> algorithm.
- * A set of messages is formed by taking one item from each input. The output of this policy satisfies the following
- * properties:
+ * Like its predecessor, the algorithm is not merely applying an epsilon to account for time differences, but tries
+ * to find the best possible match. Each set of grouped messages which are output by the policy, satisfies the following criteria:
  * \li <b>Each message is used only once.</b> Two sets will never share the same message, but some messages can be dropped.
- * \li <b>Messages are used in order.</b> Unlike the original ROS implementation, we do not guarantee that sets
- * as a whole do not overlap, but we guarantee that for each topic, messages will be used in time stamp order.
+ * \li <b>Messages are used in order.</b> Unlike the original algorithm, we do not guarantee that sets as a whole do
+ * not overlap, but we guarantee that for each topic, messages will be used in time stamp order. We found that revising
+ * this criterion improves match quality for high-frequency topics, such as stereo vision systems with depth images,
+ * in the presence of transient jitter.
  * \li <b>Sets are contiguous.</b> This means that you cannot form a valid set from the dropped messages.
- * \li <b>Sets have minimal timespan.</b> This means that the time stamp difference among
- * messages in a set cannot be smaller without violating the previous property.
+ * \li <b>Sets have minimal timespan.</b> This means that the time stamp difference among messages in a set cannot be
+ * smaller without violating the previous property.
  * \li <b>The output only depends on the time stamps,</b> not on the arrival time of messages. The messages have to
  * arrive in order on each topic, but not necessarily across topics, as long as the queue size is large enough to
  * accommodate for the differences.
  *
  * Optional parameters:
- * \li <b>Set timespan</b>: the latest message in a set will have a time stamp that is at most this long after the
- * first message in a set. By default, the policy does not constrain the timespan.
+ * \li <b>Set timespan</b>: the time difference of two messages in the same set will never exceed this value.
+ * By default, the policy does not constrain the timespan. If you set this value, the policy will avoid "wasting" messages
+ * in sets which are ultimately rejected anyway. Oftentimes, this will give you more valid sets in total.
  * \li <b>Message distance</b>: if messages of a particular topic cannot be closer together than a known interval,
  * providing this lower bound will not change the output but will allow the algorithm to conclude earlier that a given
  * set is optimal, thereby reducing output lag. The default lower bound is zero. An incorrect lower bound will result
@@ -62,19 +65,18 @@ namespace combiner_policies
  *
  * The algorithm works as follows:
  * \li Wait until each input queue has at least one message available.
- * \li Pick the latest message among the heads of all queues, which is going to be the <i>pivot</i>. The pivot belongs
- * to every set that is contiguous to the previous set, so it must belong to the next set.
- * \li For all other input queues except the pivot, advance to the next message until the timedelta to the pivot message
- * is minimal. Proving optimality depends on the minimum message distance and the fact that on every topic, messages will arrive in
- * time stamp order. If the queue is exhausted and, at least theoretically, the next message could still be closer to
- * the pivot, wait for the next message to arrive.
+ * \li Pick the latest message among the heads of all queues, which is going to be the pivot. The pivot belongs to every
+ * set that is contiguous to the previous set, so it must belong to the newly formed set.
+ * \li For all other input queues except the pivot, advance to the next message until the time difference to the pivot
+ * message is minimal. Proving optimality depends on the minimum message distance and the fact that on every topic,
+ * messages will arrive in time stamp order. If any queue is exhausted and, at least theoretically, the next message could
+ * still be closer to the pivot, wait for the next message to arrive.
  * \li Once all input queues have reached their optimum, send the resulting set. If the set violates the user-specified
  * timespan constraint, drop the pivot element instead, and restart from scratch with the remaining messages.
- *
- * If messages arrive out of order (i.e. a message on a topic has a time stamp that is earlier than the previously
- * received one), all queues are flushed and the policy restarts from scratch. If messages need to be dropped because the
- * maximum queue size or the message age limit is exceeded, the pivot element is chosen again from the new queue heads.
- * By default, the policy will buffer arbitrary many messages for at most one second.
+ * \li If messages arrive out of order (i.e. a message on a topic has a time stamp that is earlier than the previously
+ * received one), all queues are flushed and the policy restarts from scratch.
+ * \li If messages need to be dropped because the maximum queue size or the message age limit is exceeded, the pivot element
+ * is chosen again from the new queue heads. By default, the policy will buffer arbitrary many messages for at most one second.
  */
 template<typename... IOs>
 class ApproximateTime : public PolicyBase<IOs...>
