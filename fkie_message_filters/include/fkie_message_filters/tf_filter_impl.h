@@ -199,7 +199,7 @@ void TfFilter<Inputs...>::set_target_frames(const ros::V_string& target_frames)
     impl_->target_frames_.clear();
     for (const std::string& f : target_frames)
     {
-        std::string f2 = helpers::strip_slash(f);
+        std::string f2 = strip_slash(f);
         if (!f2.empty()) impl_->target_frames_.push_back(f2);
     }
 }
@@ -240,7 +240,7 @@ void TfFilter<Inputs...>::receive (const Inputs&... in)
     std::unique_lock<std::mutex> lock{impl_->mutex_};
     if (impl_->target_frames_.empty()) return;
     std::shared_ptr<MessageInfo> info = std::make_shared<MessageInfo>(std::forward_as_tuple(in...));
-    std::string source_frame = helpers::strip_slash(helpers::access_ros_header_frame_id(std::get<0>(info->message)));
+    std::string source_frame = strip_slash(helpers::access_ros_header_frame_id(std::get<0>(info->message)));
     if (source_frame.empty())
     {
         report_failure(lock, info->message, TfFilterResult::EmptyFrameID);
@@ -298,7 +298,7 @@ void TfFilter<Inputs...>::transformable(tf2::TransformableRequestHandle request_
         --impl_->cur_queue_size_;
         if (result == tf2::TransformAvailable) /* Everything succeeded */
         {
-            std::string source_frame = helpers::strip_slash(helpers::access_ros_header_frame_id(std::get<0>(info->message)));
+            std::string source_frame = strip_slash(helpers::access_ros_header_frame_id(std::get<0>(info->message)));
             ros::Time stamp = helpers::access_ros_header_stamp(std::get<0>(info->message));
             for (const std::string& frame : impl_->target_frames_)
             {
