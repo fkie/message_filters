@@ -131,7 +131,7 @@ private:
     TfFilterResult result_;
 };
 
-namespace helpers
+namespace
 {
 
 std::string strip_slash(const std::string& s) noexcept
