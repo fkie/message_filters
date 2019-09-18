@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>fkie_message_filters</name>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <description>Improved ROS message filters</description>
 
   <maintainer email="timo.roehling@fkie.fraunhofer.de">Timo Röhling</maintainer>

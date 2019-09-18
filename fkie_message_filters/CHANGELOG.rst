@@ -2,8 +2,8 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.0.1 (2019-09-18)
+------------------
 * Bugfix for ODR violation
 * Improve documentation
 * Rename helper function for more clarity
