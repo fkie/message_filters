@@ -79,6 +79,7 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 if(CATKIN_ENABLE_TESTING)
+  find_package(rostest REQUIRED)
   catkin_add_gtest(filtertests
     test/test_buffer.cpp
     test/test_combiner_approximate_time.cpp
@@ -95,8 +96,9 @@ if(CATKIN_ENABLE_TESTING)
     test/test_user_filter.cpp
   )
   target_link_libraries(filtertests ${PROJECT_NAME})
+  add_rostest_gtest(publish_subscribe_tests rostest/publish_subscribe.launch rostest/test_publish_subscribe.cpp)
+  target_link_libraries(publish_subscribe_tests ${PROJECT_NAME})
 endif()
-
 
 if(DOXYGEN)
     add_custom_target(doc ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/doc/html/index.html)
