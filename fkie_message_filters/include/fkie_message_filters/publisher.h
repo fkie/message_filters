@@ -89,6 +89,24 @@ public:
      * \nothrow
      */
     void advertise(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, bool latch = false, ros::CallbackQueueInterface* callback_queue = 0) noexcept;
+    /** \brief Advertise ROS topic with subscriber status callbacks.
+     *
+     * All arguments are passed to the ROS client library; see the ROS documentation for further information. Calling
+     * this method will automatically unadvertise any previously advertised ROS topic.
+     *
+     * \arg \c nh ROS node handle to create the ROS advertisement
+     * \arg \c topic name of the ROS topic, subject to remapping
+     * \arg \c queue_size size of the ROS publishing queue
+     * \arg \c connect_cb callback that is invoked each time a new subscriber connects to the advertised topic
+     * \arg \c disconnect_cb callback that is invoked each time an existing subscriber disconnects from the advertised topic
+     * \arg \c tracked_object an associated object whose lifetime will limit the lifetime of the advertised topic
+     * \arg \c latch if true, the last published message remains available for later subscribers
+     * \arg \c callback_queue custom ROS callback queue
+     *
+     * \nothrow
+     */
+    void advertise(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, const ros::SubscriberStatusCallback& connect_cb, const ros::SubscriberStatusCallback& disconnect_cb = ros::SubscriberStatusCallback(), const ros::VoidConstPtr& tracked_object = ros::VoidConstPtr(), bool latch = false, ros::CallbackQueueInterface* callback_queue = 0) noexcept;
+
 protected:
     /** \private */
     virtual void receive (const typename Translate<M>::FilterType& t) noexcept override;

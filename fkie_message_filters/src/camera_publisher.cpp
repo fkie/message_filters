@@ -65,6 +65,37 @@ void CameraPublisher::advertise(const image_transport::ImageTransport& it, const
     update_subscriber_state();
 }
 
+void CameraPublisher::advertise (const image_transport::ImageTransport& it, const std::string& base_topic, uint32_t queue_size, const image_transport::SubscriberStatusCallback& image_connect_cb, const image_transport::SubscriberStatusCallback& image_disconnect_cb, const ros::SubscriberStatusCallback& info_connect_cb, const ros::SubscriberStatusCallback& info_disconnect_cb, const ros::VoidPtr& tracked_object, bool latch) noexcept
+{
+    it_ = std::make_shared<image_transport::ImageTransport>(it);
+    pub_ = it_->advertiseCamera(
+        base_topic, queue_size,
+        [this, image_connect_cb](const image_transport::SingleSubscriberPublisher& ssp)
+        {
+            this->update_subscriber_state();
+            if (image_connect_cb) image_connect_cb(ssp);
+        },
+        [this, image_disconnect_cb](const image_transport::SingleSubscriberPublisher& ssp)
+        {
+            this->update_subscriber_state();
+            if (image_disconnect_cb) image_disconnect_cb(ssp);
+        },
+        [this, info_connect_cb](const ros::SingleSubscriberPublisher& ssp)
+        {
+            this->update_subscriber_state();
+            if (info_connect_cb) info_connect_cb(ssp);
+        },
+        [this, info_disconnect_cb](const ros::SingleSubscriberPublisher& ssp)
+        {
+            this->update_subscriber_state();
+            if (info_disconnect_cb) info_disconnect_cb(ssp);
+        },
+        tracked_object,
+        latch
+    );
+    update_subscriber_state();
+}
+
 void CameraPublisher::receive (const sensor_msgs::ImageConstPtr& img, const sensor_msgs::CameraInfoConstPtr& info) noexcept
 {
     pub_.publish(img, info);

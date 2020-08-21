@@ -80,6 +80,24 @@ public:
      * \nothrow
      */
     void advertise (const image_transport::ImageTransport& it, const std::string& base_topic, uint32_t queue_size, bool latch = false) noexcept;
+    /** \brief Advertise ROS camera topic with subscriber status callbacks.
+     *
+     * All arguments are passed to the ROS client library; see the ROS documentation for further information. Calling
+     * this method will automatically unadvertise any previously advertised ROS topic.
+     *
+     * \arg \c it ROS image_transport instance to handle the publishing
+     * \arg \c base_topic name of the ROS image topic, subject to remapping
+     * \arg \c queue_size size of the ROS publishing queue
+     * \arg \c image_connect_cb callback that is invoked each time a new subscriber connects to the advertised image topic
+     * \arg \c image_disconnect_cb callback that is invoked each time an existing subscriber disconnects from the advertised image topic
+     * \arg \c info_connect_cb callback that is invoked each time a new subscriber connects to the advertised camera info topic
+     * \arg \c info_disconnect_cb callback that is invoked each time an existing subscriber disconnects from the advertised camera info topic
+     * \arg \c tracked_object an associated object whose lifetime will limit the lifetimes of the advertised topics
+     * \arg \c latch if true, the last published message remains available for later subscribers
+     *
+     * \nothrow
+     */
+    void advertise (const image_transport::ImageTransport& it, const std::string& base_topic, uint32_t queue_size, const image_transport::SubscriberStatusCallback& image_connect_cb, const image_transport::SubscriberStatusCallback& image_disconnect_cb = image_transport::SubscriberStatusCallback(), const ros::SubscriberStatusCallback& info_connect_cb = ros::SubscriberStatusCallback(), const ros::SubscriberStatusCallback& info_disconnect_cb = ros::SubscriberStatusCallback(), const ros::VoidPtr& tracked_object = ros::VoidPtr(), bool latch = false) noexcept;
 protected:
     /** \private */
     void receive (const sensor_msgs::ImageConstPtr&, const sensor_msgs::CameraInfoConstPtr&) noexcept override;

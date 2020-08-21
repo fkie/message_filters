@@ -57,6 +57,27 @@ void ImagePublisher::advertise(const image_transport::ImageTransport& it, const 
     update_subscriber_state();
 }
 
+void ImagePublisher::advertise (const image_transport::ImageTransport& it, const std::string& base_topic, uint32_t queue_size, const image_transport::SubscriberStatusCallback& connect_cb, const image_transport::SubscriberStatusCallback& disconnect_cb, const ros::VoidPtr& tracked_object, bool latch) noexcept
+{
+    it_ = std::make_shared<image_transport::ImageTransport>(it);
+    pub_ = it_->advertise(
+        base_topic, queue_size,
+        [this, connect_cb](const image_transport::SingleSubscriberPublisher& ssp)
+        {
+            this->update_subscriber_state();
+            if (connect_cb) connect_cb(ssp);
+        },
+        [this, disconnect_cb](const image_transport::SingleSubscriberPublisher& ssp)
+        {
+            this->update_subscriber_state();
+            if (disconnect_cb) disconnect_cb(ssp);
+        },
+        tracked_object,
+        latch
+    );
+    update_subscriber_state();
+}
+
 void ImagePublisher::receive (const sensor_msgs::ImageConstPtr& img) noexcept
 {
     pub_.publish(img);
