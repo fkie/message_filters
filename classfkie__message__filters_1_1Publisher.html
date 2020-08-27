@@ -110,12 +110,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8f057c55c51f5b488ef3277555dcf4a6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Publisher.html#a8f057c55c51f5b488ef3277555dcf4a6">Publisher</a> () noexcept</td></tr>
 <tr class="memdesc:a8f057c55c51f5b488ef3277555dcf4a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty publisher.  <a href="#a8f057c55c51f5b488ef3277555dcf4a6">More...</a><br /></td></tr>
 <tr class="separator:a8f057c55c51f5b488ef3277555dcf4a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a560edb976cf361842be086a76d940f01"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Publisher.html#a560edb976cf361842be086a76d940f01">Publisher</a> (ros::NodeHandle &amp;nh, const std::string &amp;<a class="el" href="classfkie__message__filters_1_1Publisher.html#aacdee13a416522fdb2c07c465746a755">topic</a>, uint32_t queue_size, bool latch=false, ros::CallbackQueueInterface *callback_queue=0) noexcept</td></tr>
-<tr class="memdesc:a560edb976cf361842be086a76d940f01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that advertises the given ROS topic.  <a href="#a560edb976cf361842be086a76d940f01">More...</a><br /></td></tr>
-<tr class="separator:a560edb976cf361842be086a76d940f01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad481edc905f28c08184bc180287ecd7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Publisher.html#ad481edc905f28c08184bc180287ecd7b">advertise</a> (ros::NodeHandle &amp;nh, const std::string &amp;<a class="el" href="classfkie__message__filters_1_1Publisher.html#aacdee13a416522fdb2c07c465746a755">topic</a>, uint32_t queue_size, bool latch=false, ros::CallbackQueueInterface *callback_queue=0) noexcept</td></tr>
-<tr class="memdesc:ad481edc905f28c08184bc180287ecd7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advertise ROS topic.  <a href="#ad481edc905f28c08184bc180287ecd7b">More...</a><br /></td></tr>
-<tr class="separator:ad481edc905f28c08184bc180287ecd7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19b824e2bd1f853257d4ab9b0e84db7d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Publisher.html#a19b824e2bd1f853257d4ab9b0e84db7d">Publisher</a> (ros::NodeHandle &amp;nh, const std::string &amp;<a class="el" href="classfkie__message__filters_1_1Publisher.html#aacdee13a416522fdb2c07c465746a755">topic</a>, uint32_t queue_size, bool latch=false, ros::CallbackQueueInterface *callback_queue=nullptr) noexcept</td></tr>
+<tr class="memdesc:a19b824e2bd1f853257d4ab9b0e84db7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that advertises the given ROS topic.  <a href="#a19b824e2bd1f853257d4ab9b0e84db7d">More...</a><br /></td></tr>
+<tr class="separator:a19b824e2bd1f853257d4ab9b0e84db7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb9ede44c230ba50d9a0904bdd3667ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Publisher.html#aeb9ede44c230ba50d9a0904bdd3667ee">advertise</a> (ros::NodeHandle &amp;nh, const std::string &amp;<a class="el" href="classfkie__message__filters_1_1Publisher.html#aacdee13a416522fdb2c07c465746a755">topic</a>, uint32_t queue_size, bool latch=false, ros::CallbackQueueInterface *callback_queue=nullptr) noexcept</td></tr>
+<tr class="memdesc:aeb9ede44c230ba50d9a0904bdd3667ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advertise ROS topic.  <a href="#aeb9ede44c230ba50d9a0904bdd3667ee">More...</a><br /></td></tr>
+<tr class="separator:aeb9ede44c230ba50d9a0904bdd3667ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3d640d28cb29ba0a6796e6abdb9028f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Publisher.html#aa3d640d28cb29ba0a6796e6abdb9028f">advertise</a> (ros::NodeHandle &amp;nh, const std::string &amp;<a class="el" href="classfkie__message__filters_1_1Publisher.html#aacdee13a416522fdb2c07c465746a755">topic</a>, uint32_t queue_size, const ros::SubscriberStatusCallback &amp;connect_cb, const ros::SubscriberStatusCallback &amp;disconnect_cb=ros::SubscriberStatusCallback(), const ros::VoidConstPtr &amp;tracked_object=ros::VoidConstPtr(), bool latch=false, ros::CallbackQueueInterface *callback_queue=nullptr) noexcept</td></tr>
+<tr class="memdesc:aa3d640d28cb29ba0a6796e6abdb9028f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advertise ROS topic with subscriber status callbacks.  <a href="#aa3d640d28cb29ba0a6796e6abdb9028f">More...</a><br /></td></tr>
+<tr class="separator:aa3d640d28cb29ba0a6796e6abdb9028f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6f66493ea85a32a0c44f33d7a51974e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefkie__message__filters.html#a3df68948f3719ec5ab09f1191fc89a7b">Connection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Sink.html#ab6f66493ea85a32a0c44f33d7a51974e">connect_to_source</a> (<a class="el" href="classfkie__message__filters_1_1Source.html">Source</a>&lt; Inputs... &gt; &amp;src) noexcept</td></tr>
 <tr class="memdesc:ab6f66493ea85a32a0c44f33d7a51974e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect this sink to a source.  <a href="#ab6f66493ea85a32a0c44f33d7a51974e">More...</a><br /></td></tr>
 <tr class="separator:ab6f66493ea85a32a0c44f33d7a51974e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -221,13 +224,13 @@ template&lt;class M , template&lt; typename &gt; class Translate = RosMessageEve
 </div><div class="memdoc">
 
 <p>Constructs an empty publisher. </p>
-<p>You need to call <a class="el" href="classfkie__message__filters_1_1Publisher.html#ad481edc905f28c08184bc180287ecd7b" title="Advertise ROS topic. ">advertise()</a> to actually publish to a ROS topic.</p>
+<p>You need to call <a class="el" href="classfkie__message__filters_1_1Publisher.html#aeb9ede44c230ba50d9a0904bdd3667ee" title="Advertise ROS topic. ">advertise()</a> to actually publish to a ROS topic.</p>
 <dl class="section user"><dt>Exceptions</dt><dd>Does not throw any exceptions. </dd></dl>
 
 </div>
 </div>
-<a id="a560edb976cf361842be086a76d940f01"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a560edb976cf361842be086a76d940f01">&#9670;&nbsp;</a></span>Publisher() <span class="overload">[2/2]</span></h2>
+<a id="a19b824e2bd1f853257d4ab9b0e84db7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19b824e2bd1f853257d4ab9b0e84db7d">&#9670;&nbsp;</a></span>Publisher() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -265,7 +268,7 @@ template&lt;class M , template&lt; typename &gt; class Translate = RosMessageEve
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">ros::CallbackQueueInterface *&#160;</td>
-          <td class="paramname"><em>callback_queue</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>callback_queue</em> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -281,14 +284,14 @@ template&lt;class M , template&lt; typename &gt; class Translate = RosMessageEve
 </div><div class="memdoc">
 
 <p>Constructor that advertises the given ROS topic. </p>
-<p>The constructor calls <a class="el" href="classfkie__message__filters_1_1Publisher.html#ad481edc905f28c08184bc180287ecd7b" title="Advertise ROS topic. ">advertise()</a> for you.</p>
+<p>The constructor calls <a class="el" href="classfkie__message__filters_1_1Publisher.html#aeb9ede44c230ba50d9a0904bdd3667ee" title="Advertise ROS topic. ">advertise()</a> for you.</p>
 <dl class="section user"><dt>Exceptions</dt><dd>Does not throw any exceptions. </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ad481edc905f28c08184bc180287ecd7b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad481edc905f28c08184bc180287ecd7b">&#9670;&nbsp;</a></span>advertise()</h2>
+<a id="aeb9ede44c230ba50d9a0904bdd3667ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb9ede44c230ba50d9a0904bdd3667ee">&#9670;&nbsp;</a></span>advertise() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -326,7 +329,7 @@ template&lt;class M , template&lt; typename &gt; class Translate = RosMessageEve
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">ros::CallbackQueueInterface *&#160;</td>
-          <td class="paramname"><em>callback_queue</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>callback_queue</em> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -347,6 +350,94 @@ template&lt;class M , template&lt; typename &gt; class Translate = RosMessageEve
 <li><code>nh</code> ROS node handle to create the ROS advertisement </li>
 <li><code>topic</code> name of the ROS topic, subject to remapping </li>
 <li><code>queue_size</code> size of the ROS publishing queue </li>
+<li><code>latch</code> if true, the last published message remains available for later subscribers </li>
+<li><code>callback_queue</code> custom ROS callback queue</li>
+</ul>
+<dl class="section user"><dt>Exceptions</dt><dd>Does not throw any exceptions. </dd></dl>
+
+</div>
+</div>
+<a id="aa3d640d28cb29ba0a6796e6abdb9028f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3d640d28cb29ba0a6796e6abdb9028f">&#9670;&nbsp;</a></span>advertise() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class M , template&lt; typename &gt; class Translate = RosMessageEvent&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classfkie__message__filters_1_1Publisher.html">fkie_message_filters::Publisher</a>&lt; M, Translate &gt;::advertise </td>
+          <td>(</td>
+          <td class="paramtype">ros::NodeHandle &amp;&#160;</td>
+          <td class="paramname"><em>nh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>topic</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>queue_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const ros::SubscriberStatusCallback &amp;&#160;</td>
+          <td class="paramname"><em>connect_cb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const ros::SubscriberStatusCallback &amp;&#160;</td>
+          <td class="paramname"><em>disconnect_cb</em> = <code>ros::SubscriberStatusCallback()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const ros::VoidConstPtr &amp;&#160;</td>
+          <td class="paramname"><em>tracked_object</em> = <code>ros::VoidConstPtr()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>latch</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ros::CallbackQueueInterface *&#160;</td>
+          <td class="paramname"><em>callback_queue</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Advertise ROS topic with subscriber status callbacks. </p>
+<p>All arguments are passed to the ROS client library; see the ROS documentation for further information. Calling this method will automatically unadvertise any previously advertised ROS topic.</p>
+<ul>
+<li><code>nh</code> ROS node handle to create the ROS advertisement </li>
+<li><code>topic</code> name of the ROS topic, subject to remapping </li>
+<li><code>queue_size</code> size of the ROS publishing queue </li>
+<li><code>connect_cb</code> callback that is invoked each time a new subscriber connects to the advertised topic </li>
+<li><code>disconnect_cb</code> callback that is invoked each time an existing subscriber disconnects from the advertised topic </li>
+<li><code>tracked_object</code> an associated object whose lifetime will limit the lifetime of the advertised topic </li>
 <li><code>latch</code> if true, the last published message remains available for later subscribers </li>
 <li><code>callback_queue</code> custom ROS callback queue</li>
 </ul>

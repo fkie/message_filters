@@ -116,6 +116,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a02ba0baceb4ccda94137c5eb5760ba99"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1ImagePublisher.html#a02ba0baceb4ccda94137c5eb5760ba99">advertise</a> (const image_transport::ImageTransport &amp;it, const std::string &amp;base_topic, uint32_t queue_size, bool latch=false) noexcept</td></tr>
 <tr class="memdesc:a02ba0baceb4ccda94137c5eb5760ba99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advertise ROS image topic.  <a href="#a02ba0baceb4ccda94137c5eb5760ba99">More...</a><br /></td></tr>
 <tr class="separator:a02ba0baceb4ccda94137c5eb5760ba99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e93fcdb610b5d89a3d899fcebae1150"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1ImagePublisher.html#a4e93fcdb610b5d89a3d899fcebae1150">advertise</a> (const image_transport::ImageTransport &amp;it, const std::string &amp;base_topic, uint32_t queue_size, const image_transport::SubscriberStatusCallback &amp;connect_cb, const image_transport::SubscriberStatusCallback &amp;disconnect_cb=image_transport::SubscriberStatusCallback(), const ros::VoidPtr &amp;tracked_object=ros::VoidPtr(), bool latch=false) noexcept</td></tr>
+<tr class="memdesc:a4e93fcdb610b5d89a3d899fcebae1150"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advertise ROS image topic with subscriber status callbacks.  <a href="#a4e93fcdb610b5d89a3d899fcebae1150">More...</a><br /></td></tr>
+<tr class="separator:a4e93fcdb610b5d89a3d899fcebae1150"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6f66493ea85a32a0c44f33d7a51974e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefkie__message__filters.html#a3df68948f3719ec5ab09f1191fc89a7b">Connection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Sink.html#ab6f66493ea85a32a0c44f33d7a51974e">connect_to_source</a> (<a class="el" href="classfkie__message__filters_1_1Source.html">Source</a>&lt; Inputs... &gt; &amp;src) noexcept</td></tr>
 <tr class="memdesc:ab6f66493ea85a32a0c44f33d7a51974e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect this sink to a source.  <a href="#ab6f66493ea85a32a0c44f33d7a51974e">More...</a><br /></td></tr>
 <tr class="separator:ab6f66493ea85a32a0c44f33d7a51974e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -269,7 +272,7 @@ Protected Member Functions</h2></td></tr>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a02ba0baceb4ccda94137c5eb5760ba99"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02ba0baceb4ccda94137c5eb5760ba99">&#9670;&nbsp;</a></span>advertise()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a02ba0baceb4ccda94137c5eb5760ba99">&#9670;&nbsp;</a></span>advertise() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -320,6 +323,85 @@ Protected Member Functions</h2></td></tr>
 <li><code>it</code> ROS image_transport instance to handle the publishing </li>
 <li><code>base_topic</code> name of the ROS image topic, subject to remapping </li>
 <li><code>queue_size</code> size of the ROS publishing queue </li>
+<li><code>latch</code> if true, the last published message remains available for later subscribers</li>
+</ul>
+<dl class="section user"><dt>Exceptions</dt><dd>Does not throw any exceptions. </dd></dl>
+
+</div>
+</div>
+<a id="a4e93fcdb610b5d89a3d899fcebae1150"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e93fcdb610b5d89a3d899fcebae1150">&#9670;&nbsp;</a></span>advertise() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void fkie_message_filters::ImagePublisher::advertise </td>
+          <td>(</td>
+          <td class="paramtype">const image_transport::ImageTransport &amp;&#160;</td>
+          <td class="paramname"><em>it</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>base_topic</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>queue_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const image_transport::SubscriberStatusCallback &amp;&#160;</td>
+          <td class="paramname"><em>connect_cb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const image_transport::SubscriberStatusCallback &amp;&#160;</td>
+          <td class="paramname"><em>disconnect_cb</em> = <code>image_transport::SubscriberStatusCallback()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const ros::VoidPtr &amp;&#160;</td>
+          <td class="paramname"><em>tracked_object</em> = <code>ros::VoidPtr()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>latch</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Advertise ROS image topic with subscriber status callbacks. </p>
+<p>All arguments are passed to the ROS client library; see the ROS documentation for further information. Calling this method will automatically unadvertise any previously advertised ROS topic.</p>
+<ul>
+<li><code>it</code> ROS image_transport instance to handle the publishing </li>
+<li><code>base_topic</code> name of the ROS image topic, subject to remapping </li>
+<li><code>queue_size</code> size of the ROS publishing queue </li>
+<li><code>connect_cb</code> callback that is invoked each time a new subscriber connects to the advertised topic </li>
+<li><code>disconnect_cb</code> callback that is invoked each time an existing subscriber disconnects from the advertised topic </li>
+<li><code>tracked_object</code> an associated object whose lifetime will limit the lifetime of the advertised topic </li>
 <li><code>latch</code> if true, the last published message remains available for later subscribers</li>
 </ul>
 <dl class="section user"><dt>Exceptions</dt><dd>Does not throw any exceptions. </dd></dl>
