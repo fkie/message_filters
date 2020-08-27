@@ -64,7 +64,7 @@ public:
      *
      * \nothrow
      */
-    Publisher(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, bool latch = false, ros::CallbackQueueInterface* callback_queue = 0) noexcept;
+    Publisher(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, bool latch = false, ros::CallbackQueueInterface* callback_queue = nullptr) noexcept;
     /** \brief Check if the ROS publisher has at least one subscriber.
      *
      * \nothrow
@@ -88,7 +88,7 @@ public:
      *
      * \nothrow
      */
-    void advertise(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, bool latch = false, ros::CallbackQueueInterface* callback_queue = 0) noexcept;
+    void advertise(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, bool latch = false, ros::CallbackQueueInterface* callback_queue = nullptr) noexcept;
     /** \brief Advertise ROS topic with subscriber status callbacks.
      *
      * All arguments are passed to the ROS client library; see the ROS documentation for further information. Calling
@@ -105,7 +105,7 @@ public:
      *
      * \nothrow
      */
-    void advertise(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, const ros::SubscriberStatusCallback& connect_cb, const ros::SubscriberStatusCallback& disconnect_cb = ros::SubscriberStatusCallback(), const ros::VoidConstPtr& tracked_object = ros::VoidConstPtr(), bool latch = false, ros::CallbackQueueInterface* callback_queue = 0) noexcept;
+    void advertise(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, const ros::SubscriberStatusCallback& connect_cb, const ros::SubscriberStatusCallback& disconnect_cb = ros::SubscriberStatusCallback(), const ros::VoidConstPtr& tracked_object = ros::VoidConstPtr(), bool latch = false, ros::CallbackQueueInterface* callback_queue = nullptr) noexcept;
 
 protected:
     /** \private */

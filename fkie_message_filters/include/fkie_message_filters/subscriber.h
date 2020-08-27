@@ -73,7 +73,7 @@ public:
      *
      * \nothrow
 	 */
-    Subscriber(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, const ros::TransportHints& transport_hints = ros::TransportHints(), ros::CallbackQueueInterface* callback_queue = 0) noexcept;
+    Subscriber(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, const ros::TransportHints& transport_hints = ros::TransportHints(), ros::CallbackQueueInterface* callback_queue = nullptr) noexcept;
     /** \brief Configure ROS topic that is to be subscribed.
      *
      * All arguments are passed to the ROS client library; see the ROS documentation for further information. Calling
@@ -87,7 +87,7 @@ public:
      *
      * \nothrow
      */
-    void set_subscribe_options (ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, const ros::TransportHints& transport_hints = ros::TransportHints(), ros::CallbackQueueInterface* callback_queue = 0) noexcept;
+    void set_subscribe_options (ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, const ros::TransportHints& transport_hints = ros::TransportHints(), ros::CallbackQueueInterface* callback_queue = nullptr) noexcept;
     /** \brief Convenience function to subscribe to a ROS topic.
      *
      * This function is equivalent to calling set_subscribe_options() and then subscribe().
@@ -100,7 +100,7 @@ public:
      *
      * \nothrow
      */
-    void subscribe (ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, const ros::TransportHints& transport_hints = ros::TransportHints(), ros::CallbackQueueInterface* callback_queue = 0) noexcept;
+    void subscribe (ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, const ros::TransportHints& transport_hints = ros::TransportHints(), ros::CallbackQueueInterface* callback_queue = nullptr) noexcept;
     using SubscriberBase::subscribe;
     using SubscriberBase::unsubscribe;
     using SubscriberBase::subscribe_on_demand;
