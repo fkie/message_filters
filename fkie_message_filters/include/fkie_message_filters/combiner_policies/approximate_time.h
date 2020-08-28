@@ -34,9 +34,9 @@ namespace combiner_policies
 /** \brief Approximate time policy.
  *
  * This is a policy for the Combiner class. It will associate data from the connected sources, but unlike ExactTime,
- * it can match messages even when their ROS header timestamps do not match perfectly. Each input source can itself
- * be a tuple, but only the first element of each tuple will be examined to determine the timestamp. It must have
- * an accessible ROS header, which is determined using the ros::message_traits template.
+ * it can match messages even when their ROS header timestamps do not match perfectly. If an input source is not
+ * unary, only the first argument will be examined to determine the timestamp. It must have
+ * an accessible ROS header, which is determined using the \c ros::message_traits template.
  *
  * The policy employs a modified version of the
  * ROS <a href="http://wiki.ros.org/message_filters/ApproximateTime">ApproximateTime</a> algorithm.

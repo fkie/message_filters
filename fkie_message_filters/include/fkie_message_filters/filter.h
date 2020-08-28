@@ -29,7 +29,7 @@ namespace fkie_message_filters
  /** \brief Typed base class for filters.
   *
   * All filters process some input and generate some output, possibly with different data types.
-  * This class provides the base class for all filter implementations, templated on the input and output date types.
+  * This class provides the base class for all filter implementations, templated on the input and output data types.
   */
 template<class In, class Out>
 class Filter : public Sink<In>, public Source<Out>

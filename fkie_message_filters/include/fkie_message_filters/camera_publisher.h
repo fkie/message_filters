@@ -29,10 +29,11 @@
 namespace fkie_message_filters
 {
 
-/** \brief Publish consumed data to a ROS camera topic
+/** \brief Publish consumed data to ROS camera topics
  *
- * This is a specialized publisher that uses image_transport to publish to a ROS camera topic.
- * All messages which are received from the connected sources will be published on the advertised ROS topic.
+ * This is a specialized publisher that uses image_transport to publish ROS camera topics.
+ * All messages which are received from the connected sources will be published on the corresponding advertised
+ * ROS topics.
  *
  * Unlike regular ROS publishers, this class can be associated with one or more subscriber instances. In that case,
  * the subscribers will subscribe to their ROS topics only if the publisher is actively used. This is a convenient

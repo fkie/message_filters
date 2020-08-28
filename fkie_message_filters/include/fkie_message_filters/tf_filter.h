@@ -53,8 +53,8 @@ enum class TfFilterResult
 /** \brief Wait for TF transformations for incoming messages.
  *
  * This filter is intended to be used with a Subscriber as source, and will delay incoming messages until they can be
- * transformed to the specified TF target frames. The filter only examines the first input, even if it has multiple
- * inputs.
+ * transformed to the specified TF target frames. If the filter input is not unary, only the first argument is examined,
+ * which must have an accessible ROS header as determined by the \c ros::message_traits template.
  *
  * \code
  * namespace mf = fkie_message_filters;

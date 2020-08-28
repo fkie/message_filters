@@ -29,10 +29,10 @@
 namespace fkie_message_filters
 {
 
-/** \brief Subscribe to a ROS camera topic as data provider.
+/** \brief Subscribe to ROS camera topics as data provider.
  *
- * This is a specialized subscriber that uses image_transport to subscribe to a ROS camera topic.
- * All messages which are received on the subscribed topic will be passed to the connected sinks for further processing.
+ * This is a specialized subscriber that uses image_transport to subscribe to ROS camera topics.
+ * All messages which are received on the subscribed topics will be passed to the connected sinks for further processing.
  *
  * Unlike regular ROS subscribers, this class can be associated with a publisher instance. In that case, the subscriber
  * will delay subscription until the publisher is actively used and will unsubscribe (and stop passing data) as soon
@@ -49,12 +49,12 @@ public:
      * You need to call set_subscribe_options() and either subscribe() or subscribe_on_demand() to actually subscribe to a ROS topic.
      */
     CameraSubscriber() noexcept {}
-    /** \brief Constructor that subscribes to the given ROS image topic.
+    /** \brief Constructor that subscribes to the given ROS camera base topic.
      *
      * This constructor calls set_subscribe_options() and subscribe() for you.
      *
      * \arg \c it ROS image_transport instance to handle the subscription
-     * \arg \c base_topic name of the ROS image topic, subject to remapping
+     * \arg \c base_topic name of the ROS camera base topic, subject to remapping
      * \arg \c queue_size size of the ROS subscription queue
      * \arg \c transport_hints transport hints for the ROS image_transport framework
      *
@@ -67,7 +67,7 @@ public:
      * this method will automatically unsubscribe any previously subscribed ROS topic.
      *
      * \arg \c it ROS image_transport instance to handle the subscription
-     * \arg \c base_topic name of the ROS image topic, subject to remapping
+     * \arg \c base_topic name of the ROS camera base topic, subject to remapping
      * \arg \c queue_size size of the ROS subscription queue
      * \arg \c transport_hints transport hints for the ROS image_transport framework
      *
@@ -80,7 +80,7 @@ public:
      *
      *
      * \arg \c it ROS image_transport instance to handle the subscription
-     * \arg \c base_topic name of the ROS image topic, subject to remapping
+     * \arg \c base_topic name of the ROS camera base topic, subject to remapping
      * \arg \c queue_size size of the ROS subscription queue
      * \arg \c transport_hints transport hints for the ROS image_transport framework
      *

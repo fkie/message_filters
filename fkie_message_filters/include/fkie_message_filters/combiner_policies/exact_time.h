@@ -34,9 +34,9 @@ namespace combiner_policies
 /** \brief Exact time policy.
  *
  * This is a policy for the Combiner class. It will associate data from the connected sources when their ROS header
- * timestamp matches exactly. Each input source can itself be a tuple, but only the first element of each tuple will
+ * timestamp matches exactly. If an input source is not unary, only the first argument of each input will
  * be examined to determine the timestamp. It must have an accessible ROS header, which is determined using the
- * ros::message_traits template.
+ * \c ros::message_traits template.
  *
  * The policy will discard unmatched data which exceeds configurable age limit or overflows the maximum queue size.
  * The resulting timestamps will be strictly increasing if at least one of the inputs receives messages in correct temporal order.

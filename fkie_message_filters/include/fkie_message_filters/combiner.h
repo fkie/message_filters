@@ -34,20 +34,19 @@ namespace combiner_policies
 {
 }
 
-/** \brief Combine multiple sinks into a single source.
+/** \brief Combine multiple sources into a single one.
  *
  * Sometimes, a filter pipeline will receive corresponding inputs from different sources, which must be processed
  * together. The combiner provides a policy-driven way to aggregate data from multiple sources into a single sink.
  * Policies can be anything from a simple FIFO to an elaborate approximate time stamp synchronization.
  *
- * Input tuples will be flattened, so given two input filters (M1,M2) and
- * (M3,M4), the output is a 4-tuple (M1,M2,M3,M4) and not a nested 2-tuple
- * ((M1,M2),(M3,M4)).
+ * The output arity of the filter is the sum of all input arities. For example, given two binary input filters 
+ * (M1,M2) and (M3,M4), the combiner will create a quaternary output (M1,M2,M3,M4).
  * Furthermore, policies which examine data generally look at the first
- * element of an input tuple only. In this example, the timing policies
- * would match the input tuples based on M1 and M3.
- * You can prepend a Selector filter to swap the element order if you
- * need a different element examined, or the Divider filter to match all elements independently.
+ * argument of each input. In this example, the timing policies
+ * would match the inputs based on M1 and M3.
+ * You can prepend a Selector filter to swap the argument order if you
+ * need a different element examined, or the Divider filter to match all arguments independently.
  *
  * \code
  * namespace mf = fkie_message_filters;

@@ -33,7 +33,7 @@ namespace combiner_policies
 /** \brief First-In-First-Out policy.
  *
  * This is a policy for the Combiner class. It will assemble data from the connected sources in a FIFO manner.
- * As soon as at least one element from each source has been received, a combined output tuple is created and passed to
+ * As soon as at least one input from each source has been received, a combined output is created and passed to
  * the sink. There is no attempt to reorder inputs in any way.
  *
  * The FIFO policy is sufficient if all corresponding inputs arrive always in order and with the same frequency.

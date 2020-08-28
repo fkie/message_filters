@@ -46,7 +46,7 @@ class Sink : public virtual FilterBase
 {
     template<typename...> friend class Source;
 public:
-    /** \brief Number of inputs. */
+    /** \brief Number of input channels. */
     static constexpr std::size_t NUM_INPUTS = sizeof...(Inputs);
     /** \brief Grouped input types.
      *

@@ -32,7 +32,7 @@ using Connection = boost::signals2::connection;
 
 /** \brief Group multiple data types as filter input or output.
  *
- * This is a helper class to disambiguate filter definitions with multiple inputs and outputs. Consider the following
+ * This is a helper class to disambiguate filter definitions with N-ary inputs and outputs. Consider the following
  * hypothetical example:
  * \code
  * Filter<Type1, Type2, Type3> flt;

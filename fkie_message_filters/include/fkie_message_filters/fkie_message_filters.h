@@ -36,7 +36,6 @@
 #include "simple_user_filter.h"
 #include "subscriber.h"
 #include "tf_filter.h"
-#include "transform_broadcaster.h"
 #include "user_filter.h"
 #include "user_source.h"
 
@@ -45,6 +44,98 @@
  * \brief Primary namespace
  *
  * \mainpage
- * \includedoc mainpage.txt
+ *
+ * The fkie_message_filters library is a replacement for the ROS message_filters
+ * package. It is written in modern C++ and more type-safe than the original
+ * version.
+ *
+ * \section overview Overview
+ *
+ * The data flow is modeled with a pipeline metaphor, where data always flows from
+ * a source to a sink. A filter is both source and sink for data, possibly with
+ * different data types. For integration with ROS, the library provides a number of
+ * subscribers and publishers which act as sources or sinks of the data flow.
+ *
+ * \section getting-started Getting Started
+ *
+ * Most of your own filter logic will probably be implemented with
+ * \link fkie_message_filters::UserFilter UserFilter \endlink or
+ * \link fkie_message_filters::SimpleUserFilter SimpleUserFilter \endlink. Most other filters
+ * in the library are intended to simplify common boilerplate tasks, such as
+ * setting up publishers and subscribers or synchronizing messages from multiple
+ * topics. As a simple "Hello World" example, consider:
+ * 
+ * \code
+ * #include <ros/ros.h>
+ * #include <fkie_message_filters/fkie_message_filters.h>
+ * 
+ * namespace mf = fkie_message_filters;
+ * 
+ * using StringSubscriber = mf::Subscriber<std_msgs::String, mf::RosMessage>;
+ * using StringPublisher = mf::Publisher<std_msgs::String, mf::RosMessage>;
+ * using GreetingFilter = mf::UserFilter<StringSubscriber::Output, StringPublisher::Input>;
+ * 
+ * void main(int argc, char** argv)
+ * {
+ *     ros::init(argc, argv, "hello");
+ *     ros::NodeHandle nh;
+ *     StringSubscriber sub(nh, "name", 1);
+ *     StringPublisher pub(nh, "greeting", 1);
+ *     GreetingFilter flt;
+ *
+ *     flt.set_processing_function(
+ *         [](const std_msgs::String& input, const GreetingFilter::CallbackFunction& output)
+ *         {
+ *             std_msgs::String greeting;
+ *             greeting.data = "Hello, " + input.data + "!";
+ *             output(greeting);
+ *         }
+ *     );
+ *
+ *     mf::chain(sub, flt, pub);
+ *     ros::spin();
+ * }
+ * \endcode
+ *
+ * The user-defined filter accepts a \c std_msgs::String message with a name as
+ * input and composes a new \c std_msgs::String message with a personalized greeting
+ * as output. Note that each source can have arbitrarily many sinks connected to it,
+ * and vice vera, so the simplicity of the three-link chain in this example is by
+ * no means a limitation of the library.
+ * 
+ * \section types Data Types
+ *
+ * Sources and sinks are strongly typed, i.e., each source will only pass on data
+ * of a particular type, and each sink will only accept data of a particular type.
+ * The compiler will error out if you try to connect incompatible filters. As the
+ * strong typing relies on the C++ template mechanism, the error messages can be
+ * quite verbose and difficult to parse (looking at you, GCC). It is very much
+ * recommended to use the \c Input and \c Output typedefs which are provided by every
+ * filter.
+ * 
+ * \section n-ary-filters N-ary filters
+ * 
+ * All sources and sinks support the grouping of multiple data types, where
+ * items of different types are combined and passed on as a unit. This is particularly
+ * useful to process messages from distinct topics which belong together conceptually,
+ * e.g., the \c sensor_msgs::Image and \c sensor_msgs::CameraInfo messages from a
+ * calibrated camera.
+ * 
+ * N-ary filters can be created, rearranged, and broken up using the
+ * \link fkie_message_filters::Combiner Combiner \endlink,
+ * \link fkie_message_filters::Divider Divider \endlink, and
+ * \link fkie_message_filters::Selector Selector \endlink filters.
+ *
+ * \section implementation Implementation Details
+ *
+ * Generally, the pipeline processing is executed by nested calls to receive and
+ * send functions. The library is thread-safe and guarantees basic exception safety,
+ * but you are expected to handle your own exceptions in your callbacks.
+ * Exceptions which propagate through library code will abort processing
+ * for the offending message immediately, even if not all downstream sinks have
+ * received the message yet. If there is no upstream user-defined filter that catches
+ * the exception, the uncaught exception will eventually terminate the program.
+ * The library will detect cycles in the pipeline and abort with a \c std::logic_error
+ * exception.
  */
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_FKIE_MESSAGE_FILTERS_H_ */

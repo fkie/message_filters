@@ -36,7 +36,8 @@ namespace fkie_message_filters
  * by at least this delay. However, all forwarded messages will be guaranteed to be in temporal order, and no message
  * will be dropped unless it arrives with a larger delay, compared to the most recently received message.
  *
- * The filter supports multiple inputs, but will only consider the first input to sort messages.
+ * If the filter input is not unary, only the first argument is examined, which must have
+ * an accessible ROS header as determined by the \c ros::message_traits template.
  */
 template<class... Inputs>
 class Sequencer : public Filter<IO<Inputs...>, IO<Inputs...>>

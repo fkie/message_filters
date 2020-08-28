@@ -46,7 +46,7 @@ enum class BufferPolicy
     Discard,
     /** \brief Queue for later use.
      *
-     * Stores incoming data for later consumption.
+     * Stores incoming data for until consumed by .
      */
     Queue,
     /** \brief Forward data immediately.
@@ -59,21 +59,45 @@ enum class BufferPolicy
 /** \brief Store and forward data.
  *
  * The buffer acts as a decoupler in the filter pipeline. Data can be stored and processed at a later time. The pipeline
- * is effectively split into an upstream and a downstream part, and it becomes possible to run the downstream
+ * is effectively split into independent upstream and downstream parts, and it becomes possible to run the downstream
  * data processing asynchronously. For instance, you can run computationally expensive algorithms on ROS messages
  * in a different thread without blocking the ROS subscriber callback queue.
- * \code
- * namespace mf = fkie_message_filters;
+ * 
+ * The buffer can be used for at least three different use cases:
+ * -# <b>Use the buffer as a valve</b><br>
+ *    You can toggle between the BufferPolicy::Discard and BufferPolicy::Passthru modes to selectively disable or enable
+ *    data processing at specific times. This is the simplest use case without any asynchronous processing.
+ * -# <b>Run multiple ROS callback queues</b><br>
+ *    If your ROS node runs multiple callback queues, you can use the buffer to bind processing to a particular queue:
+ *    \code
+ *    namespace mf = fkie_message_filters;
  *
- * mf::Subscriber<M> sub;
- * mf::Buffer<mf::Subscriber<M>::Output> buffer(mf::BufferPolicy::Queue, 10);
- * mf::SimpleUserFilter<mf::Subscriber<M>::Output> flt;
+ *    ros::NodeHandle nh;
+ *    nh.setCallbackQueue(...);
  *
- * std::thread t([&buffer]{ buffer.spin(); });
- * flt.set_processing_function(...);
- * mf::chain(sub, buffer, flt);
- * ros::spin();
- * \endcode
+ *    // Version 1
+ *    mf::Buffer<M> buf1(nh, 10);  // will use the callback queue of nh
+ *
+ *    // Version 2
+ *    mf::Buffer<M> buf2(mf::BufferPolicy::Queue, 10);
+ *    buf2.set_callback_queue(...); // will explicitly set the ROS callback queue
+ *    \endcode
+ * -# <b>Run your own thread(s) for data processing</b><br>
+ *    This is the most versatile option for advanced users. You can set up your
+ *    worker threads as you desire and then call spin(), spin_once() or process_one()
+ *    as you see fit.
+ *    \code
+ *    namespace mf = fkie_message_filters;
+ *
+ *    mf::Subscriber<M> sub;
+ *    mf::Buffer<mf::Subscriber<M>::Output> buffer(mf::BufferPolicy::Queue, 10);
+ *    mf::SimpleUserFilter<mf::Subscriber<M>::Output> flt;
+ *
+ *    std::thread t([&buffer]{ buffer.spin(); });
+ *    flt.set_processing_function(...);
+ *    mf::chain(sub, buffer, flt);
+ *    ros::spin();
+ *    \endcode
  */
 template<class... Inputs>
 class Buffer : public Filter<IO<Inputs...>, IO<Inputs...>>
@@ -102,7 +126,7 @@ public:
     /** \brief Modify the buffer policy.
      *
      * If the new buffer policy is not BufferPolicy::Queue, any pending call to wait(), process_one(), or spin()
-     * will return. If the buffer policy is changed to BufferPolicy::PassThru, all pending data
+     * will return. If the buffer policy is changed to BufferPolicy::Passthru, all pending data
      * is processed immediately before the function returns. If the buffer policy is changed to BufferPolicy::Discard,
      * all pending data is discarded immediately.
      *
@@ -110,7 +134,7 @@ public:
      * \arg \c max_queue_size for the BufferPolicy::Queue policy, the maximum number of queued data items. If zero,
      * the previously set queue size remains unchanged.
      *
-     * \warning If you change the policy from BufferPolicy::Queue to BufferPolicy::PassThru and there is still a
+     * \warning If you change the policy from BufferPolicy::Queue to BufferPolicy::Passthru and there is still a
      * pending call to process_one(), spin_once(), or spin() in a different thread, some data might be processed
      * in parallel or out of order when the queue is flushed.
      *
@@ -190,9 +214,9 @@ public:
     bool process_one(const std::chrono::duration<Rep, Period>& timeout);
     /** \brief Process pending data.
      *
-     * Takes all pending data from the queue, processes it, and returns. Does nothing if the buffer
-     * policy is not BufferPolicy::Queue. The function will finish processing all taken data even if the buffer policy
-     * is changed. Also, new data will not be added to the workload but remain in the buffer.
+     * Does nothing if the buffer policy is not BufferPolicy::Queue.
+     * The method is guaranteed to return as it will only process data which is pending at invocation time.
+     * This also means that there may be new data pending already when this method returns.
      *
      * \filterthrow
      */
@@ -211,7 +235,7 @@ public:
     void spin();
     /** \brief Reset filter.
      *
-     * If the buffer policy is BufferPolicy::Queue, this will clear the internal queue and discard all waiting messages.
+     * If the buffer policy is BufferPolicy::Queue, this will clear the internal queue and discard all pending data.
      * Otherwise, this function has no effect.
      *
      * \nothrow

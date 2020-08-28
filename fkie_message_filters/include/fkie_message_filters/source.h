@@ -31,7 +31,7 @@ template<typename...> class Sink;
 
 /** \brief Base class for data providers.
  *
- * %In the message filter library, all data flows from sources to sinks. The sources are data providers, which may either
+ * %In the message filter library, all data flows from sources to sinks. The sources are providers of data, which may either
  * be generated synthetically or gathered from other sources, such as ROS topics.
  *
  * Derived classes need to call the send() method to pass actual data to the connected sinks. This class does
@@ -44,7 +44,7 @@ class Source : public virtual FilterBase
 {
     template<typename...> friend class Sink;
 public:
-    /** \brief Number of outputs. */
+    /** \brief Number of output channels. */
     static constexpr std::size_t NUM_OUTPUTS = sizeof...(Outputs);
     /** \brief Grouped output types.
      *

@@ -28,17 +28,17 @@
 namespace fkie_message_filters
 {
 
-/** \brief Split source with multiple inputs into independent output sinks.
+/** \brief Split an N-ary source into N unary ones.
  *
- * Sometimes, a filter pipeline that processes multiple inputs together, must be split up to handle those inputs
- * independently. Often, this happens when messages needs to be published with a Publisher, but it can be used
- * for all kinds of purposes.
+ * The divider splits an N-ary source into its constituent elements, so they can be processed independently.
+ * It is mostly used as the penultimate pipeline filter to forward message tuples to
+ * independent Publisher instances.
  *
- * The divider acts as one sink and N sources, one for each data type that is passed in. You can connect the sources
- * independently using the source() function.
+ * Technically, the divider acts as one sink and N sources, one for each data type that is passed in.
+ * You can connect the sources independently using the source() function.
  *
- * The divider will always completely split the pipeline. If you want a partial split only, you should use one or
- * more Selector filters.
+ * The divider will always completely separate the input arguments. If you want a partial split only,
+ * you should use one or more Selector filters instead.
  *
  * \code
  * namespace mf = fkie_message_filters;
@@ -50,7 +50,8 @@ namespace fkie_message_filters
  * MyDivider div;
  * mf::Publisher<M1, mf::RosMessage> pub1;
  * mf::Publisher<M2, mf::RosMessage> pub2;
- * mf::chain(buf_in, mf::split(div, pub1, pub2));
+ * mf::chain(buf_in, div);
+ * div.connect_to_sinks(pub1, pub2);
  * \endcode
  * \sa Combiner
  */

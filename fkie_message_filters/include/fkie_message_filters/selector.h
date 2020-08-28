@@ -30,10 +30,11 @@ template<class IO, std::size_t... Is>
 class Selector;
 #endif
 
-/** \brief Choose an arbitrary set of inputs to be forwarded
+/** \brief Reorder or reduce an N-ary filter.
  *
- * Sometimes, a filter pipeline that processes multiple inputs together, must be split up to handle those inputs
- * independently. The selector class can pick an arbitrary set of the inputs and forward it.
+ * This filter reorders the arguments of an N-ary filter and/or chooses an arbitrary subset of the input arguments.
+ * The output arguments are selected from the input by index. The following example reduces a ternary filter to a binary
+ * filter of the first two arguments, in swapped order:
  * \code
  * namespace mf = fkie_message_filters;
  *
