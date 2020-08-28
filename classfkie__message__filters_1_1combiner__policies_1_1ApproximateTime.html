@@ -155,7 +155,7 @@ Protected Member Functions</h2></td></tr>
 class fkie_message_filters::combiner_policies::ApproximateTime&lt; IOs &gt;</h3>
 
 <p>Approximate time policy. </p>
-<p>This is a policy for the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sinks into a single source. ">Combiner</a> class. It will associate data from the connected sources, but unlike <a class="el" href="classfkie__message__filters_1_1combiner__policies_1_1ExactTime.html" title="Exact time policy. ">ExactTime</a>, it can match messages even when their ROS header timestamps do not match perfectly. Each input source can itself be a tuple, but only the first element of each tuple will be examined to determine the timestamp. It must have an accessible ROS header, which is determined using the ros::message_traits template.</p>
+<p>This is a policy for the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one. ">Combiner</a> class. It will associate data from the connected sources, but unlike <a class="el" href="classfkie__message__filters_1_1combiner__policies_1_1ExactTime.html" title="Exact time policy. ">ExactTime</a>, it can match messages even when their ROS header timestamps do not match perfectly. If an input source is not unary, only the first argument will be examined to determine the timestamp. It must have an accessible ROS header, which is determined using the <code>ros::message_traits</code> template.</p>
 <p>The policy employs a modified version of the ROS <a href="http://wiki.ros.org/message_filters/ApproximateTime">ApproximateTime</a> algorithm. Like its predecessor, the algorithm is not merely applying an epsilon to account for time differences, but tries to find the best possible match. Each set of grouped messages which are output by the policy, satisfies the following criteria: </p><ul>
 <li><b>Each message is used only once.</b> Two sets will never share the same message, but some messages can be dropped. </li>
 <li><b>Messages are used in order.</b> Unlike the original algorithm, we do not guarantee that sets as a whole do not overlap, but we guarantee that for each topic, messages will be used in time stamp order. We found that revising this criterion improves match quality for high-frequency topics, such as stereo vision systems with depth images, in the presence of transient jitter. </li>
@@ -264,7 +264,7 @@ template&lt;std::size_t N&gt; </div>
 </div><div class="memdoc">
 
 <p>Input function. </p>
-<p>This function will be called by the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sinks into a single source. ">Combiner</a> class for incoming data. </p>
+<p>This function will be called by the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one. ">Combiner</a> class for incoming data. </p>
 
 </div>
 </div>
@@ -293,7 +293,7 @@ template&lt;std::size_t N&gt; </div>
 </div><div class="memdoc">
 
 <p>Emit data. </p>
-<p>This returns combined data back to the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sinks into a single source. ">Combiner</a> class. </p>
+<p>This returns combined data back to the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one. ">Combiner</a> class. </p>
 
 </div>
 </div>
@@ -323,7 +323,7 @@ template&lt;typename... IOs&gt; </div>
 </div><div class="memdoc">
 
 <p>Reset internal state. </p>
-<p>This function is called by the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sinks into a single source. ">Combiner</a> if the filter is reset. </p>
+<p>This function is called by the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one. ">Combiner</a> if the filter is reset. </p>
 
 <p>Implements <a class="el" href="classfkie__message__filters_1_1combiner__policies_1_1PolicyBase.html#a556affa54d091e9512a2e151cc1cabfe">fkie_message_filters::combiner_policies::PolicyBase&lt; IOs... &gt;</a>.</p>
 

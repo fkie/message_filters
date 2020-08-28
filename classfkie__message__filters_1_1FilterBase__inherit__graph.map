@@ -28,20 +28,20 @@
 <area shape="rect" id="node9" href="$classfkie__message__filters_1_1Sequencer.html" title="fkie_message_filters\l::Sequencer\&lt; Inputs... \&gt;" alt="" coords="700,201,864,243"/>
 <area shape="rect" id="node10" href="$classfkie__message__filters_1_1SimpleUserFilter.html" title="fkie_message_filters\l::SimpleUserFilter\&lt; Inputs... \&gt;" alt="" coords="683,267,881,308"/>
 <area shape="rect" id="node11" href="$classfkie__message__filters_1_1TfFilter.html" title="fkie_message_filters\l::TfFilter\&lt; Inputs... \&gt;" alt="" coords="711,332,853,373"/>
-<area shape="rect" id="node13" href="$classfkie__message__filters_1_1Selector.html" title="Choose an arbitrary set of inputs to be forwarded. " alt="" coords="703,528,861,569"/>
+<area shape="rect" id="node13" href="$classfkie__message__filters_1_1Selector.html" title="Reorder or reduce an N&#45;ary filter. " alt="" coords="703,528,861,569"/>
 <area shape="rect" id="node15" href="$classfkie__message__filters_1_1UserFilter.html" title="Generic filter with user&#45;defined callback function. " alt="" coords="711,594,853,650"/>
 <area shape="rect" id="node18" href="$classfkie__message__filters_1_1Filter.html" title="Typed base class for filters. " alt="" coords="469,691,611,732"/>
 <area shape="rect" id="node20" href="$classfkie__message__filters_1_1Divider.html" title="fkie_message_filters\l::Divider\&lt; Inputs... \&gt;" alt="" coords="469,836,611,877"/>
-<area shape="rect" id="node21" href="$classfkie__message__filters_1_1Divider.html" title="Split source with multiple inputs into independent output sinks. " alt="" coords="469,771,611,812"/>
+<area shape="rect" id="node21" href="$classfkie__message__filters_1_1Divider.html" title="Split an N&#45;ary source into N unary ones. " alt="" coords="469,771,611,812"/>
 <area shape="rect" id="node24" href="$classfkie__message__filters_1_1ImagePublisher.html" title="Publish consumed data to a ROS image topic. " alt="" coords="469,924,611,965"/>
-<area shape="rect" id="node26" href="$classfkie__message__filters_1_1CameraPublisher.html" title="Publish consumed data to a ROS camera topic. " alt="" coords="469,1012,611,1053"/>
+<area shape="rect" id="node26" href="$classfkie__message__filters_1_1CameraPublisher.html" title="Publish consumed data to ROS camera topics. " alt="" coords="469,1012,611,1053"/>
 <area shape="rect" id="node28" href="$classfkie__message__filters_1_1Publisher.html" title="Publish consumed data on a ROS topic. " alt="" coords="449,1100,631,1141"/>
 <area shape="rect" id="node31" href="$classfkie__message__filters_1_1Filter.html" title="fkie_message_filters\l::Filter\&lt; IO\&lt; Inputs...\l \&gt;, IO\&lt; Inputs... \&gt; \&gt;" alt="" coords="467,222,613,278"/>
 <area shape="rect" id="node33" href="$classfkie__message__filters_1_1Filter.html" title="fkie_message_filters\l::Filter\&lt; IO\&lt; Inputs...\l \&gt;, IO\&lt; Inputs... \&gt;::template\l Select\&lt; Is... \&gt; \&gt;" alt="" coords="447,425,633,496"/>
-<area shape="rect" id="node36" href="$classfkie__message__filters_1_1Combiner.html" title="Combine multiple sinks into a single source. " alt="" coords="457,1242,623,1298"/>
+<area shape="rect" id="node36" href="$classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one. " alt="" coords="457,1242,623,1298"/>
 <area shape="rect" id="node39" href="$classfkie__message__filters_1_1UserSource.html" title="Manually operated data source. " alt="" coords="455,1388,625,1429"/>
 <area shape="rect" id="node40" href="$classfkie__message__filters_1_1UserSource.html" title="fkie_message_filters\l::UserSource\&lt; Outputs... \&gt;" alt="" coords="449,1323,631,1364"/>
 <area shape="rect" id="node42" href="$classfkie__message__filters_1_1ImageSubscriber.html" title="Subscribe to a ROS image topic as data provider. " alt="" coords="469,1453,611,1495"/>
-<area shape="rect" id="node44" href="$classfkie__message__filters_1_1CameraSubscriber.html" title="Subscribe to a ROS camera topic as data provider. " alt="" coords="469,1531,611,1572"/>
+<area shape="rect" id="node44" href="$classfkie__message__filters_1_1CameraSubscriber.html" title="Subscribe to ROS camera topics as data provider. " alt="" coords="469,1531,611,1572"/>
 <area shape="rect" id="node46" href="$classfkie__message__filters_1_1Subscriber.html" title="Subscribe to a ROS topic as data provider. " alt="" coords="445,1619,635,1660"/>
 </map>

@@ -148,7 +148,7 @@ Public Member Functions</h2></td></tr>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:af49e2493417d30e42db4e98ac37aaa93"><td class="memItemLeft" align="right" valign="top"><a id="af49e2493417d30e42db4e98ac37aaa93"></a>
 static constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Source.html#af49e2493417d30e42db4e98ac37aaa93">NUM_OUTPUTS</a></td></tr>
-<tr class="memdesc:af49e2493417d30e42db4e98ac37aaa93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of outputs. <br /></td></tr>
+<tr class="memdesc:af49e2493417d30e42db4e98ac37aaa93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of output channels. <br /></td></tr>
 <tr class="separator:af49e2493417d30e42db4e98ac37aaa93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
@@ -185,7 +185,7 @@ class fkie_message_filters::Subscriber&lt; M, Translate &gt;</h3>
 <li><code>Subscriber&lt;M, RosMessage&gt;</code> will act as a source of plain <code>M</code> objects</li>
 </ul>
 <p>Unlike regular ROS subscribers, this class can be associated with a publisher instance. In that case, the subscriber will delay subscription until the publisher is actively used and will unsubscribe (and stop passing data) as soon as the publisher becomes idle. This is a convenient method to save processing power if the filter pipeline is used only intermittently.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html" title="Subscribe to a ROS camera topic as data provider. ">CameraSubscriber</a>, <a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html" title="Subscribe to a ROS image topic as data provider. ">ImageSubscriber</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html" title="Subscribe to ROS camera topics as data provider. ">CameraSubscriber</a>, <a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html" title="Subscribe to a ROS image topic as data provider. ">ImageSubscriber</a> </dd></dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="abf62f81139581703a6fbe41dd3e9d579"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abf62f81139581703a6fbe41dd3e9d579">&#9670;&nbsp;</a></span>Output</h2>

@@ -142,7 +142,7 @@ Public Member Functions</h2></td></tr>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a6c006700f85dee1fd531d268630aa006"><td class="memItemLeft" align="right" valign="top"><a id="a6c006700f85dee1fd531d268630aa006"></a>
 static constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Sink.html#a6c006700f85dee1fd531d268630aa006">NUM_INPUTS</a></td></tr>
-<tr class="memdesc:a6c006700f85dee1fd531d268630aa006"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of inputs. <br /></td></tr>
+<tr class="memdesc:a6c006700f85dee1fd531d268630aa006"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of input channels. <br /></td></tr>
 <tr class="separator:a6c006700f85dee1fd531d268630aa006"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
@@ -161,7 +161,7 @@ Protected Member Functions</h2></td></tr>
 <div class="textblock"><p>Publish consumed data to a ROS image topic. </p>
 <p>This is a specialized publisher that uses image_transport to publish to a ROS image topic. All messages which are received from the connected sources will be published on the advertised ROS topic.</p>
 <p>Unlike regular ROS publishers, this class can be associated with one or more subscriber instances. In that case, the subscribers will subscribe to their ROS topics only if the publisher is actively used. This is a convenient method to save processing power if the filter pipeline is used only intermittently.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html" title="Subscribe to a ROS image topic as data provider. ">ImageSubscriber</a>, <a class="el" href="classfkie__message__filters_1_1CameraPublisher.html" title="Publish consumed data to a ROS camera topic. ">CameraPublisher</a>, <a class="el" href="classfkie__message__filters_1_1Publisher.html" title="Publish consumed data on a ROS topic. ">Publisher</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html" title="Subscribe to a ROS image topic as data provider. ">ImageSubscriber</a>, <a class="el" href="classfkie__message__filters_1_1CameraPublisher.html" title="Publish consumed data to ROS camera topics. ">CameraPublisher</a>, <a class="el" href="classfkie__message__filters_1_1Publisher.html" title="Publish consumed data on a ROS topic. ">Publisher</a> </dd></dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a0f68fa081ebeca7074f24306762002f3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0f68fa081ebeca7074f24306762002f3">&#9670;&nbsp;</a></span>Input</h2>

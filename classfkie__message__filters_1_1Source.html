@@ -122,7 +122,7 @@ Public Member Functions</h2></td></tr>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:af49e2493417d30e42db4e98ac37aaa93"><td class="memItemLeft" align="right" valign="top"><a id="af49e2493417d30e42db4e98ac37aaa93"></a>
 static constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Source.html#af49e2493417d30e42db4e98ac37aaa93">NUM_OUTPUTS</a> = sizeof...(Outputs)</td></tr>
-<tr class="memdesc:af49e2493417d30e42db4e98ac37aaa93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of outputs. <br /></td></tr>
+<tr class="memdesc:af49e2493417d30e42db4e98ac37aaa93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of output channels. <br /></td></tr>
 <tr class="separator:af49e2493417d30e42db4e98ac37aaa93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
@@ -136,7 +136,7 @@ Protected Member Functions</h2></td></tr>
 class fkie_message_filters::Source&lt; Outputs &gt;</h3>
 
 <p>Base class for data providers. </p>
-<p>In the message filter library, all data flows from sources to sinks. The sources are data providers, which may either be generated synthetically or gathered from other sources, such as ROS topics.</p>
+<p>In the message filter library, all data flows from sources to sinks. The sources are providers of data, which may either be generated synthetically or gathered from other sources, such as ROS topics.</p>
 <p>Derived classes need to call the <a class="el" href="classfkie__message__filters_1_1Source.html#a506e87b830bb228995e42f72a4daf5d9" title="Pass data to all connected sinks. ">send()</a> method to pass actual data to the connected sinks. This class does nothing but track which sinks have been connected.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classfkie__message__filters_1_1Sink.html" title="Base class for data consumers. ">Sink</a> </dd></dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>

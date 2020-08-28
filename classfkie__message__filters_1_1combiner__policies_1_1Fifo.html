@@ -143,7 +143,7 @@ Protected Member Functions</h2></td></tr>
 class fkie_message_filters::combiner_policies::Fifo&lt; IOs &gt;</h3>
 
 <p>First-In-First-Out policy. </p>
-<p>This is a policy for the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sinks into a single source. ">Combiner</a> class. It will assemble data from the connected sources in a FIFO manner. As soon as at least one element from each source has been received, a combined output tuple is created and passed to the sink. There is no attempt to reorder inputs in any way.</p>
+<p>This is a policy for the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one. ">Combiner</a> class. It will assemble data from the connected sources in a FIFO manner. As soon as at least one input from each source has been received, a combined output is created and passed to the sink. There is no attempt to reorder inputs in any way.</p>
 <p>The FIFO policy is sufficient if all corresponding inputs arrive always in order and with the same frequency. The policy has no requirements with regard to the data types it processes. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a5d27d8c312c6f600e41170df3bf0fcc6"></a>
@@ -251,7 +251,7 @@ template&lt;std::size_t N&gt; </div>
 </div><div class="memdoc">
 
 <p>Input function. </p>
-<p>This function will be called by the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sinks into a single source. ">Combiner</a> class for incoming data. </p>
+<p>This function will be called by the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one. ">Combiner</a> class for incoming data. </p>
 
 </div>
 </div>
@@ -280,7 +280,7 @@ template&lt;std::size_t N&gt; </div>
 </div><div class="memdoc">
 
 <p>Emit data. </p>
-<p>This returns combined data back to the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sinks into a single source. ">Combiner</a> class. </p>
+<p>This returns combined data back to the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one. ">Combiner</a> class. </p>
 
 </div>
 </div>
@@ -310,7 +310,7 @@ template&lt;typename... IOs&gt; </div>
 </div><div class="memdoc">
 
 <p>Reset internal state. </p>
-<p>This function is called by the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sinks into a single source. ">Combiner</a> if the filter is reset. </p>
+<p>This function is called by the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one. ">Combiner</a> if the filter is reset. </p>
 
 <p>Implements <a class="el" href="classfkie__message__filters_1_1combiner__policies_1_1PolicyBase.html#a556affa54d091e9512a2e151cc1cabfe">fkie_message_filters::combiner_policies::PolicyBase&lt; IOs... &gt;</a>.</p>
 

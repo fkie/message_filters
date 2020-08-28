@@ -11,6 +11,6 @@
 <area shape="rect" id="node9" href="$classfkie__message__filters_1_1Sequencer.html" title="fkie_message_filters\l::Sequencer\&lt; Inputs... \&gt;" alt="" coords="624,332,788,373"/>
 <area shape="rect" id="node10" href="$classfkie__message__filters_1_1SimpleUserFilter.html" title="fkie_message_filters\l::SimpleUserFilter\&lt; Inputs... \&gt;" alt="" coords="607,397,805,439"/>
 <area shape="rect" id="node11" href="$classfkie__message__filters_1_1TfFilter.html" title="fkie_message_filters\l::TfFilter\&lt; Inputs... \&gt;" alt="" coords="635,463,777,504"/>
-<area shape="rect" id="node13" href="$classfkie__message__filters_1_1Selector.html" title="Choose an arbitrary set of inputs to be forwarded. " alt="" coords="627,528,785,569"/>
+<area shape="rect" id="node13" href="$classfkie__message__filters_1_1Selector.html" title="Reorder or reduce an N&#45;ary filter. " alt="" coords="627,528,785,569"/>
 <area shape="rect" id="node15" href="$classfkie__message__filters_1_1UserFilter.html" title="Generic filter with user&#45;defined callback function. " alt="" coords="635,594,777,650"/>
 </map>

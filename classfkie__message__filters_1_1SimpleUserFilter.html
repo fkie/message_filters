@@ -138,11 +138,11 @@ Public Member Functions</h2></td></tr>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a6c006700f85dee1fd531d268630aa006"><td class="memItemLeft" align="right" valign="top"><a id="a6c006700f85dee1fd531d268630aa006"></a>
 static constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Sink.html#a6c006700f85dee1fd531d268630aa006">NUM_INPUTS</a> = sizeof...(Inputs)</td></tr>
-<tr class="memdesc:a6c006700f85dee1fd531d268630aa006"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of inputs. <br /></td></tr>
+<tr class="memdesc:a6c006700f85dee1fd531d268630aa006"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of input channels. <br /></td></tr>
 <tr class="separator:a6c006700f85dee1fd531d268630aa006"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af49e2493417d30e42db4e98ac37aaa93"><td class="memItemLeft" align="right" valign="top"><a id="af49e2493417d30e42db4e98ac37aaa93"></a>
 static constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Source.html#af49e2493417d30e42db4e98ac37aaa93">NUM_OUTPUTS</a></td></tr>
-<tr class="memdesc:af49e2493417d30e42db4e98ac37aaa93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of outputs. <br /></td></tr>
+<tr class="memdesc:af49e2493417d30e42db4e98ac37aaa93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of output channels. <br /></td></tr>
 <tr class="separator:af49e2493417d30e42db4e98ac37aaa93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
@@ -160,7 +160,7 @@ class fkie_message_filters::SimpleUserFilter&lt; Inputs &gt;</h3>
 
 <p>Simplified filter with user-defined callback function. </p>
 <p>This is a simplified version of the <a class="el" href="classfkie__message__filters_1_1UserFilter.html" title="Generic filter with user-defined callback function. ">UserFilter</a> where inputs and outputs are identical. A user-defined processing function is called for all incoming data. If the function returns <code>true</code>, the data is passed on, otherwise the data is discarded.</p>
-<p>The filter will throw a std::bad_function_call exception if it is invoked without a user-defined processing function. </p>
+<p>The filter will throw a <code>std::bad_function_call</code> exception if it is invoked without a user-defined processing function. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a0f68fa081ebeca7074f24306762002f3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0f68fa081ebeca7074f24306762002f3">&#9670;&nbsp;</a></span>Input</h2>

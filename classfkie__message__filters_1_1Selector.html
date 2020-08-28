@@ -74,7 +74,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Choose an arbitrary set of inputs to be forwarded.  
+<p>Reorder or reduce an N-ary filter.  
  <a href="classfkie__message__filters_1_1Selector.html#details">More...</a></p>
 
 <p><code>#include &lt;fkie_message_filters/selector.h&gt;</code></p>
@@ -132,11 +132,11 @@ Public Member Functions</h2></td></tr>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a6c006700f85dee1fd531d268630aa006"><td class="memItemLeft" align="right" valign="top"><a id="a6c006700f85dee1fd531d268630aa006"></a>
 static constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Sink.html#a6c006700f85dee1fd531d268630aa006">NUM_INPUTS</a> = sizeof...(Inputs)</td></tr>
-<tr class="memdesc:a6c006700f85dee1fd531d268630aa006"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of inputs. <br /></td></tr>
+<tr class="memdesc:a6c006700f85dee1fd531d268630aa006"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of input channels. <br /></td></tr>
 <tr class="separator:a6c006700f85dee1fd531d268630aa006"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af49e2493417d30e42db4e98ac37aaa93"><td class="memItemLeft" align="right" valign="top"><a id="af49e2493417d30e42db4e98ac37aaa93"></a>
 static constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Source.html#af49e2493417d30e42db4e98ac37aaa93">NUM_OUTPUTS</a></td></tr>
-<tr class="memdesc:af49e2493417d30e42db4e98ac37aaa93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of outputs. <br /></td></tr>
+<tr class="memdesc:af49e2493417d30e42db4e98ac37aaa93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of output channels. <br /></td></tr>
 <tr class="separator:af49e2493417d30e42db4e98ac37aaa93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
@@ -152,8 +152,8 @@ Protected Member Functions</h2></td></tr>
 <div class="textblock"><h3>template&lt;class... Inputs, std::size_t... Is&gt;<br />
 class fkie_message_filters::Selector&lt; Inputs, Is &gt;</h3>
 
-<p>Choose an arbitrary set of inputs to be forwarded. </p>
-<p>Sometimes, a filter pipeline that processes multiple inputs together, must be split up to handle those inputs independently. The selector class can pick an arbitrary set of the inputs and forward it. </p><div class="fragment"><div class="line"><span class="keyword">namespace </span>mf = <a class="code" href="namespacefkie__message__filters.html">fkie_message_filters</a>;</div><div class="line"></div><div class="line"><span class="keyword">using</span> BufferIn = mf::Buffer&lt;T0, T1, T2&gt;;</div><div class="line"><span class="keyword">using</span> Select = mf::Selector&lt;BufferIn::Output, 1, 0&gt;;</div><div class="line"><span class="keyword">using</span> BufferOut = mf::Buffer&lt;T1, T0&gt;;</div><div class="line"></div><div class="line">BufferIn buf_in;</div><div class="line">Select select;</div><div class="line">BufferOut buf_out;</div><div class="line">mf::chain(buf_in, select, buf_out);</div></div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><a class="el" href="classfkie__message__filters_1_1Divider.html" title="Split source with multiple inputs into independent output sinks. ">Divider</a>, <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sinks into a single source. ">Combiner</a> </dd></dl>
+<p>Reorder or reduce an N-ary filter. </p>
+<p>This filter reorders the arguments of an N-ary filter and/or chooses an arbitrary subset of the input arguments. The output arguments are selected from the input by index. The following example reduces a ternary filter to a binary filter of the first two arguments, in swapped order: </p><div class="fragment"><div class="line"><span class="keyword">namespace </span>mf = <a class="code" href="namespacefkie__message__filters.html">fkie_message_filters</a>;</div><div class="line"></div><div class="line"><span class="keyword">using</span> BufferIn = mf::Buffer&lt;T0, T1, T2&gt;;</div><div class="line"><span class="keyword">using</span> Select = mf::Selector&lt;BufferIn::Output, 1, 0&gt;;</div><div class="line"><span class="keyword">using</span> BufferOut = mf::Buffer&lt;T1, T0&gt;;</div><div class="line"></div><div class="line">BufferIn buf_in;</div><div class="line">Select select;</div><div class="line">BufferOut buf_out;</div><div class="line">mf::chain(buf_in, select, buf_out);</div></div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><a class="el" href="classfkie__message__filters_1_1Divider.html" title="Split an N-ary source into N unary ones. ">Divider</a>, <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one. ">Combiner</a> </dd></dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a0f68fa081ebeca7074f24306762002f3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0f68fa081ebeca7074f24306762002f3">&#9670;&nbsp;</a></span>Input</h2>

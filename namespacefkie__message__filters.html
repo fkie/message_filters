@@ -76,7 +76,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacefkie__message__filters_1_1combiner__policies"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefkie__message__filters_1_1combiner__policies.html">combiner_policies</a></td></tr>
-<tr class="memdesc:namespacefkie__message__filters_1_1combiner__policies"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sinks into a single source. ">Combiner</a> policies. <br /></td></tr>
+<tr class="memdesc:namespacefkie__message__filters_1_1combiner__policies"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one. ">Combiner</a> policies. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -85,16 +85,16 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store and forward data.  <a href="classfkie__message__filters_1_1Buffer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1CameraPublisher.html">CameraPublisher</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publish consumed data to a ROS camera topic.  <a href="classfkie__message__filters_1_1CameraPublisher.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publish consumed data to ROS camera topics.  <a href="classfkie__message__filters_1_1CameraPublisher.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html">CameraSubscriber</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subscribe to a ROS camera topic as data provider.  <a href="classfkie__message__filters_1_1CameraSubscriber.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subscribe to ROS camera topics as data provider.  <a href="classfkie__message__filters_1_1CameraSubscriber.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Combiner.html">Combiner</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Combine multiple sinks into a single source.  <a href="classfkie__message__filters_1_1Combiner.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Combine multiple sources into a single one.  <a href="classfkie__message__filters_1_1Combiner.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Divider.html">Divider</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Split source with multiple inputs into independent output sinks.  <a href="classfkie__message__filters_1_1Divider.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Split an N-ary source into N unary ones.  <a href="classfkie__message__filters_1_1Divider.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Filter.html">Filter</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typed base class for filters.  <a href="classfkie__message__filters_1_1Filter.html#details">More...</a><br /></td></tr>
@@ -118,7 +118,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for ROS publishers in a filter pipeline.  <a href="classfkie__message__filters_1_1PublisherBase.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Selector.html">Selector</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose an arbitrary set of inputs to be forwarded.  <a href="classfkie__message__filters_1_1Selector.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reorder or reduce an N-ary filter.  <a href="classfkie__message__filters_1_1Selector.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Sequencer.html">Sequencer</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enforce correct temporal order.  <a href="classfkie__message__filters_1_1Sequencer.html#details">More...</a><br /></td></tr>
@@ -237,7 +237,7 @@ template&lt;class... Types&gt; </div>
 <p>Turns the buffer into a black hole that lets all incoming data vanish. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="aa9578ad344a317def3fbb4850a67ea89a722ad2d05ecf4868b00c5484b82fd808"></a>Queue&#160;</td><td class="fielddoc"><p>Queue for later use. </p>
-<p>Stores incoming data for later consumption. </p>
+<p>Stores incoming data for until consumed by . </p>
 </td></tr>
 <tr><td class="fieldname"><a id="aa9578ad344a317def3fbb4850a67ea89ac3e72e91fe05fe792fa27eea830ec68f"></a>Passthru&#160;</td><td class="fielddoc"><p>Forward data immediately. </p>
 <p>All data is forwarded to the connected sinks immediately, as if the buffer did not exist. </p>

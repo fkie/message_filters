@@ -149,7 +149,7 @@ Protected Member Functions</h2></td></tr>
 class fkie_message_filters::combiner_policies::ExactTime&lt; IOs &gt;</h3>
 
 <p>Exact time policy. </p>
-<p>This is a policy for the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sinks into a single source. ">Combiner</a> class. It will associate data from the connected sources when their ROS header timestamp matches exactly. Each input source can itself be a tuple, but only the first element of each tuple will be examined to determine the timestamp. It must have an accessible ROS header, which is determined using the ros::message_traits template.</p>
+<p>This is a policy for the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one. ">Combiner</a> class. It will associate data from the connected sources when their ROS header timestamp matches exactly. If an input source is not unary, only the first argument of each input will be examined to determine the timestamp. It must have an accessible ROS header, which is determined using the <code>ros::message_traits</code> template.</p>
 <p>The policy will discard unmatched data which exceeds configurable age limit or overflows the maximum queue size. The resulting timestamps will be strictly increasing if at least one of the inputs receives messages in correct temporal order. Whenever matched data is emitted, all queued inputs with older timestamps will be discarded.</p>
 <p>The filter will not output any data at all if the time lag between two inputs is larger than the maximum permissible age, or if the time lag requires more messages to be buffered than the maximum queue size permits. By default, the filter will buffer arbitrary many messages for at most one second. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
@@ -241,7 +241,7 @@ template&lt;std::size_t N&gt; </div>
 </div><div class="memdoc">
 
 <p>Input function. </p>
-<p>This function will be called by the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sinks into a single source. ">Combiner</a> class for incoming data. </p>
+<p>This function will be called by the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one. ">Combiner</a> class for incoming data. </p>
 
 </div>
 </div>
@@ -270,7 +270,7 @@ template&lt;std::size_t N&gt; </div>
 </div><div class="memdoc">
 
 <p>Emit data. </p>
-<p>This returns combined data back to the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sinks into a single source. ">Combiner</a> class. </p>
+<p>This returns combined data back to the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one. ">Combiner</a> class. </p>
 
 </div>
 </div>
@@ -300,7 +300,7 @@ template&lt;typename... IOs&gt; </div>
 </div><div class="memdoc">
 
 <p>Reset internal state. </p>
-<p>This function is called by the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sinks into a single source. ">Combiner</a> if the filter is reset. </p>
+<p>This function is called by the <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one. ">Combiner</a> if the filter is reset. </p>
 
 <p>Implements <a class="el" href="classfkie__message__filters_1_1combiner__policies_1_1PolicyBase.html#a556affa54d091e9512a2e151cc1cabfe">fkie_message_filters::combiner_policies::PolicyBase&lt; IOs... &gt;</a>.</p>
 

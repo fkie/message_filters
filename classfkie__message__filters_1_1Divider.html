@@ -74,7 +74,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Split source with multiple inputs into independent output sinks.  
+<p>Split an N-ary source into N unary ones.  
  <a href="classfkie__message__filters_1_1Divider.html#details">More...</a></p>
 
 <p><code>#include &lt;fkie_message_filters/divider.h&gt;</code></p>
@@ -147,7 +147,7 @@ template&lt;std::size_t N&gt; </td></tr>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a6c006700f85dee1fd531d268630aa006"><td class="memItemLeft" align="right" valign="top"><a id="a6c006700f85dee1fd531d268630aa006"></a>
 static constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Sink.html#a6c006700f85dee1fd531d268630aa006">NUM_INPUTS</a></td></tr>
-<tr class="memdesc:a6c006700f85dee1fd531d268630aa006"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of inputs. <br /></td></tr>
+<tr class="memdesc:a6c006700f85dee1fd531d268630aa006"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of input channels. <br /></td></tr>
 <tr class="separator:a6c006700f85dee1fd531d268630aa006"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
@@ -160,11 +160,11 @@ Protected Member Functions</h2></td></tr>
 <div class="textblock"><h3>template&lt;class... Inputs&gt;<br />
 class fkie_message_filters::Divider&lt; Inputs &gt;</h3>
 
-<p>Split source with multiple inputs into independent output sinks. </p>
-<p>Sometimes, a filter pipeline that processes multiple inputs together, must be split up to handle those inputs independently. Often, this happens when messages needs to be published with a <a class="el" href="classfkie__message__filters_1_1Publisher.html" title="Publish consumed data on a ROS topic. ">Publisher</a>, but it can be used for all kinds of purposes.</p>
-<p>The divider acts as one sink and N sources, one for each data type that is passed in. You can connect the sources independently using the <a class="el" href="classfkie__message__filters_1_1Divider.html#a447816f860820adae136e6727a7261e0" title="Access the source for the Nth data element. ">source()</a> function.</p>
-<p>The divider will always completely split the pipeline. If you want a partial split only, you should use one or more <a class="el" href="classfkie__message__filters_1_1Selector.html" title="Choose an arbitrary set of inputs to be forwarded. ">Selector</a> filters.</p>
-<div class="fragment"><div class="line"><span class="keyword">namespace </span>mf = <a class="code" href="namespacefkie__message__filters.html">fkie_message_filters</a>;</div><div class="line"></div><div class="line"><span class="keyword">using</span> BufferIn = mf::Buffer&lt;M1, M2&gt;;</div><div class="line"><span class="keyword">using</span> MyDivider = mf::Divider&lt;BufferIn::Output&gt;;</div><div class="line"></div><div class="line">BufferIn buf_in;</div><div class="line">MyDivider div;</div><div class="line">mf::Publisher&lt;M1, mf::RosMessage&gt; pub1;</div><div class="line">mf::Publisher&lt;M2, mf::RosMessage&gt; pub2;</div><div class="line">mf::chain(buf_in, mf::split(div, pub1, pub2));</div></div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sinks into a single source. ">Combiner</a> </dd></dl>
+<p>Split an N-ary source into N unary ones. </p>
+<p>The divider splits an N-ary source into its constituent elements, so they can be processed independently. It is mostly used as the penultimate pipeline filter to forward message tuples to independent <a class="el" href="classfkie__message__filters_1_1Publisher.html" title="Publish consumed data on a ROS topic. ">Publisher</a> instances.</p>
+<p>Technically, the divider acts as one sink and N sources, one for each data type that is passed in. You can connect the sources independently using the <a class="el" href="classfkie__message__filters_1_1Divider.html#a447816f860820adae136e6727a7261e0" title="Access the source for the Nth data element. ">source()</a> function.</p>
+<p>The divider will always completely separate the input arguments. If you want a partial split only, you should use one or more <a class="el" href="classfkie__message__filters_1_1Selector.html" title="Reorder or reduce an N-ary filter. ">Selector</a> filters instead.</p>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span>mf = <a class="code" href="namespacefkie__message__filters.html">fkie_message_filters</a>;</div><div class="line"></div><div class="line"><span class="keyword">using</span> BufferIn = mf::Buffer&lt;M1, M2&gt;;</div><div class="line"><span class="keyword">using</span> MyDivider = mf::Divider&lt;BufferIn::Output&gt;;</div><div class="line"></div><div class="line">BufferIn buf_in;</div><div class="line">MyDivider div;</div><div class="line">mf::Publisher&lt;M1, mf::RosMessage&gt; pub1;</div><div class="line">mf::Publisher&lt;M2, mf::RosMessage&gt; pub2;</div><div class="line">mf::chain(buf_in, div);</div><div class="line">div.connect_to_sinks(pub1, pub2);</div></div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one. ">Combiner</a> </dd></dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a0f68fa081ebeca7074f24306762002f3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0f68fa081ebeca7074f24306762002f3">&#9670;&nbsp;</a></span>Input</h2>

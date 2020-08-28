@@ -166,11 +166,11 @@ Public Member Functions</h2></td></tr>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a6c006700f85dee1fd531d268630aa006"><td class="memItemLeft" align="right" valign="top"><a id="a6c006700f85dee1fd531d268630aa006"></a>
 static constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Sink.html#a6c006700f85dee1fd531d268630aa006">NUM_INPUTS</a> = sizeof...(Inputs)</td></tr>
-<tr class="memdesc:a6c006700f85dee1fd531d268630aa006"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of inputs. <br /></td></tr>
+<tr class="memdesc:a6c006700f85dee1fd531d268630aa006"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of input channels. <br /></td></tr>
 <tr class="separator:a6c006700f85dee1fd531d268630aa006"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af49e2493417d30e42db4e98ac37aaa93"><td class="memItemLeft" align="right" valign="top"><a id="af49e2493417d30e42db4e98ac37aaa93"></a>
 static constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Source.html#af49e2493417d30e42db4e98ac37aaa93">NUM_OUTPUTS</a></td></tr>
-<tr class="memdesc:af49e2493417d30e42db4e98ac37aaa93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of outputs. <br /></td></tr>
+<tr class="memdesc:af49e2493417d30e42db4e98ac37aaa93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of output channels. <br /></td></tr>
 <tr class="separator:af49e2493417d30e42db4e98ac37aaa93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
@@ -187,7 +187,7 @@ Protected Member Functions</h2></td></tr>
 class fkie_message_filters::TfFilter&lt; Inputs &gt;</h3>
 
 <p>Wait for TF transformations for incoming messages. </p>
-<p>This filter is intended to be used with a <a class="el" href="classfkie__message__filters_1_1Subscriber.html" title="Subscribe to a ROS topic as data provider. ">Subscriber</a> as source, and will delay incoming messages until they can be transformed to the specified TF target frames. The filter only examines the first input, even if it has multiple inputs.</p>
+<p>This filter is intended to be used with a <a class="el" href="classfkie__message__filters_1_1Subscriber.html" title="Subscribe to a ROS topic as data provider. ">Subscriber</a> as source, and will delay incoming messages until they can be transformed to the specified TF target frames. If the filter input is not unary, only the first argument is examined, which must have an accessible ROS header as determined by the <code>ros::message_traits</code> template.</p>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span>mf = <a class="code" href="namespacefkie__message__filters.html">fkie_message_filters</a>;</div><div class="line"></div><div class="line">mf::Subscriber&lt;M&gt; sub;</div><div class="line">mf::TfFilter&lt;mf::Subscriber&lt;M&gt;::Output&gt; flt;</div><div class="line">ros::NodeHandle nh;</div><div class="line"></div><div class="line">sub.subscribe(nh, <span class="stringliteral">&quot;topic&quot;</span>, 10);</div><div class="line">flt.init(tf2_buffer, <span class="stringliteral">&quot;target_frame&quot;</span>, 10, nh);</div><div class="line">mf::chain(sub, flt);</div></div><!-- fragment --> </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a0f68fa081ebeca7074f24306762002f3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0f68fa081ebeca7074f24306762002f3">&#9670;&nbsp;</a></span>Input</h2>
