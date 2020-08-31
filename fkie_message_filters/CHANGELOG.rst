@@ -2,8 +2,8 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.1.0 (2020-08-31)
+------------------
 * Rewrite documentation
 * Add test for subscriber callbacks
 * Use "nullptr" instead of "0"
