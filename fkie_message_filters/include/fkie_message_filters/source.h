@@ -35,7 +35,8 @@ template<typename...> class Sink;
  * be generated synthetically or gathered from other sources, such as ROS topics.
  *
  * Derived classes need to call the send() method to pass actual data to the connected sinks. This class does
- * nothing but track which sinks have been connected.
+ * nothing but track which sinks have been connected.  The send() method takes the same number and types of arguments as
+ * specified in the template instantiation.
  *
  * \sa Sink
  */
@@ -44,7 +45,7 @@ class Source : public virtual FilterBase
 {
     template<typename...> friend class Sink;
 public:
-    /** \brief Number of output channels. */
+    /** \brief Number of output arguments. */
     static constexpr std::size_t NUM_OUTPUTS = sizeof...(Outputs);
     /** \brief Grouped output types.
      *

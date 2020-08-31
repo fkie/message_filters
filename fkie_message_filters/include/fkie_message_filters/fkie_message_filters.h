@@ -58,12 +58,25 @@
  *
  * \section getting-started Getting Started
  *
- * Most of your own filter logic will probably be implemented with
- * \link fkie_message_filters::UserFilter UserFilter \endlink or
- * \link fkie_message_filters::SimpleUserFilter SimpleUserFilter \endlink. Most other filters
- * in the library are intended to simplify common boilerplate tasks, such as
- * setting up publishers and subscribers or synchronizing messages from multiple
- * topics. As a simple "Hello World" example, consider:
+ * While you are free to derive your own classes from the one of the base classes,
+ * most programs will want to register a custom callback function for their
+ * application logic.
+ *
+ * The \link fkie_message_filters::SimpleUserFilter SimpleUserFilter \endlink
+ * works almost like a regular ROS callback, but it
+ * expects a boolean return value that determines if the data is passed on
+ * to subsequent filters in the pipeline (if any), or if processing terminates.
+ * You can use this type of filter to consume data at the end of the pipeline,
+ * or if you want to remove invalid inputs before further processing occurs.
+ *
+ * The \link fkie_message_filters::UserFilter UserFilter \endlink is more
+ * generic and can be used if your filter outputs differ from its inputs. You
+ * can implement pretty much any kind of transforming filter.
+ * 
+ * A third filter \link fkie_message_filters::UserSource UserSource \endlink is
+ * a simple data source which can be used as callback in third-party code.
+ *
+ * As a simple "Hello World" example, consider:
  * 
  * \code
  * #include <ros/ros.h>
@@ -120,7 +133,6 @@
  * useful to process messages from distinct topics which belong together conceptually,
  * e.g., the \c sensor_msgs::Image and \c sensor_msgs::CameraInfo messages from a
  * calibrated camera.
- * 
  * N-ary filters can be created, rearranged, and broken up using the
  * \link fkie_message_filters::Combiner Combiner \endlink,
  * \link fkie_message_filters::Divider Divider \endlink, and

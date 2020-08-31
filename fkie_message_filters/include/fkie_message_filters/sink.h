@@ -37,7 +37,8 @@ template<typename...> class Source;
  * %In the message filter library, all data flows from sources to sinks. The sinks are data consumers, which process
  * all data they receive from a source.
  *
- * Derived classes must override the receive() method to actually process data.
+ * Derived classes must override the receive() method to actually process data. The receive() method takes the same
+ * number and types of arguments as specified in the template instantiation.
  *
  * \sa Source
  */
@@ -46,7 +47,7 @@ class Sink : public virtual FilterBase
 {
     template<typename...> friend class Source;
 public:
-    /** \brief Number of input channels. */
+    /** \brief Number of input arguments. */
     static constexpr std::size_t NUM_INPUTS = sizeof...(Inputs);
     /** \brief Grouped input types.
      *

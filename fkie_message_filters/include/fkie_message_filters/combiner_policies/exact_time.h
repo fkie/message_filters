@@ -34,7 +34,7 @@ namespace combiner_policies
 /** \brief Exact time policy.
  *
  * This is a policy for the Combiner class. It will associate data from the connected sources when their ROS header
- * timestamp matches exactly. If an input source is not unary, only the first argument of each input will
+ * timestamp match exactly. If an input source is not unary, only the first argument of each input will
  * be examined to determine the timestamp. It must have an accessible ROS header, which is determined using the
  * \c ros::message_traits template.
  *
