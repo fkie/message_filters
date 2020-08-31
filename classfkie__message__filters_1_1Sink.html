@@ -133,7 +133,7 @@ Public Member Functions</h2></td></tr>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a6c006700f85dee1fd531d268630aa006"><td class="memItemLeft" align="right" valign="top"><a id="a6c006700f85dee1fd531d268630aa006"></a>
 static constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Sink.html#a6c006700f85dee1fd531d268630aa006">NUM_INPUTS</a> = sizeof...(Inputs)</td></tr>
-<tr class="memdesc:a6c006700f85dee1fd531d268630aa006"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of input channels. <br /></td></tr>
+<tr class="memdesc:a6c006700f85dee1fd531d268630aa006"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of input arguments. <br /></td></tr>
 <tr class="separator:a6c006700f85dee1fd531d268630aa006"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
@@ -148,7 +148,7 @@ class fkie_message_filters::Sink&lt; Inputs &gt;</h3>
 
 <p>Base class for data consumers. </p>
 <p>In the message filter library, all data flows from sources to sinks. The sinks are data consumers, which process all data they receive from a source.</p>
-<p>Derived classes must override the <a class="el" href="classfkie__message__filters_1_1Sink.html#a10476274ee6189356de12858eff64d83" title="Process incoming data. ">receive()</a> method to actually process data.</p>
+<p>Derived classes must override the <a class="el" href="classfkie__message__filters_1_1Sink.html#a10476274ee6189356de12858eff64d83" title="Process incoming data. ">receive()</a> method to actually process data. The <a class="el" href="classfkie__message__filters_1_1Sink.html#a10476274ee6189356de12858eff64d83" title="Process incoming data. ">receive()</a> method takes the same number and types of arguments as specified in the template instantiation.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classfkie__message__filters_1_1Source.html" title="Base class for data providers. ">Source</a> </dd></dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a0f68fa081ebeca7074f24306762002f3"></a>
