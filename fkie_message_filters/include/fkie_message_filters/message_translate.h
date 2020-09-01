@@ -35,7 +35,7 @@ struct RosMessage
     using FilterType = M;
     static FilterType eventToFilter(const EventType& t)
     {
-        return t.getConstMessage().get();
+        return *t.getConstMessage().get();
     }
     static PublishType filterToPublish(const FilterType& t)
     {
