@@ -77,38 +77,7 @@
  * a simple data source which can be used as callback in third-party code.
  *
  * As a simple "Hello World" example, consider:
- * 
- * \code
- * #include <ros/ros.h>
- * #include <fkie_message_filters/fkie_message_filters.h>
- * 
- * namespace mf = fkie_message_filters;
- * 
- * using StringSubscriber = mf::Subscriber<std_msgs::String, mf::RosMessage>;
- * using StringPublisher = mf::Publisher<std_msgs::String, mf::RosMessage>;
- * using GreetingFilter = mf::UserFilter<StringSubscriber::Output, StringPublisher::Input>;
- * 
- * void main(int argc, char** argv)
- * {
- *     ros::init(argc, argv, "hello");
- *     ros::NodeHandle nh;
- *     StringSubscriber sub(nh, "name", 1);
- *     StringPublisher pub(nh, "greeting", 1);
- *     GreetingFilter flt;
- *
- *     flt.set_processing_function(
- *         [](const std_msgs::String& input, const GreetingFilter::CallbackFunction& output)
- *         {
- *             std_msgs::String greeting;
- *             greeting.data = "Hello, " + input.data + "!";
- *             output(greeting);
- *         }
- *     );
- *
- *     mf::chain(sub, flt, pub);
- *     ros::spin();
- * }
- * \endcode
+ * \include hello.cpp
  *
  * The user-defined filter accepts a \c std_msgs::String message with a name as
  * input and composes a new \c std_msgs::String message with a personalized greeting
