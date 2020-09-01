@@ -78,6 +78,9 @@ target_link_libraries(${PROJECT_NAME}
   ${catkin_LIBRARIES}
 )
 
+add_executable(hello_example example/hello.cpp)
+target_link_libraries(hello_example ${PROJECT_NAME})
+
 if(CATKIN_ENABLE_TESTING)
   find_package(rostest REQUIRED)
   catkin_add_gtest(filtertests

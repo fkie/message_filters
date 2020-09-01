@@ -64,6 +64,7 @@ As a simple "Hello World" example, consider:
 
 ```c++
 #include <ros/ros.h>
+#include <std_msgs/String.h>
 #include <fkie_message_filters/fkie_message_filters.h>
 
 namespace mf = fkie_message_filters;
@@ -72,7 +73,7 @@ using StringSubscriber = mf::Subscriber<std_msgs::String, mf::RosMessage>;
 using StringPublisher = mf::Publisher<std_msgs::String, mf::RosMessage>;
 using GreetingFilter = mf::UserFilter<StringSubscriber::Output, StringPublisher::Input>;
 
-void main(int argc, char** argv)
+int main(int argc, char** argv)
 {
     ros::init(argc, argv, "hello");
     ros::NodeHandle nh;
@@ -89,6 +90,7 @@ void main(int argc, char** argv)
     );
     mf::chain(sub, flt, pub);
     ros::spin();
+    return 0;
 }
 ```
 
