@@ -37,7 +37,7 @@ namespace {
     }
 }
 
-TEST(fkie_message_filters_ros_integration, Publisher)
+TEST(fkie_message_filters_ros_integration, PublisherMessage)
 {
     std::size_t received_msgs = 0;
     ros::NodeHandle nh("~");
@@ -51,6 +51,60 @@ TEST(fkie_message_filters_ros_integration, Publisher)
     ASSERT_EQ(1, sub.getNumPublishers());
     ASSERT_EQ(0, received_msgs);
     src(std_msgs::Empty());
+    process_pending_events();
+    ASSERT_EQ(1, received_msgs);
+}
+
+TEST(fkie_message_filters_ros_integration, PublisherMessageConstPtr)
+{
+    std::size_t received_msgs = 0;
+    ros::NodeHandle nh("~");
+    ros::Subscriber sub = nh.subscribe<std_msgs::Empty>("publisher_test", 1, [&received_msgs](const std_msgs::EmptyConstPtr&) { ++received_msgs; });
+    mf::UserSource<std_msgs::Empty::ConstPtr> src;
+    mf::Publisher<std_msgs::Empty, mf::RosMessageConstPtr> pub;
+    src.connect_to_sink(pub);
+    ASSERT_EQ(0, sub.getNumPublishers());
+    pub.advertise(nh, "publisher_test", 1);
+    process_pending_events();
+    ASSERT_EQ(1, sub.getNumPublishers());
+    ASSERT_EQ(0, received_msgs);
+    src(std_msgs::Empty::ConstPtr(new std_msgs::Empty()));
+    process_pending_events();
+    ASSERT_EQ(1, received_msgs);
+}
+
+TEST(fkie_message_filters_ros_integration, PublisherMessageStdSharedPtr)
+{
+    std::size_t received_msgs = 0;
+    ros::NodeHandle nh("~");
+    ros::Subscriber sub = nh.subscribe<std_msgs::Empty>("publisher_test", 1, [&received_msgs](const std_msgs::EmptyConstPtr&) { ++received_msgs; });
+    mf::UserSource<std::shared_ptr<const std_msgs::Empty>> src;
+    mf::Publisher<std_msgs::Empty, mf::RosMessageStdSharedPtr> pub;
+    src.connect_to_sink(pub);
+    ASSERT_EQ(0, sub.getNumPublishers());
+    pub.advertise(nh, "publisher_test", 1);
+    process_pending_events();
+    ASSERT_EQ(1, sub.getNumPublishers());
+    ASSERT_EQ(0, received_msgs);
+    src(std::shared_ptr<const std_msgs::Empty>(new std_msgs::Empty()));
+    process_pending_events();
+    ASSERT_EQ(1, received_msgs);
+}
+
+TEST(fkie_message_filters_ros_integration, PublisherMessageEvent)
+{
+    std::size_t received_msgs = 0;
+    ros::NodeHandle nh("~");
+    ros::Subscriber sub = nh.subscribe<std_msgs::Empty>("publisher_test", 1, [&received_msgs](const std_msgs::EmptyConstPtr&) { ++received_msgs; });
+    mf::UserSource<ros::MessageEvent<const std_msgs::Empty>> src;
+    mf::Publisher<std_msgs::Empty, mf::RosMessageEvent> pub;
+    src.connect_to_sink(pub);
+    ASSERT_EQ(0, sub.getNumPublishers());
+    pub.advertise(nh, "publisher_test", 1);
+    process_pending_events();
+    ASSERT_EQ(1, sub.getNumPublishers());
+    ASSERT_EQ(0, received_msgs);
+    src(ros::MessageEvent<const std_msgs::Empty>(std_msgs::Empty::ConstPtr(new std_msgs::Empty())));
     process_pending_events();
     ASSERT_EQ(1, received_msgs);
 }
@@ -85,15 +139,72 @@ TEST(fkie_message_filters_ros_integration, PublisherWithSubscriberCB)
     ASSERT_EQ(1, disconnected_cbs);
 }
 
-TEST(fkie_message_filters_ros_integration, Subscriber)
+TEST(fkie_message_filters_ros_integration, SubscriberMessageEvent)
 {
     std::size_t received_msgs = 0;
     ros::NodeHandle nh("~");
     ros::Publisher pub = nh.advertise<std_msgs::Empty>("subscriber_test", 1);
-    mf::Subscriber<std_msgs::Empty> sub;
+    mf::Subscriber<std_msgs::Empty, mf::RosMessageEvent> sub;
     mf::SimpleUserFilter<ros::MessageEvent<const std_msgs::Empty>> flt;
     sub.connect_to_sink(flt);
     flt.set_processing_function([&received_msgs](const ros::MessageEvent<const std_msgs::Empty>&) -> bool { ++received_msgs; return true; });
+    ASSERT_EQ(0, pub.getNumSubscribers());
+    sub.subscribe(nh, "subscriber_test", 1);
+    process_pending_events();
+    ASSERT_EQ(1, pub.getNumSubscribers());
+    ASSERT_EQ(0, received_msgs);
+    pub.publish<std_msgs::Empty>(std_msgs::Empty());
+    process_pending_events();
+    ASSERT_EQ(1, received_msgs);
+}
+
+TEST(fkie_message_filters_ros_integration, SubscriberMessageConstPtr)
+{
+    std::size_t received_msgs = 0;
+    ros::NodeHandle nh("~");
+    ros::Publisher pub = nh.advertise<std_msgs::Empty>("subscriber_test", 1);
+    mf::Subscriber<std_msgs::Empty, mf::RosMessageConstPtr> sub;
+    mf::SimpleUserFilter<std_msgs::Empty::ConstPtr> flt;
+    sub.connect_to_sink(flt);
+    flt.set_processing_function([&received_msgs](const std_msgs::Empty::ConstPtr&) -> bool { ++received_msgs; return true; });
+    ASSERT_EQ(0, pub.getNumSubscribers());
+    sub.subscribe(nh, "subscriber_test", 1);
+    process_pending_events();
+    ASSERT_EQ(1, pub.getNumSubscribers());
+    ASSERT_EQ(0, received_msgs);
+    pub.publish<std_msgs::Empty>(std_msgs::Empty());
+    process_pending_events();
+    ASSERT_EQ(1, received_msgs);
+}
+
+TEST(fkie_message_filters_ros_integration, SubscriberMessageStdSharedPtr)
+{
+    std::size_t received_msgs = 0;
+    ros::NodeHandle nh("~");
+    ros::Publisher pub = nh.advertise<std_msgs::Empty>("subscriber_test", 1);
+    mf::Subscriber<std_msgs::Empty, mf::RosMessageStdSharedPtr> sub;
+    mf::SimpleUserFilter<std::shared_ptr<const std_msgs::Empty>> flt;
+    sub.connect_to_sink(flt);
+    flt.set_processing_function([&received_msgs](const std::shared_ptr<const std_msgs::Empty>&) -> bool { ++received_msgs; return true; });
+    ASSERT_EQ(0, pub.getNumSubscribers());
+    sub.subscribe(nh, "subscriber_test", 1);
+    process_pending_events();
+    ASSERT_EQ(1, pub.getNumSubscribers());
+    ASSERT_EQ(0, received_msgs);
+    pub.publish<std_msgs::Empty>(std_msgs::Empty());
+    process_pending_events();
+    ASSERT_EQ(1, received_msgs);
+}
+
+TEST(fkie_message_filters_ros_integration, SubscriberMessage)
+{
+    std::size_t received_msgs = 0;
+    ros::NodeHandle nh("~");
+    ros::Publisher pub = nh.advertise<std_msgs::Empty>("subscriber_test", 1);
+    mf::Subscriber<std_msgs::Empty, mf::RosMessage> sub;
+    mf::SimpleUserFilter<std_msgs::Empty> flt;
+    sub.connect_to_sink(flt);
+    flt.set_processing_function([&received_msgs](const std_msgs::Empty&) -> bool { ++received_msgs; return true; });
     ASSERT_EQ(0, pub.getNumSubscribers());
     sub.subscribe(nh, "subscriber_test", 1);
     process_pending_events();
