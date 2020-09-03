@@ -2,8 +2,8 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.1.2 (2020-09-03)
+------------------
 * Fix compiler warnings with Clang 9
 * Fix compilation error due to namespace problems with friend class
 * Contributors: Timo Röhling
