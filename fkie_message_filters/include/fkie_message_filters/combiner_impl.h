@@ -46,7 +46,7 @@ void Combiner<PolicyTmpl, IOs...>::connect_policy() noexcept
         [this](const OutgoingTuple& out)
         {
             helpers::index_apply<std::tuple_size<OutgoingTuple>::value>(
-                [&](auto... Is)
+                [this,&out](auto... Is)
                 {
                     this->send(std::get<Is>(out)...);
                 }
@@ -57,7 +57,7 @@ void Combiner<PolicyTmpl, IOs...>::connect_policy() noexcept
         [this](auto I)
         {
             std::get<I>(this->sinks_).set_policy_input(
-                [&](std::unique_lock<std::mutex>& lock, auto&& in)
+                [this](std::unique_lock<std::mutex>& lock, auto&& in)
                 {
                     this->policy_.template add<decltype(I)::value>(lock, std::forward<decltype(in)>(in));
                 }
