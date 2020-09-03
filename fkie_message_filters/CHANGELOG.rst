@@ -2,6 +2,12 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fix compiler warnings with Clang 9
+* Fix compilation error due to namespace problems with friend class
+* Contributors: Timo Röhling
+
 1.1.1 (2020-09-01)
 ------------------
 * Fix compilation bug with RosMessage adapter
