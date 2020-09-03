@@ -8,10 +8,11 @@ jobs:
       matrix:
         env:
           - {ROS_DISTRO: melodic}
+          - {ROS_DISTRO: noetic}
     env:
       CATKIN_LINT: 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: 'ros-industrial/industrial_ci@master'
+      - uses: 'ros-industrial/industrial_ci@v0.10.0'
         env: ${{ matrix.env }}
