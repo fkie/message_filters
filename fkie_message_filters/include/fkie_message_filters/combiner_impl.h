@@ -46,7 +46,7 @@ void Combiner<PolicyTmpl, IOs...>::connect_policy() noexcept
         [this](const OutgoingTuple& out)
         {
             helpers::index_apply<std::tuple_size<OutgoingTuple>::value>(
-                [this,&out](auto... Is)
+                [this, &out](auto... Is)
                 {
                     this->send(std::get<Is>(out)...);
                 }

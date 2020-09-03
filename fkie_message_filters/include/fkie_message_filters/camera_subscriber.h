@@ -94,7 +94,7 @@ public:
      *
      * \nothrow
      */
-    virtual std::string topic() const noexcept;
+    virtual std::string topic() const noexcept override;
 protected:
     /** \brief Check if the ROS subscriber is properly configured.
      *

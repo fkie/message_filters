@@ -91,7 +91,7 @@ public:
     using SubscriberBase::subscribe;
     using SubscriberBase::unsubscribe;
     using SubscriberBase::subscribe_on_demand;
-    virtual std::string topic() const noexcept;
+    virtual std::string topic() const noexcept override;
 protected:
     /** \brief Check if the ROS subscriber is properly configured.
      *

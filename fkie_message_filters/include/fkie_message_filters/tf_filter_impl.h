@@ -115,7 +115,7 @@ public:
                     lock.unlock();
                     helpers::index_apply<sizeof...(Inputs)>
                     (
-                        [this, &impl, &cb](auto... Is)
+                        [this, &cb](auto... Is)
                         {
                             cb(std::get<Is>(this->msg_)..., this->result_);
                         }
