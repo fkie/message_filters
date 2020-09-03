@@ -43,7 +43,7 @@ template<typename... IOs>
 class Fifo : public PolicyBase<IOs...>
 {
 public:
-    template<template<typename...> class, class...> friend class Combiner;
+    template<template<typename...> class, class...> friend class fkie_message_filters::Combiner;
     using typename PolicyBase<IOs...>::EmitterCB;
     using typename PolicyBase<IOs...>::IncomingTuples;
     using typename PolicyBase<IOs...>::OutgoingTuple;

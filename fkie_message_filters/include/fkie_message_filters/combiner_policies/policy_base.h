@@ -37,7 +37,7 @@ template<class... IOs>
 class PolicyBase
 {
 public:
-    template<template<typename...> class, class...> friend class Combiner;
+    template<template<typename...> class, class...> friend class fkie_message_filters::Combiner;
     /** \brief Tuple type of incoming data tuples. */
     using IncomingTuples = std::tuple<helpers::io_tuple_t<IOs>...>;
     /** \brief Combined tuple type for data output. */
