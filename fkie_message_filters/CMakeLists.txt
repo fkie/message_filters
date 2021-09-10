@@ -21,8 +21,6 @@
 cmake_minimum_required(VERSION 3.1)
 project(fkie_message_filters)
 
-set(CMAKE_CXX_STANDARD 14)
-
 ###############################################
 # Find catkin macros, packages, and libraries #
 ###############################################
@@ -74,6 +72,7 @@ add_dependencies(${PROJECT_NAME}
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
   ${catkin_EXPORTED_TARGETS}
 )
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_14)
 target_link_libraries(${PROJECT_NAME}
   ${catkin_LIBRARIES}
 )
