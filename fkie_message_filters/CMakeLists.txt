@@ -19,7 +19,7 @@
 ############################################################################
 #
 cmake_minimum_required(VERSION 3.8...3.28)
-project(fkie_message_filters)
+project(fkie_message_filters VERSION 2.0.0)
 
 find_package(ament_cmake REQUIRED)
 find_package(Boost QUIET)
@@ -40,6 +40,7 @@ add_library(${PROJECT_NAME}
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
     $<INSTALL_INTERFACE:include>
     ${sensor_msgs_INCLUDE_DIR}
     ${std_msgs_INCLUDE_DIR}
@@ -54,6 +55,12 @@ target_link_libraries(tf2_bug PUBLIC tf2_ros::tf2_ros)
 
 add_executable(hello_example example/hello.cpp)
 target_link_libraries(hello_example PRIVATE ${PROJECT_NAME})
+
+configure_file(
+    src/version.h.in
+    ${CMAKE_CURRENT_BINARY_DIR}/include/version.h
+    @ONLY
+)
 
 if(BUILD_TESTING)
     find_package(ament_cmake_gtest REQUIRED)
@@ -91,14 +98,16 @@ if(DOXYGEN)
 endif()
 
 install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+    RUNTIME DESTINATION bin
 )
 
 install(DIRECTORY include/
   DESTINATION include
 )
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/include/version.h
+    DESTINATION include/${PROJECT_NAME})
 
 ##########################
 # Ament package handling #
