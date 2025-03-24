@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -44,19 +44,16 @@ template<class... Inputs>
 typename Divider<Inputs...>::Connections Divider<Inputs...>::connect_to_sinks(Sink<Inputs>&... sinks) noexcept
 {
     Connections conn;
-    connect_to_sinks_impl<0>(conn, sinks...);
+    if constexpr (sizeof...(Inputs))
+        connect_to_sinks_impl<0>(conn, sinks...);
     return conn;
 }
 
 template<class... Inputs>
 void Divider<Inputs...>::disconnect_from_all_sinks() noexcept
 {
-    helpers::for_each_apply<sizeof...(Inputs)>(
-        [this](auto I)
-        {
-            std::get<I>(this->sources_).disconnect_from_all_sinks();
-        }
-    );
+    helpers::for_each_apply<sizeof...(Inputs)>([this](auto I)
+                                               { std::get<I>(this->sources_).disconnect_from_all_sinks(); });
 }
 
 template<class... Inputs>
@@ -68,35 +65,26 @@ void Divider<Inputs...>::disconnect() noexcept
 
 template<class... Inputs>
 template<class Input>
-void Divider<Inputs...>::DividerSource<Input>::forward(const Input& in)
+template<class ForwardedInput>
+void Divider<Inputs...>::DividerSource<Input>::forward(ForwardedInput&& in)
 {
-    this->send(in);
+    this->send(helpers::maybe_move(in));
 }
 
 template<class... Inputs>
-void Divider<Inputs...>::receive(const Inputs&... ins)
+void Divider<Inputs...>::receive(helpers::argument_t<Inputs>... ins)
 {
-    forward_to_sources<0>(ins...);
-}
-
-template<class... Inputs>
-template<std::size_t N>
-void Divider<Inputs...>::forward_to_sources()
-{
+    if constexpr (sizeof...(Inputs))
+        forward_to_sources<0>(helpers::maybe_move(ins)...);
 }
 
 template<class... Inputs>
 template<std::size_t N, typename ThisInput, typename... OtherInputs>
-void Divider<Inputs...>::forward_to_sources(const ThisInput& in, const OtherInputs&... ins)
+void Divider<Inputs...>::forward_to_sources(ThisInput&& in, OtherInputs&&... ins)
 {
-    std::get<N>(sources_).forward(in);
-    forward_to_sources<N + 1>(ins...);
-}
-
-template<class... Inputs>
-template<std::size_t N>
-void Divider<Inputs...>::connect_to_sinks_impl(Connections& conn) noexcept
-{
+    std::get<N>(sources_).forward(std::forward<ThisInput&&>(in));
+    if constexpr (sizeof...(OtherInputs))
+        forward_to_sources<N + 1>(std::forward<OtherInputs&&>(ins)...);
 }
 
 template<class... Inputs>
@@ -104,9 +92,10 @@ template<std::size_t N, typename ThisSink, typename... OtherSinks>
 void Divider<Inputs...>::connect_to_sinks_impl(Connections& conn, ThisSink& sink, OtherSinks&... sinks) noexcept
 {
     conn[N] = std::get<N>(sources_).connect_to_sink(sink);
-    connect_to_sinks_impl<N + 1>(conn, sinks...);
+    if constexpr (sizeof...(OtherSinks))
+        connect_to_sinks_impl<N + 1>(conn, sinks...);
 }
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_DIVIDER_IMPL_H_ */

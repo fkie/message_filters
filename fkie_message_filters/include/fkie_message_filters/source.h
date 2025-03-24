@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,22 +20,24 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_SOURCE_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_SOURCE_H_
 
-#include "types.h"
 #include "filter_base.h"
-#include <boost/signals2.hpp>
+#include "helpers/argument.h"
+#include "helpers/signaling.h"
+#include "types.h"
 
 namespace fkie_message_filters
 {
 
-template<typename...> class Sink;
+template<typename...>
+class Sink;
 
 /** \brief Base class for data providers.
  *
- * %In the message filter library, all data flows from sources to sinks. The sources are providers of data, which may either
- * be generated synthetically or gathered from other sources, such as ROS topics.
+ * %In the message filter library, all data flows from sources to sinks. The sources are providers of data, which may
+ * either be generated synthetically or gathered from other sources, such as ROS topics.
  *
- * Derived classes need to call the send() method to pass actual data to the connected sinks. This class does
- * nothing but track which sinks have been connected.  The send() method takes the same number and types of arguments as
+ * Derived classes need to call the send() method to pass actual data to the connected sinks. This class does nothing
+ * but track which sinks have been connected.  The send() method takes the same number and types of arguments as
  * specified in the template instantiation.
  *
  * \sa Sink
@@ -43,7 +45,9 @@ template<typename...> class Sink;
 template<typename... Outputs>
 class Source : public virtual FilterBase
 {
-    template<typename...> friend class Sink;
+    template<typename...>
+    friend class Sink;
+
 public:
     /** \brief Number of output arguments. */
     static constexpr std::size_t NUM_OUTPUTS = sizeof...(Outputs);
@@ -56,9 +60,9 @@ public:
     virtual ~Source() {}
     /** \brief Connect this source to a sink.
      *
-     * Can be called multiple times to connect multiple sinks; in that case, the sinks receive data in the same order as they
-     * have been connected. This function does basically the same thing as Sink::connect_to_source(), only from the opposite
-     * point of view.
+     * Can be called multiple times to connect multiple sinks; in that case, the sinks receive data in the same order as
+     * they have been connected. This function does basically the same thing as Sink::connect_to_source(), only from the
+     * opposite point of view.
      *
      * \arg \c dst the sink that is to be connected
      *
@@ -66,7 +70,7 @@ public:
      *
      * \nothrow
      */
-    Connection connect_to_sink (Sink<Outputs...>& dst) noexcept;
+    Connection connect_to_sink(Sink<Outputs...>& dst) noexcept;
     /** \brief Disconnect from all connected sinks.
      *
      * Severs the connection to all sinks, turning the send() method into a no-op.
@@ -81,6 +85,7 @@ public:
      * \nothrow
      */
     virtual void disconnect() noexcept override;
+
 protected:
     /** \brief Pass data to all connected sinks.
      *
@@ -88,9 +93,10 @@ protected:
      *
      * \filterthrow
      */
-    void send (const Outputs&... out);
+    void send(helpers::argument_t<Outputs>... out);
+
 private:
-    boost::signals2::signal<void(const Outputs&...)> signal_;
+    helpers::Signal<Outputs...> signal_;
 };
 
 template<typename... Outputs>
@@ -98,7 +104,7 @@ class Source<IO<Outputs...>> : public Source<Outputs...>
 {
 };
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #include "sink.h"
 #include "source_impl.h"

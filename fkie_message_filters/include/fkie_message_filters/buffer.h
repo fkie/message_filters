@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,15 +20,15 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_BUFFER_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_BUFFER_H_
 
-
 #include "filter.h"
-#include <boost/circular_buffer.hpp>
-#include <tuple>
-#include <mutex>
-#include <condition_variable>
-#include <ros/callback_queue_interface.h>
-#include <ros/node_handle.h>
 
+#include <rclcpp/node.hpp>
+
+#include <condition_variable>
+#include <deque>
+#include <memory>
+#include <mutex>
+#include <tuple>
 
 namespace fkie_message_filters
 {
@@ -60,32 +60,27 @@ enum class BufferPolicy
  *
  * The buffer acts as a decoupler in the filter pipeline. Data can be stored and processed at a later time. The pipeline
  * is effectively split into independent upstream and downstream parts, and it becomes possible to run the downstream
- * data processing asynchronously. For instance, you can run computationally expensive algorithms on ROS messages
- * in a different thread without blocking the ROS subscriber callback queue.
- * 
+ * data processing asynchronously. For instance, you can run computationally expensive algorithms on ROS messages in a
+ * different thread without blocking the ROS subscriber callback queue.
+ *
  * The buffer can be used for at least three different use cases:
+ *
  * -# <b>Use the buffer as a valve</b><br>
  *    You can toggle between the BufferPolicy::Discard and BufferPolicy::Passthru modes to selectively disable or enable
  *    data processing at specific times. This is the simplest use case without any asynchronous processing.
- * -# <b>Run multiple ROS callback queues</b><br>
- *    If your ROS node runs multiple callback queues, you can use the buffer to bind processing to a particular queue:
+ * -# <b>Run multiple ROS callback groups</b><br>
+ *    You can let the buffer processing happen in a dedicated ROS 2 callback group. This is the simplest way to deal with
+ *    computationally expensive message processing:
  *    \code
  *    namespace mf = fkie_message_filters;
  *
- *    ros::NodeHandle nh;
- *    nh.setCallbackQueue(...);
- *
- *    // Version 1
- *    mf::Buffer<M> buf1(nh, 10);  // will use the callback queue of nh
- *
- *    // Version 2
- *    mf::Buffer<M> buf2(mf::BufferPolicy::Queue, 10);
- *    buf2.set_callback_queue(...); // will explicitly set the ROS callback queue
+ *    rclcpp::Node::SharedPtr node = ...;
+ *    mf::Buffer<M> buf1(node, 10);  // will create a callback group from node
  *    \endcode
  * -# <b>Run your own thread(s) for data processing</b><br>
- *    This is the most versatile option for advanced users. You can set up your
- *    worker threads as you desire and then call spin(), spin_once() or process_one()
- *    as you see fit.
+ *    This is the most flexible option for advanced users. You can set up your worker threads as you desire and then
+ *    call spin(), spin_once() or process_one() as you see fit.
+ *
  *    \code
  *    namespace mf = fkie_message_filters;
  *
@@ -96,7 +91,6 @@ enum class BufferPolicy
  *    std::thread t([&buffer]{ buffer.spin(); });
  *    flt.set_processing_function(...);
  *    mf::chain(sub, buffer, flt);
- *    ros::spin();
  *    \endcode
  */
 template<class... Inputs>
@@ -107,46 +101,44 @@ public:
      *
      * Constructs a buffer with BufferPolicy::Queue policy and data processing via ROS callbacks.
      *
-     * \arg \c nh ROS node handle whose callback queue is used for data processing
+     * \arg \c node ROS node instance which will host a dedicated callback group for data processing
      * \arg \c max_queue_size the maximum number of queued data items
      *
      * \nothrow
      */
-    Buffer (const ros::NodeHandle& nh, std::size_t max_queue_size) noexcept;
+    Buffer(const rclcpp::Node::SharedPtr& node, std::size_t max_queue_size) noexcept;
     /** \brief Constructor.
      * \arg \c policy the buffer policy
      * \arg \c max_queue_size for the BufferPolicy::Queue policy, the maximum number of queued data items.
-     * \arg \c cbq ROS callback queue that is used to process queued data
      *
      * \nothrow
      * \sa set_policy(), set_callback_queue()
      */
-    Buffer (BufferPolicy policy = BufferPolicy::Discard, std::size_t max_queue_size = 1, ros::CallbackQueueInterface* cbq = nullptr) noexcept;
+    Buffer(BufferPolicy policy = BufferPolicy::Discard, std::size_t max_queue_size = 1) noexcept;
     virtual ~Buffer();
     /** \brief Modify the buffer policy.
      *
-     * If the new buffer policy is not BufferPolicy::Queue, any pending call to wait(), process_one(), or spin()
-     * will return. If the buffer policy is changed to BufferPolicy::Passthru, all pending data
-     * is processed immediately before the function returns. If the buffer policy is changed to BufferPolicy::Discard,
-     * all pending data is discarded immediately.
+     * If the new buffer policy is not BufferPolicy::Queue, any pending call to wait(), process_one(), or spin() will
+     * return. If the buffer policy is changed to BufferPolicy::Passthru, all pending data is processed immediately
+     * before the function returns. If the buffer policy is changed to BufferPolicy::Discard, all pending data is
+     * discarded immediately.
      *
-     * \arg \c policy the buffer policy
-     * \arg \c max_queue_size for the BufferPolicy::Queue policy, the maximum number of queued data items. If zero,
-     * the previously set queue size remains unchanged.
+     * \arg \c policy the buffer policy \arg \c max_queue_size for the BufferPolicy::Queue policy, the maximum number of
+     * queued data items. If zero, the previously set queue size remains unchanged.
      *
-     * \warning If you change the policy from BufferPolicy::Queue to BufferPolicy::Passthru and there is still a
-     * pending call to process_one(), spin_once(), or spin() in a different thread, some data might be processed
-     * in parallel or out of order when the queue is flushed.
+     * \warning If you change the policy from BufferPolicy::Queue to BufferPolicy::Passthru and there is still a pending
+     * call to process_one(), spin_once(), or spin() in a different thread, some data might be processed in parallel or
+     * out of order when the queue is flushed.
      *
      * \filterthrow
      */
-    void set_policy (BufferPolicy policy, std::size_t max_queue_size = 0);
-    /** \brief Process data with a ROS callback queue.
+    void set_policy(BufferPolicy policy, std::size_t max_queue_size = 0);
+    /** \brief Process data in a dedicated ROS callback group.
      *
      * Instead of running your own processing threads, you can use the ROS callback system to schedule data processing
      * whenever new data arrives.
      *
-     * \arg \c cbq the ROS callback queue or \c nullptr to disable ROS callbacks.
+     * \arg \c node the ROS node or \c nullptr to disable ROS callbacks.
      *
      * \nothrow
      *
@@ -154,16 +146,17 @@ public:
      * namespace mf = fkie_message_filters;
      *
      * mf::Buffer<...> buf;
+     * rclcpp::Node::SharedPtr node = ...;
      *
-     * buf.set_callback_queue(ros::getGlobalCallbackQueue());
-     * ros::spin();
+     * buf.set_node(node);
+     * rclcpp::spin(node);
      * \endcode
      */
-    void set_callback_queue(ros::CallbackQueueInterface* cbq) noexcept;
+    void set_node(const rclcpp::Node::SharedPtr& node) noexcept;
     /** \brief Check if the buffer has pending data.
      *
-     * \retval true if the current policy is BufferPolicy::Queue and a subsequent call to process_one() or spin_once() will process data.
-     * \retval false otherwise
+     * \retval true if the current policy is BufferPolicy::Queue and a subsequent call to process_one() or spin_once()
+     * will process data. \retval false otherwise
      *
      * \nothrow
      */
@@ -172,7 +165,8 @@ public:
      *
      * \retval true there is data available for consumption by spin_once()
      * \retval false either the current buffer policy is not BufferPolicy::Queue, or the policy has been
-     * changed to something other than BufferPolicy::Queue while the function was waiting, or the ROS node has been shut down.
+     * changed to something other than BufferPolicy::Queue while the function was waiting, or the ROS node has been shut
+     * down.
      *
      * \nothrow
      */
@@ -194,7 +188,8 @@ public:
      *
      * \retval true data has been processed successfully
      * \retval false either the current buffer policy is not BufferPolicy::Queue, or the policy has been
-     * changed to something other than BufferPolicy::Queue while the function was waiting, or the ROS node has been shut down.
+     * changed to something other than BufferPolicy::Queue while the function was waiting, or the ROS node has been shut
+     * down.
      *
      * \filterthrow
      */
@@ -241,22 +236,24 @@ public:
      * \nothrow
      */
     void reset() noexcept override;
+
 protected:
-    virtual void receive(const Inputs&... in) override;
+    virtual void receive(helpers::argument_t<Inputs>... in) override;
+
 private:
     struct Impl;
-    class RosCB;
     using QueueElement = std::tuple<Inputs...>;
     void process_some(std::unique_lock<std::mutex>&);
-    void send_queue_element(const QueueElement& e);
+    void send_queue_element(QueueElement& e);
     std::shared_ptr<Impl> impl_;
-    ros::CallbackQueueInterface* cbq_;
 };
 
 template<class... Inputs>
-class Buffer<IO<Inputs...>> : public Buffer<Inputs...> {};
+class Buffer<IO<Inputs...>> : public Buffer<Inputs...>
+{
+};
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #include "buffer_impl.h"
 

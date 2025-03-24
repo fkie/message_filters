@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,19 +35,15 @@ void Filter<In, Out>::disconnect() noexcept
 namespace helpers
 {
 
-template<typename Filter>
-void chain_impl(Filter& flt) noexcept
-{
-}
-
 template<typename Filter1, typename Filter2, typename... MoreFilters>
 void chain_impl(Filter1& flt1, Filter2& flt2, MoreFilters&... filters) noexcept
 {
-    chain_impl(flt2, filters...);
+    if constexpr (sizeof...(MoreFilters))
+        chain_impl(flt2, filters...);
     flt1.connect_to_sink(flt2);
 }
 
-} // namespace helpers
+}  // namespace helpers
 
 template<typename Filter1, typename Filter2, typename... MoreFilters>
 void chain(Filter1& flt1, Filter2& flt2, MoreFilters&... filters) noexcept
@@ -55,6 +51,6 @@ void chain(Filter1& flt1, Filter2& flt2, MoreFilters&... filters) noexcept
     helpers::chain_impl(flt1, flt2, filters...);
 }
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_FILTER_IMPL_H_ */

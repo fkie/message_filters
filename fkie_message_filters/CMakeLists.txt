@@ -1,7 +1,7 @@
 ############################################################################
 #
 # fkie_message_filters
-# Copyright © 2018-2020 Fraunhofer FKIE
+# Copyright © 2018-2025 Fraunhofer FKIE
 # Author: Timo Röhling
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,88 +18,67 @@
 #
 ############################################################################
 #
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.8...3.28)
 project(fkie_message_filters)
 
-###############################################
-# Find catkin macros, packages, and libraries #
-###############################################
-
-find_package(catkin REQUIRED COMPONENTS
-  image_transport
-  roscpp
-  sensor_msgs
-  tf2_ros
-)
-
-#######################
-# System dependencies #
-#######################
+find_package(ament_cmake REQUIRED)
+find_package(Boost QUIET)
+find_package(image_transport REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(tf2_ros REQUIRED)
 
 find_program(DOXYGEN doxygen)
 
-############################
-# Configure catkin package #
-############################
-
-catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS
-    image_transport
-    roscpp
-    sensor_msgs
-    tf2_ros
-)
-
-#########
-# Build #
-#########
-
-include_directories(SYSTEM
-  ${catkin_INCLUDE_DIRS}
-)
-include_directories(include)
+###########
+# Targets #
+###########
 
 add_library(${PROJECT_NAME}
-  src/camera_publisher.cpp
-  src/camera_subscriber.cpp
-  src/image_publisher.cpp
-  src/image_subscriber.cpp
-  src/publisher_subscriber_base.cpp
+    src/publisher_subscriber_base.cpp
 )
-add_dependencies(${PROJECT_NAME}
-  ${${PROJECT_NAME}_EXPORTED_TARGETS}
-  ${catkin_EXPORTED_TARGETS}
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
+target_include_directories(${PROJECT_NAME} PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+    ${sensor_msgs_INCLUDE_DIR}
+    ${std_msgs_INCLUDE_DIR}
 )
-target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_14)
-target_link_libraries(${PROJECT_NAME}
-  ${catkin_LIBRARIES}
+target_link_libraries(${PROJECT_NAME} PUBLIC
+    image_transport::image_transport
+    tf2_ros::tf2_ros
+    rclcpp::rclcpp
 )
+add_executable(tf2_bug test/tf2_bug.cpp)
+target_link_libraries(tf2_bug PUBLIC tf2_ros::tf2_ros)
 
 add_executable(hello_example example/hello.cpp)
-target_link_libraries(hello_example ${PROJECT_NAME})
+target_link_libraries(hello_example PRIVATE ${PROJECT_NAME})
 
-if(CATKIN_ENABLE_TESTING)
-  find_package(rostest REQUIRED)
-  catkin_add_gtest(filtertests
-    test/test_buffer.cpp
-    test/test_combiner_approximate_time.cpp
-    test/test_combiner_exact_time.cpp
-    test/test_combiner_fifo.cpp
-    test/test_divider.cpp
-    test/test_filter_loop.cpp
-    test/test_helpers.cpp
-    test/test_main.cpp
-    test/test_selector.cpp
-    test/test_sequencer.cpp
-    test/test_simple_user_filter.cpp
-    test/test_tf_filter.cpp
-    test/test_user_filter.cpp
-  )
-  target_link_libraries(filtertests ${PROJECT_NAME})
-  add_rostest_gtest(publish_subscribe_tests rostest/publish_subscribe.launch rostest/test_publish_subscribe.cpp)
-  target_link_libraries(publish_subscribe_tests ${PROJECT_NAME})
+if(BUILD_TESTING)
+    find_package(ament_cmake_gtest REQUIRED)
+    find_package(ament_cmake_ros REQUIRED)
+    find_package(std_msgs REQUIRED)
+    ament_add_ros_isolated_gtest(filtertests
+        test/test_buffer.cpp
+        test/test_combiner_approximate_time.cpp
+        test/test_combiner_exact_time.cpp
+        test/test_combiner_fifo.cpp
+        test/test_divider.cpp
+        test/test_filter_loop.cpp
+        test/test_helpers.cpp
+        test/test_main.cpp
+        test/test_publish_subscribe.cpp
+        test/test_selector.cpp
+        test/test_sequencer.cpp
+        test/test_simple_user_filter.cpp
+        test/test_tf_filter.cpp
+        test/test_user_filter.cpp
+    )
+    target_link_libraries(filtertests ${PROJECT_NAME})
+    if(TARGET Boost::boost)
+        target_link_libraries(filtertests Boost::boost)
+    endif()
 endif()
 
 if(DOXYGEN)
@@ -111,16 +90,18 @@ if(DOXYGEN)
     )
 endif()
 
-###########
-# Install #
-###########
-
-install(TARGETS ${PROJECT_NAME}
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
 )
 
-install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+install(DIRECTORY include/
+  DESTINATION include
 )
+
+##########################
+# Ament package handling #
+##########################
+ament_export_targets(${PROJECT_NAME})
+ament_package()

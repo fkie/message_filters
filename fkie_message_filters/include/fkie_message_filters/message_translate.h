@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,8 +20,11 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_MESSAGE_TRANSLATE_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_MESSAGE_TRANSLATE_H_
 
-#include <ros/message_event.h>
-#include "helpers/shared_ptr_compat.h"
+#include <rclcpp/publisher.hpp>
+#include <rclcpp/subscription.hpp>
+
+#include <functional>
+#include <memory>
 
 namespace fkie_message_filters
 {
@@ -30,86 +33,84 @@ template<class M>
 struct RosMessage
 {
     using MessageType = M;
-    using PublishType = M;
-    using EventType = ros::MessageEvent<const M>;
     using FilterType = M;
-    static FilterType eventToFilter(const EventType& t)
+    using Publisher = rclcpp::Publisher<MessageType>;
+
+    static MessageType create()
     {
-        return *t.getConstMessage().get();
+        return MessageType();
     }
-    static PublishType filterToPublish(const FilterType& t)
+
+    template<class PublisherT, class... Ms>
+    static void publish(PublisherT& pub, Ms&&... in)
     {
-        return t;
+        pub.publish(std::forward<Ms&&>(in)...);
     }
-    static const MessageType& filterToMessage(const FilterType& t)
+
+    static FilterType subscriberToFilter(typename M::UniquePtr& m)
     {
-        return t;
+        return *m;
+    }
+
+    static FilterType subscriberToFilter(const typename M::ConstSharedPtr& m)
+    {
+        return *m;
     }
 };
 
 template<class M>
-struct RosMessageConstPtr
+struct RosMessageUniquePtr
 {
     using MessageType = M;
-    using PublishType = typename M::ConstPtr;
-    using EventType = ros::MessageEvent<const M>;
-    using FilterType = typename M::ConstPtr;
-    static FilterType eventToFilter(const EventType& t) noexcept
+    using FilterType = typename M::UniquePtr;
+    using Publisher = rclcpp::Publisher<MessageType>;
+
+    static typename MessageType::UniquePtr create()
     {
-        return t.getConstMessage();
+        return std::make_unique<MessageType>();
     }
-    static PublishType filterToPublish(const FilterType& t) noexcept
+
+    template<class PublisherT, class... Ms>
+    static void publish(PublisherT& pub, Ms&... ms)
     {
-        return t;
+        pub.publish(std::move(ms)...);
     }
-    static const MessageType& filterToMessage(const FilterType& t) noexcept
+
+    static FilterType&& subscriberToFilter(typename M::UniquePtr& m)
     {
-        return *t;
+        return std::move(m);
     }
 };
 
 template<class M>
-struct RosMessageStdSharedPtr
+struct RosMessageSharedPtr
 {
     using MessageType = M;
-    using PublishType = typename M::ConstPtr;
-    using EventType = ros::MessageEvent<const M>;
-    using FilterType = std::shared_ptr<const M>;
-    static FilterType eventToFilter(const EventType& t) noexcept
+    using FilterType = typename M::ConstSharedPtr;
+    using Publisher = rclcpp::Publisher<MessageType>;
+
+    static typename MessageType::SharedPtr create()
     {
-        return helpers::convert_shared_ptr<FilterType>(t.getConstMessage());
+        return std::make_shared<MessageType>();
     }
-    static PublishType filterToPublish(const FilterType& t) noexcept
+
+    template<class PublisherT, class... Ms>
+    static void publish(PublisherT& pub, const Ms&... ms)
     {
-        return helpers::convert_shared_ptr<PublishType>(t);
+        pub.publish(*ms...);
     }
-    static const MessageType& filterToMessage(const FilterType& t) noexcept
+
+    static FilterType subscriberToFilter(typename M::UniquePtr& m)
     {
-        return *t;
+        return FilterType(std::move(m));
+    }
+
+    static FilterType subscriberToFilter(const typename M::ConstSharedPtr& m)
+    {
+        return m;
     }
 };
 
-template<class M>
-struct RosMessageEvent
-{
-    using MessageType = M;
-    using PublishType = typename M::ConstPtr;
-    using EventType = ros::MessageEvent<const M>;
-    using FilterType = ros::MessageEvent<const M>;
-    static FilterType eventToFilter(const EventType& t) noexcept
-    {
-        return t;
-    }
-    static PublishType filterToPublish(const FilterType& t) noexcept
-    {
-        return t.getConstMessage();
-    }
-    static const MessageType& filterToMessage(const FilterType& t) noexcept
-    {
-        return *t.getConstMessage();
-    }
-};
-
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_MESSAGE_TRANSLATE_H_ */

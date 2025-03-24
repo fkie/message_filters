@@ -17,29 +17,50 @@
  * limitations under the License.
  *
  ****************************************************************************/
-#ifndef INCLUDE_FKIE_MESSAGE_FILTERS_SIMPLE_USER_FILTER_IMPL_H_
-#define INCLUDE_FKIE_MESSAGE_FILTERS_SIMPLE_USER_FILTER_IMPL_H_
 
-#include "simple_user_filter.h"
+#ifndef INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_ARGUMENT_H_
+#define INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_ARGUMENT_H_
+
+#include <memory>
+#include <type_traits>
 
 namespace fkie_message_filters
 {
 
-template<typename... Inputs>
-void SimpleUserFilter<Inputs...>::set_processing_function(const ProcessingFunction& f) noexcept
+namespace helpers
 {
-    f_ = f;
+
+template<class T, bool, bool>
+struct argument;
+
+template<class T>
+struct argument<T, true, true>
+{
+    using type = const T&;
+};
+
+template<class T>
+struct argument<T, false, true>
+{
+    using type = T;
+};
+
+template<typename T>
+using argument_t = typename argument<T, std::is_copy_constructible_v<T>, std::is_move_constructible_v<T>>::type;
+
+template<typename T, std::enable_if_t<std::is_copy_constructible_v<T>, bool> = true>
+constexpr T& maybe_move(T& arg) noexcept
+{
+    return arg;
 }
 
-template<typename... Inputs>
-void SimpleUserFilter<Inputs...>::receive(helpers::argument_t<Inputs>... in)
+template<typename T, std::enable_if_t<!std::is_copy_constructible_v<T>, bool> = true>
+constexpr T&& maybe_move(T& arg) noexcept
 {
-    if (f_(in...))
-    {
-        this->send(helpers::maybe_move(in)...);
-    }
+    return std::move(arg);
 }
 
+}  // namespace helpers
 }  // namespace fkie_message_filters
 
-#endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SIMPLE_USER_FILTER_IMPL_H_ */
+#endif

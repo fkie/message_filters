@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,8 +21,9 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_FILTER_BASE_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_FILTER_BASE_H_
 
+#include "helpers/argument.h"
 #include "types.h"
-#include <boost/noncopyable.hpp>
+
 #include <functional>
 
 namespace fkie_message_filters
@@ -32,16 +33,16 @@ namespace helpers
 template<class... Types>
 struct FilterCB
 {
-    using Type = std::function<void(const Types&...)>;
+    using Type = std::function<void(helpers::argument_t<Types>...)>;
 };
 
 template<class... Types>
 struct FilterCB<IO<Types...>>
 {
-    using Type = std::function<void(const Types&...)>;
+    using Type = std::function<void(helpers::argument_t<Types>...)>;
 };
 
-} // namespace helpers
+}  // namespace helpers
 
 /** \brief Callback function for customizable filters.
  * \sa UserFilter, SimpleUserFilter
@@ -54,9 +55,12 @@ using FilterCB = typename helpers::FilterCB<Types...>::Type;
  * All filters process some input and generate some output, possibly with different data types.
  * This class provides the base class for all filter implementations.
  */
-class FilterBase : public boost::noncopyable
+class FilterBase
 {
 public:
+    FilterBase() = default;
+    FilterBase(const FilterBase&) = delete;
+    FilterBase& operator=(const FilterBase&) = delete;
     virtual ~FilterBase() {}
     /** \brief Disconnect from all connected sources and sinks.
      *
@@ -75,6 +79,6 @@ public:
     virtual void reset() noexcept {};
 };
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_FILTER_BASE_H_ */

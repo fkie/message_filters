@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,40 +18,54 @@
  *
  ****************************************************************************/
 #include "test.h"
-#include <fkie_message_filters/combiner_policies/fifo.h>
+
 #include <fkie_message_filters/combiner.h>
+#include <fkie_message_filters/combiner_policies/fifo.h>
 #include <fkie_message_filters/simple_user_filter.h>
 #include <fkie_message_filters/user_source.h>
 
-TEST(fkie_message_filters, FifoCombiner)
+template<typename int_T, typename double_T>
+void fifo_test_code()
 {
-    using Source1 = mf::UserSource<int_M, int_M>;
-    using Source2 = mf::UserSource<double_M, double_M>;
-    using Combiner = mf::Combiner<mf::combiner_policies::Fifo, Source1::Output, Source2::Output>;
-    using Sink = mf::SimpleUserFilter<int_M, int_M, double_M, double_M>;
+    using Source1 = mf::UserSource<int_T, int_T>;
+    using Source2 = mf::UserSource<double_T, double_T>;
+    using Combiner = mf::Combiner<mf::combiner_policies::Fifo, typename Source1::Output, typename Source2::Output>;
+    using Sink = mf::SimpleUserFilter<int_T, int_T, double_T, double_T>;
 
     std::size_t callback_counts = 0;
     Source1 src1;
     Source2 src2;
     Sink snk;
-    Combiner combiner(Combiner::Policy(1));
+    Combiner combiner(typename Combiner::Policy(1));
     combiner.connect_to_sources(src1, src2);
     combiner.connect_to_sink(snk);
     snk.set_processing_function(
-        [&](const int_M& i1, const int_M& i2, const double_M& d1, const double_M& d2) -> bool
+        [&](const int_T& i1, const int_T& i2, const double_T& d1, const double_T& d2) -> bool
         {
             ++callback_counts;
-            if (i1 != 1) throw std::domain_error("i1 != 1");
-            if (i2 != 2) throw std::domain_error("i2 != 2");
-            if (d1 != 3.14) throw std::domain_error("d1 != 3.14");
-            if (d2 != 6.28) throw ExpectedException("d2 != 6.28");
+            if (i1 != 1)
+                throw std::domain_error("i1 != 1");
+            if (i2 != 2)
+                throw std::domain_error("i2 != 2");
+            if (d1 != 3.14)
+                throw std::domain_error("d1 != 3.14");
+            if (d2 != 6.28)
+                throw ExpectedException("d2 != 6.28");
             return true;
-        }
-    );
-    src1(int_M(1), int_M(2));
-    src2(double_M(3.14), double_M(6.28));
-    src2(double_M(3.14), double_M(0));
-    ASSERT_THROW(src1(int_M(1), int_M(2)), ExpectedException);
+        });
+    src1(int_T(1), int_T(2));
+    src2(double_T(3.14), double_T(6.28));
+    src2(double_T(3.14), double_T(0));
+    ASSERT_THROW(src1(int_T(1), int_T(2)), ExpectedException);
     ASSERT_EQ(2u, callback_counts);
 }
 
+TEST(fkie_message_filters, FifoCombinerCopyConstructible)
+{
+    fifo_test_code<int_C, double_C>();
+}
+
+TEST(fkie_message_filters, FifoCombinerMoveConstructible)
+{
+    fifo_test_code<int_M, double_M>();
+}

@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +24,8 @@
 namespace fkie_message_filters
 {
 
-template<typename...> class IO;
+template<typename...>
+class IO;
 
 namespace helpers
 {
@@ -110,7 +111,7 @@ struct io_tuple
 template<typename IO>
 using io_tuple_t = typename io_tuple<IO>::type;
 
-} // namespace helpers
-} // namespace fkie_message_filters
+}  // namespace helpers
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_IO_H_ */

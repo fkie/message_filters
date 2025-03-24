@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,13 +20,12 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_SUBSCRIBER_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_SUBSCRIBER_H_
 
-#include "source.h"
 #include "message_translate.h"
+#include "source.h"
 #include "subscriber_base.h"
-#include <ros/node_handle.h>
-#include <ros/subscriber.h>
-#include <ros/subscribe_options.h>
-#include <ros/transport_hints.h>
+
+#include <rclcpp/node.hpp>
+
 #include <memory>
 
 namespace fkie_message_filters
@@ -35,28 +34,28 @@ namespace fkie_message_filters
 /** \brief Subscribe to a ROS topic as data provider.
  *
  * This class together with the Publisher class is the generic interface between ROS and this library. All messages
- * which are received on the subscribed topic will be passed to the connected sinks for further processing.
- * For maximum flexibility, you can choose one of four ways how to pass the received message:
+ * which are received on the subscribed topic will be passed to the connected sinks for further processing. For maximum
+ * flexibility, you can choose how to pass the received message:
  *
- * \li \c Subscriber<M, RosMessageEvent> will act as a source of \c ros::MessageEvent<const M> objects (default)
- * \li \c Subscriber<M, RosMessageConstPtr> will act as a source of \c M::ConstPtr objects (as of this writing, this is a \c boost::shared_ptr<const M>)
- * \li \c Subscriber<M, RosMessageStdSharedPtr> will act as a source of \c std::shared_ptr<const M> objects
+ * \li \c Subscriber<M, RosMessageSharedPtr> will act as a source of \c M::ConstSharedPtr objects (default)
+ * \li \c Subscriber<M, RosMessageUniquePtr> will act as a source of \c M::UniquePtr objects
  * \li \c Subscriber<M, RosMessage> will act as a source of plain \c M objects
  *
  * Unlike regular ROS subscribers, this class can be associated with a publisher instance. In that case, the subscriber
- * will delay subscription until the publisher is actively used and will unsubscribe (and stop passing data) as soon
- * as the publisher becomes idle. This is a convenient method to save processing power if the filter pipeline is used
- * only intermittently.
+ * will delay subscription until the publisher is actively used and will unsubscribe (and stop passing data) as soon as
+ * the publisher becomes idle. This is a convenient method to save processing power if the filter pipeline is used only
+ * intermittently.
  *
  * \sa CameraSubscriber, ImageSubscriber
  */
-template<class M, template<typename> class Translate = RosMessageEvent>
+template<class M, template<typename> class Translate = RosMessageSharedPtr>
 class Subscriber : public SubscriberBase, public Source<typename Translate<M>::FilterType>
 {
 public:
     /** \brief Constructs an empty subscriber.
      *
-     * You need to call set_subscribe_options() and either subscribe() or subscribe_on_demand() to actually subscribe to a ROS topic.
+     * You need to call set_subscribe_options() and either subscribe() or subscribe_on_demand() to actually subscribe to
+     * a ROS topic.
      *
      * \nothrow
      */
@@ -65,46 +64,50 @@ public:
      *
      * This constructor calls set_subscribe_options() and subscribe() for you.
      *
-     * \arg \c nh ROS node handle to create the ROS subscription
+     * \arg \c node ROS node instance to create the ROS subscription
      * \arg \c topic name of the ROS topic, subject to remapping
-     * \arg \c queue_size size of the ROS subscription queue
-     * \arg \c transport_hints low-level transport hints for the ROS client library
-     * \arg \c callback_queue custom ROS callback queue
+     * \arg \c qos the ROS quality of service specification
+     * \arg \c options ROS subscription options
      *
      * \nothrow
-	 */
-    Subscriber(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, const ros::TransportHints& transport_hints = ros::TransportHints(), ros::CallbackQueueInterface* callback_queue = nullptr) noexcept;
+     */
+    Subscriber(const rclcpp::Node::SharedPtr& node, const std::string& topic,
+               const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
+               const rclcpp::SubscriptionOptions& options = rclcpp::SubscriptionOptions()) noexcept;
     /** \brief Configure ROS topic that is to be subscribed.
      *
      * All arguments are passed to the ROS client library; see the ROS documentation for further information. Calling
      * this method will automatically unsubscribe any previously subscribed ROS topic.
      *
-     * \arg \c nh ROS node handle to create the ROS subscription
+     * \arg \c node ROS node instance to create the ROS subscription
      * \arg \c topic name of the ROS topic, subject to remapping
-     * \arg \c queue_size size of the ROS subscription queue
-     * \arg \c transport_hints low-level transport hints for the ROS client library
-     * \arg \c callback_queue custom ROS callback queue
+     * \arg \c qos the ROS quality of service specification
+     * \arg \c options ROS subscription options
      *
      * \nothrow
      */
-    void set_subscribe_options (ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, const ros::TransportHints& transport_hints = ros::TransportHints(), ros::CallbackQueueInterface* callback_queue = nullptr) noexcept;
+    void set_subscribe_options(const rclcpp::Node::SharedPtr& node, const std::string& topic,
+                               const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
+                               const rclcpp::SubscriptionOptions& options = rclcpp::SubscriptionOptions()) noexcept;
     /** \brief Convenience function to subscribe to a ROS topic.
      *
      * This function is equivalent to calling set_subscribe_options() and then subscribe().
      *
-     * \arg \c nh ROS node handle to create the ROS subscription
+     * \arg \c node ROS node instance to create the ROS subscription
      * \arg \c topic name of the ROS topic, subject to remapping
-     * \arg \c queue_size size of the ROS subscription queue
-     * \arg \c transport_hints low-level transport hints for the ROS client library
-     * \arg \c callback_queue custom ROS callback queue
+     * \arg \c qos the ROS quality of service specification
+     * \arg \c options ROS subscription options
      *
      * \nothrow
      */
-    void subscribe (ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, const ros::TransportHints& transport_hints = ros::TransportHints(), ros::CallbackQueueInterface* callback_queue = nullptr) noexcept;
+    void subscribe(const rclcpp::Node::SharedPtr& node, const std::string& topic,
+                   const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
+                   const rclcpp::SubscriptionOptions& options = rclcpp::SubscriptionOptions()) noexcept;
     using SubscriberBase::subscribe;
-    using SubscriberBase::unsubscribe;
     using SubscriberBase::subscribe_on_demand;
+    using SubscriberBase::unsubscribe;
     virtual std::string topic() const noexcept override;
+
 protected:
     /** \brief Check if the ROS subscriber is properly configured.
      *
@@ -121,16 +124,21 @@ protected:
      * \nothrow
      */
     virtual void unsubscribe_impl() noexcept override;
+
 private:
-    using EventType = typename Translate<M>::EventType;
+    using MessageType = typename Translate<M>::MessageType;
     using FilterType = typename Translate<M>::FilterType;
-    void cb(const EventType& event);
-    ros::Subscriber sub_;
-    ros::SubscribeOptions opts_;
-    std::shared_ptr<ros::NodeHandle> nh_;
+    using SubscriptionType = typename M::UniquePtr;
+    using SubscriptionCB = std::function<void(SubscriptionType)>;
+    using Subscription = rclcpp::Subscription<MessageType>;
+    rclcpp::Node::SharedPtr node_;
+    std::string topic_;
+    rclcpp::QoS qos_{rclcpp::KeepLast(10), rmw_qos_profile_default};
+    rclcpp::SubscriptionOptions options_;
+    typename Subscription::SharedPtr sub_;
 };
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #include "subscriber_impl.h"
 

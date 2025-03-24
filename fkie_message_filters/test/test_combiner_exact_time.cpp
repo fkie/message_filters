@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,21 +18,23 @@
  *
  ****************************************************************************/
 #include "test.h"
-#include <fkie_message_filters/combiner_policies/exact_time.h>
-#include <fkie_message_filters/combiner.h>
-#include <fkie_message_filters/user_source.h>
-#include <fkie_message_filters/simple_user_filter.h>
 
-TEST(fkie_message_filters, ExactTimeCombiner)
+#include <fkie_message_filters/combiner.h>
+#include <fkie_message_filters/combiner_policies/exact_time.h>
+#include <fkie_message_filters/simple_user_filter.h>
+#include <fkie_message_filters/user_source.h>
+
+template<typename int_T>
+void exact_time_test_code()
 {
-    using IntegerStamped = Stamped<int>;
+    using IntegerStamped = Stamped<int_T>;
     using Source = mf::UserSource<IntegerStamped>;
-    using Combiner = mf::Combiner<mf::combiner_policies::ExactTime, Source::Output, Source::Output>;
-    using Sink = mf::SimpleUserFilter<Combiner::Output>;
+    using Combiner = mf::Combiner<mf::combiner_policies::ExactTime, typename Source::Output, typename Source::Output>;
+    using Sink = mf::SimpleUserFilter<typename Combiner::Output>;
 
     std::size_t callback_counts = 0;
     Source src1, src2;
-    Combiner combiner(Combiner::Policy().set_max_age(ros::Duration(10, 0)));
+    Combiner combiner(typename Combiner::Policy().set_max_age(rclcpp::Duration(10, 0)));
     Sink snk;
     combiner.connect_to_sources(src1, src2);
     combiner.connect_to_sink(snk);
@@ -40,38 +42,47 @@ TEST(fkie_message_filters, ExactTimeCombiner)
         [&](const IntegerStamped& m1, const IntegerStamped& m2) -> bool
         {
             ++callback_counts;
-            if (m1.header.stamp != m2.header.stamp) throw std::domain_error("timestamps do not match");
+            if (m1.header.stamp != m2.header.stamp)
+                throw std::domain_error("timestamps do not match");
             return true;
-        }
-    );
+        });
     // Check that matching messages will be passed together
-    src1(IntegerStamped(0, "", ros::Time(11, 0)));
-    src1(IntegerStamped(0, "", ros::Time(15, 0)));
-    src1(IntegerStamped(0, "", ros::Time(19, 0)));
-    src1(IntegerStamped(0, "", ros::Time(22, 0)));
+    src1(IntegerStamped(0, "", make_stamp(11)));
+    src1(IntegerStamped(0, "", make_stamp(15)));
+    src1(IntegerStamped(0, "", make_stamp(19)));
+    src1(IntegerStamped(0, "", make_stamp(22)));
     ASSERT_EQ(0u, callback_counts);
-    src2(IntegerStamped(0, "", ros::Time(11, 0)));
+    src2(IntegerStamped(0, "", make_stamp(11)));
     ASSERT_EQ(0u, callback_counts);
-    src2(IntegerStamped(0, "", ros::Time(15, 0)));
+    src2(IntegerStamped(0, "", make_stamp(15)));
     ASSERT_EQ(1u, callback_counts);
-    src2(IntegerStamped(0, "", ros::Time(18, 0)));
+    src2(IntegerStamped(0, "", make_stamp(18)));
     ASSERT_EQ(1u, callback_counts);
-    src2(IntegerStamped(0, "", ros::Time(19, 0)));
+    src2(IntegerStamped(0, "", make_stamp(19)));
     ASSERT_EQ(2u, callback_counts);
-    src2(IntegerStamped(0, "", ros::Time(23, 0)));
+    src2(IntegerStamped(0, "", make_stamp(23)));
     ASSERT_EQ(2u, callback_counts);
-    src1(IntegerStamped(0, "", ros::Time(23, 0)));
+    src1(IntegerStamped(0, "", make_stamp(23)));
     ASSERT_EQ(3u, callback_counts);
     // Check that old messages will be discarded after max age
-    src1(IntegerStamped(0, "", ros::Time(30, 0)));
-    src1(IntegerStamped(0, "", ros::Time(50, 0)));
-    src2(IntegerStamped(0, "", ros::Time(30, 0)));
+    src1(IntegerStamped(0, "", make_stamp(30)));
+    src1(IntegerStamped(0, "", make_stamp(50)));
+    src2(IntegerStamped(0, "", make_stamp(30)));
     ASSERT_EQ(3u, callback_counts);
     // Check that old messages will be discarded after successful match
-    src1(IntegerStamped(0, "", ros::Time(60, 0)));
-    src1(IntegerStamped(0, "", ros::Time(61, 0)));
-    src2(IntegerStamped(0, "", ros::Time(61, 0)));
-    src2(IntegerStamped(0, "", ros::Time(60, 0)));
+    src1(IntegerStamped(0, "", make_stamp(60)));
+    src1(IntegerStamped(0, "", make_stamp(61)));
+    src2(IntegerStamped(0, "", make_stamp(61)));
+    src2(IntegerStamped(0, "", make_stamp(60)));
     ASSERT_EQ(4u, callback_counts);
 }
 
+TEST(fkie_message_filters, ExactTimeCombinerCopyConstructible)
+{
+    exact_time_test_code<int_C>();
+}
+
+TEST(fkie_message_filters, ExactTimeCombinerMoveConstructible)
+{
+    exact_time_test_code<int_M>();
+}

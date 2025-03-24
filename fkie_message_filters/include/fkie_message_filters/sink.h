@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,22 +20,25 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_SINK_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_SINK_H_
 
-#include "types.h"
 #include "filter_base.h"
-#include <vector>
-#include <set>
+#include "helpers/argument.h"
+#include "types.h"
+
 #include <mutex>
+#include <set>
 #include <thread>
+#include <vector>
 
 namespace fkie_message_filters
 {
 
-template<typename...> class Source;
+template<typename...>
+class Source;
 
 /** \brief Base class for data consumers.
  *
- * %In the message filter library, all data flows from sources to sinks. The sinks are data consumers, which process
- * all data they receive from a source.
+ * %In the message filter library, all data flows from sources to sinks. The sinks are data consumers, which process all
+ * data they receive from a source.
  *
  * Derived classes must override the receive() method to actually process data. The receive() method takes the same
  * number and types of arguments as specified in the template instantiation.
@@ -45,7 +48,9 @@ template<typename...> class Source;
 template<typename... Inputs>
 class Sink : public virtual FilterBase
 {
-    template<typename...> friend class Source;
+    template<typename...>
+    friend class Source;
+
 public:
     /** \brief Number of input arguments. */
     static constexpr std::size_t NUM_INPUTS = sizeof...(Inputs);
@@ -59,15 +64,14 @@ public:
     /** \brief Connect this sink to a source.
      *
      * Can be called multiple times to connect multiple sources; in that case, the sink receives data from all connected
-     * sources. This function does basically the same thing as Source::connect_to_sink(), only from the opposite
-     * point of view.
+     * sources. This function does basically the same thing as Source::connect_to_sink(), only from the opposite point
+     * of view.
      *
      * \arg \c src the source that is to be connected
      *
-     * \return a connection object that can be used to monitor or sever the created connection
-     * \nothrow
+     * \return a connection object that can be used to monitor or sever the created connection \nothrow
      */
-    Connection connect_to_source (Source<Inputs...>& src) noexcept;
+    Connection connect_to_source(Source<Inputs...>& src) noexcept;
     /** \brief Disconnect from all connected sources.
      *
      * Severs the connection to all sources. The receive() method will not be called any more.
@@ -82,6 +86,7 @@ public:
      * \nothrow
      */
     virtual void disconnect() noexcept override;
+
 protected:
     /** \brief Process incoming data.
      *
@@ -89,11 +94,12 @@ protected:
      *
      * \abstractthrow
      */
-    virtual void receive(const Inputs&... in) = 0;
+    virtual void receive(helpers::argument_t<Inputs>... in) = 0;
+
 private:
     class ReentryProtector;
-    void receive_cb (const Connection&, const Inputs&... in);
-    std::vector<boost::signals2::scoped_connection> conn_;
+    void receive_cb(Inputs&&... in);
+    std::vector<helpers::ScopedConnection> conn_;
     std::mutex mutex_;
     std::set<std::thread::id> running_;
 };
@@ -103,9 +109,9 @@ class Sink<IO<Inputs...>> : public Sink<Inputs...>
 {
 };
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
-#include "source.h"
 #include "sink_impl.h"
+#include "source.h"
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SINK_H_ */

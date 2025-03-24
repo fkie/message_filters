@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,9 +32,10 @@ class Selector;
 
 /** \brief Reorder or reduce an N-ary filter.
  *
- * This filter reorders the arguments of an N-ary filter and/or chooses an arbitrary subset of the input arguments.
- * The output arguments are selected from the input by index. The following example reduces a ternary filter to a binary
+ * This filter reorders the arguments of an N-ary filter and/or chooses an arbitrary subset of the input arguments. The
+ * output arguments are selected from the input by index. The following example reduces a ternary filter to a binary
  * filter of the first two arguments, in swapped order:
+ *
  * \code
  * namespace mf = fkie_message_filters;
  *
@@ -58,10 +59,10 @@ class Selector : public Filter<IO<Inputs...>, typename IO<Inputs...>::template S
 #endif
 {
 protected:
-    void receive(const Inputs&... in) override;
+    void receive(helpers::argument_t<Inputs>... in) override;
 };
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #include "selector_impl.h"
 

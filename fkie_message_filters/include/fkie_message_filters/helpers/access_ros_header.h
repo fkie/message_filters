@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,11 +21,15 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_ACCESS_ROS_HEADER_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_ACCESS_ROS_HEADER_H_
 
-#include <memory>
+#if __has_include(<boost/shared_ptr.hpp>)
 #include <boost/shared_ptr.hpp>
-#include <ros/message_event.h>
-#include <ros/message_traits.h>
-#include <ros/time.h>
+#define FKIE_MESSAGE_FILTERS_HAS_BOOST 1
+#else
+#define FKIE_MESSAGE_FILTERS_HAS_BOOST 0
+#endif
+#include <rclcpp/time.hpp>
+
+#include <memory>
 #include <string>
 #include <type_traits>
 
@@ -37,30 +41,56 @@ namespace helpers
 template<class M>
 struct AccessRosHeader
 {
-    static std::string frame_id(const M& m) noexcept { return ros::message_traits::FrameId<std::remove_cv_t<M>>::value(m); }
-    static ros::Time stamp(const M& m) noexcept { return ros::message_traits::TimeStamp<std::remove_cv_t<M>>::value(m); }
+    static std::string frame_id(const M& m) noexcept
+    {
+        return m.header.frame_id;
+    }
+    static rclcpp::Time stamp(const M& m) noexcept
+    {
+        return rclcpp::Time(m.header.stamp, RCL_ROS_TIME);
+    }
 };
 
 template<class M>
 struct AccessRosHeader<std::shared_ptr<M>>
 {
-    static std::string frame_id(const std::shared_ptr<M>& m) noexcept { return ros::message_traits::FrameId<std::remove_cv_t<M>>::value(*m); }
-    static ros::Time stamp(const std::shared_ptr<M>& m) noexcept { return ros::message_traits::TimeStamp<std::remove_cv_t<M>>::value(*m); }
+    static std::string frame_id(const std::shared_ptr<M>& m) noexcept
+    {
+        return m->header.frame_id;
+    }
+    static rclcpp::Time stamp(const std::shared_ptr<M>& m) noexcept
+    {
+        return rclcpp::Time(m->header.stamp, RCL_ROS_TIME);
+    }
 };
 
+template<class M>
+struct AccessRosHeader<std::unique_ptr<M>>
+{
+    static std::string frame_id(const std::unique_ptr<M>& m) noexcept
+    {
+        return m->header.frame_id;
+    }
+    static rclcpp::Time stamp(const std::unique_ptr<M>& m) noexcept
+    {
+        return rclcpp::Time(m->header.stamp, RCL_ROS_TIME);
+    }
+};
+
+#if FKIE_MESSAGE_FILTERS_HAS_BOOST
 template<class M>
 struct AccessRosHeader<boost::shared_ptr<M>>
 {
-    static std::string frame_id(const boost::shared_ptr<M>& m) noexcept { return ros::message_traits::FrameId<std::remove_cv_t<M>>::value(*m); }
-    static ros::Time stamp(const boost::shared_ptr<M>& m) noexcept { return ros::message_traits::TimeStamp<std::remove_cv_t<M>>::value(*m); }
+    static std::string frame_id(const boost::shared_ptr<M>& m) noexcept
+    {
+        return m->header.frame_id;
+    }
+    static rclcpp::Time stamp(const boost::shared_ptr<M>& m) noexcept
+    {
+        return rclcpp::Time(m->header.stamp, RCL_ROS_TIME);
+    }
 };
-
-template<class M>
-struct AccessRosHeader<ros::MessageEvent<M>>
-{
-    static std::string frame_id(const ros::MessageEvent<M>& m) noexcept { return ros::message_traits::FrameId<std::remove_cv_t<M>>::value(*m.getConstMessage()); }
-    static ros::Time stamp(const ros::MessageEvent<M>& m) noexcept { return ros::message_traits::TimeStamp<std::remove_cv_t<M>>::value(*m.getConstMessage()); }
-};
+#endif
 
 template<class M>
 std::string access_ros_header_frame_id(const M& m) noexcept
@@ -69,12 +99,12 @@ std::string access_ros_header_frame_id(const M& m) noexcept
 }
 
 template<class M>
-ros::Time access_ros_header_stamp(const M& m) noexcept
+rclcpp::Time access_ros_header_stamp(const M& m) noexcept
 {
     return AccessRosHeader<M>::stamp(m);
 }
 
-} // namespace helpers
-} // namespace fkie_message_filters
+}  // namespace helpers
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_ACCESS_ROS_HEADER_H_ */

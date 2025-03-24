@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,10 +28,10 @@ namespace fkie_message_filters
 
 /** \brief Manually operated data source.
  *
- * This data source behaves like a function object and can be called to pass data to its sinks. It is mostly useful
- * to connect a filter pipeline to foreign data sources. Even though its technically possible to use a UserSource
- * object as callback for a ROS subscriber, the specialized Subscriber sources have additional functionality and are
- * easier to set up.
+ * This data source behaves like a function object and can be called to pass data to its sinks. It is mostly useful to
+ * connect a filter pipeline to foreign data sources. Even though its technically possible to use a UserSource object as
+ * callback for a ROS subscriber, the specialized Subscriber sources have additional functionality and are easier to set
+ * up.
  */
 template<class... Outputs>
 class UserSource : public Source<Outputs...>
@@ -42,13 +42,15 @@ public:
      *
      * \filterthrow
      */
-    void operator()(const Outputs&... out);
+    void operator()(helpers::argument_t<Outputs>... out);
 };
 
 template<class... Outputs>
-class UserSource<IO<Outputs...>> : public UserSource<Outputs...> {};
+class UserSource<IO<Outputs...>> : public UserSource<Outputs...>
+{
+};
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #include "user_source_impl.h"
 

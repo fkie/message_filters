@@ -7,12 +7,10 @@ jobs:
     strategy:
       matrix:
         env:
-          - {ROS_DISTRO: melodic}
-          - {ROS_DISTRO: noetic}
-    env:
-      CATKIN_LINT: 'true'
+          - {ROS_DISTRO: humble}
+          - {ROS_DISTRO: jazzy}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: 'ros-industrial/industrial_ci@0.10.0'
+      - uses: 'ros-industrial/industrial_ci@master'
         env: ${{ matrix.env }}

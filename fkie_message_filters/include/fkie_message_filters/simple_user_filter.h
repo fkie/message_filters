@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,6 +21,7 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_SIMPLE_USER_FILTER_H_
 
 #include "filter.h"
+
 #include <functional>
 
 namespace fkie_message_filters
@@ -32,7 +33,8 @@ namespace fkie_message_filters
  * processing function is called for all incoming data. If the function returns \c true, the data is passed on,
  * otherwise the data is discarded.
  *
- * The filter will throw a \c std::bad_function_call exception if it is invoked without a user-defined processing function.
+ * The filter will throw a \c std::bad_function_call exception if it is invoked without a user-defined processing
+ * function.
  */
 template<typename... Inputs>
 class SimpleUserFilter : public Filter<IO<Inputs...>, IO<Inputs...>>
@@ -53,17 +55,21 @@ public:
      *
      * \nothrow
      */
-    void set_processing_function (const ProcessingFunction& f) noexcept;
+    void set_processing_function(const ProcessingFunction& f) noexcept;
+
 protected:
-    void receive (const Inputs&... in) override;
+    void receive(helpers::argument_t<Inputs>... in) override;
+
 private:
     ProcessingFunction f_;
 };
 
 template<typename... Inputs>
-class SimpleUserFilter<IO<Inputs...>> : public SimpleUserFilter<Inputs...> {};
+class SimpleUserFilter<IO<Inputs...>> : public SimpleUserFilter<Inputs...>
+{
+};
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #include "simple_user_filter_impl.h"
 

@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,9 +19,11 @@
  ****************************************************************************/
 
 #include <gtest/gtest.h>
+#include <rclcpp/rclcpp.hpp>
 
-int main (int argc, char** argv)
+int main(int argc, char** argv)
 {
     testing::InitGoogleTest(&argc, argv);
+    rclcpp::init(argc, argv);
     return RUN_ALL_TESTS();
 }

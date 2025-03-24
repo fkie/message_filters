@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,8 +20,8 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_SINK_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_SINK_IMPL_H_
 
-#include "sink.h"
 #include "helpers/scoped_unlock.h"
+#include "sink.h"
 
 namespace fkie_message_filters
 {
@@ -30,8 +30,7 @@ template<typename... Inputs>
 class Sink<Inputs...>::ReentryProtector
 {
 public:
-    ReentryProtector(Sink<Inputs...>& parent)
-    : running_(parent.running_), this_id_(std::this_thread::get_id())
+    ReentryProtector(Sink<Inputs...>& parent) : running_(parent.running_), this_id_(std::this_thread::get_id())
     {
         if (!running_.insert(this_id_).second)
         {
@@ -49,12 +48,11 @@ private:
     const std::thread::id this_id_;
 };
 
-
 template<typename... Inputs>
 Connection Sink<Inputs...>::connect_to_source(Source<Inputs...>& src) noexcept
 {
     std::lock_guard<std::mutex> lock(mutex_);
-    Connection c = src.signal_.connect_extended([this](const Connection& conn, const Inputs&... in) { this->receive_cb(conn, in...); });
+    Connection c = src.signal_.connect([this](Inputs&&... in) { this->receive_cb(std::forward<Inputs&&>(in)...); });
     conn_.push_back(c);
     return c;
 }
@@ -73,15 +71,16 @@ void Sink<Inputs...>::disconnect() noexcept
 }
 
 template<typename... Inputs>
-void Sink<Inputs...>::receive_cb(const Connection&, const Inputs&... in)
+void Sink<Inputs...>::receive_cb(Inputs&&... in)
 {
     std::unique_lock<std::mutex> lock(mutex_);
-    conn_.erase(std::remove_if(conn_.begin(), conn_.end(), [](const Connection& c) -> bool { return !c.connected(); }), conn_.end());
+    conn_.erase(std::remove_if(conn_.begin(), conn_.end(), [](const Connection& c) -> bool { return !c.connected(); }),
+                conn_.end());
     ReentryProtector p{*this};
     auto unlock = helpers::with_scoped_unlock(lock);
-    receive(in...);
+    receive(helpers::maybe_move(in)...);
 }
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SINK_IMPL_H_ */

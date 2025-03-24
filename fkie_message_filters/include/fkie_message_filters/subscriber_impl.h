@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,71 +25,67 @@
 namespace fkie_message_filters
 {
 
-template<class M, template<typename > class Translate>
+template<class M, template<typename> class Translate>
 Subscriber<M, Translate>::Subscriber() noexcept
 {
 }
 
-template<class M, template<typename > class Translate>
-Subscriber<M, Translate>::Subscriber(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, const ros::TransportHints& transport_hints, ros::CallbackQueueInterface* callback_queue) noexcept
+template<class M, template<typename> class Translate>
+Subscriber<M, Translate>::Subscriber(const rclcpp::Node::SharedPtr& node, const std::string& topic,
+                                     const rclcpp::QoS& qos, const rclcpp::SubscriptionOptions& options) noexcept
 {
-    subscribe(nh, topic, queue_size, transport_hints, callback_queue);
+    subscribe(node, topic, qos, options);
 }
 
-template<class M, template<typename > class Translate>
+template<class M, template<typename> class Translate>
 std::string Subscriber<M, Translate>::topic() const noexcept
 {
-    return sub_.getTopic();
+    return sub_ ? sub_->get_topic_name() : std::string();
 }
 
-template<class M, template<typename > class Translate>
-void Subscriber<M, Translate>::set_subscribe_options(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, const ros::TransportHints& transport_hints, ros::CallbackQueueInterface* callback_queue) noexcept
+template<class M, template<typename> class Translate>
+void Subscriber<M, Translate>::set_subscribe_options(const rclcpp::Node::SharedPtr& node, const std::string& topic,
+                                                     const rclcpp::QoS& qos,
+                                                     const rclcpp::SubscriptionOptions& options) noexcept
 {
     unsubscribe();
-    if (!topic.empty())
-    {
-        opts_.initByFullCallbackType<const EventType&>(topic, queue_size, std::bind(&Subscriber<M, Translate>::cb, this, std::placeholders::_1));
-        opts_.callback_queue = callback_queue;
-        opts_.transport_hints = transport_hints;
-        nh_ = std::make_shared<ros::NodeHandle>(nh);
-    }
+    node_ = node;
+    topic_ = topic;
+    qos_ = qos;
+    options_ = options;
 }
 
-template<class M, template<typename > class Translate>
-void Subscriber<M, Translate>::subscribe(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size,
-        const ros::TransportHints& transport_hints, ros::CallbackQueueInterface* callback_queue) noexcept
+template<class M, template<typename> class Translate>
+void Subscriber<M, Translate>::subscribe(const rclcpp::Node::SharedPtr& node, const std::string& topic,
+                                         const rclcpp::QoS& qos, const rclcpp::SubscriptionOptions& options) noexcept
 {
-    set_subscribe_options(nh, topic, queue_size, transport_hints, callback_queue);
+    set_subscribe_options(node, topic, qos, options);
     subscribe();
 }
 
-template<class M, template<typename > class Translate>
+template<class M, template<typename> class Translate>
 bool Subscriber<M, Translate>::is_configured() const noexcept
 {
-    return nh_ && !opts_.topic.empty();
+    return node_ && !topic_.empty();
 }
 
-template<class M, template<typename > class Translate>
+template<class M, template<typename> class Translate>
 void Subscriber<M, Translate>::subscribe_impl() noexcept
 {
     if (!sub_)
     {
-        sub_ = nh_->subscribe(opts_);
+        sub_ = node_->create_subscription<MessageType, SubscriptionCB>(
+            topic_, qos_, [this](SubscriptionType message) { this->send(Translate<M>::subscriberToFilter(message)); },
+            options_);
     }
 }
 
-template<class M, template<typename > class Translate>
+template<class M, template<typename> class Translate>
 void Subscriber<M, Translate>::unsubscribe_impl() noexcept
 {
-    sub_.shutdown();
+    sub_.reset();
 }
 
-template<class M, template<typename > class Translate>
-void Subscriber<M, Translate>::cb(const EventType& event)
-{
-    this->send(Translate<M>::eventToFilter(event));
-}
-
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SUBSCRIBER_IMPL_H_ */

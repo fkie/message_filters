@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,25 +20,23 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_DIVIDER_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_DIVIDER_H_
 
-
-#include "source.h"
-#include "sink.h"
 #include "helpers/tuple.h"
+#include "sink.h"
+#include "source.h"
 
 namespace fkie_message_filters
 {
 
 /** \brief Split an N-ary source into N unary ones.
  *
- * The divider splits an N-ary source into its constituent elements, so they can be processed independently.
- * It is mostly used as the penultimate pipeline filter to forward message tuples to
- * independent Publisher instances.
+ * The divider splits an N-ary source into its constituent elements, so they can be processed independently. It is
+ * mostly used as the penultimate pipeline filter to forward message tuples to independent Publisher instances.
  *
- * Technically, the divider acts as one sink and N sources, one for each data type that is passed in.
- * You can connect the sources independently using the source() function.
+ * Technically, the divider acts as one sink and N sources, one for each data type that is passed in. You can connect
+ * the sources independently using the source() function.
  *
- * The divider will always completely separate the input arguments. If you want a partial split only,
- * you should use one or more Selector filters instead.
+ * The divider will always completely separate the input arguments. If you want a partial split only, you should use one
+ * or more Selector filters instead.
  *
  * \code
  * namespace mf = fkie_message_filters;
@@ -63,7 +61,8 @@ public:
     /** \brief Array of connection objects. */
     using Connections = std::array<Connection, NUM_INPUTS>;
     /** \brief Base class of the Nth source. */
-    template<std::size_t N> using SourceType = helpers::select_nth<N, Source<Inputs>...>;
+    template<std::size_t N>
+    using SourceType = helpers::select_nth<N, Source<Inputs>...>;
     /** \brief Access the source for the Nth data element. */
     template<std::size_t N>
     SourceType<N>& source() noexcept;
@@ -85,30 +84,31 @@ public:
      * \nothrow
      */
     void disconnect() noexcept override;
+
 protected:
-    void receive (const Inputs&... in) override;
+    void receive(helpers::argument_t<Inputs>... in) override;
+
 private:
     template<class Input>
     class DividerSource : public Source<Input>
     {
     public:
-        void forward(const Input& in);
+        template<class ForwardedInput>
+        void forward(ForwardedInput&& in);
     };
     std::tuple<DividerSource<Inputs>...> sources_;
     template<std::size_t N, typename ThisInput, typename... OtherInputs>
-    void forward_to_sources(const ThisInput& in, const OtherInputs&... ins);
-    template<std::size_t N>
-    void forward_to_sources();
+    void forward_to_sources(ThisInput&& in, OtherInputs&&... ins);
     template<std::size_t N, typename ThisSink, typename... OtherSinks>
     void connect_to_sinks_impl(Connections& conn, ThisSink& sink, OtherSinks&... sinks) noexcept;
-    template<std::size_t N>
-    void connect_to_sinks_impl(Connections& conn) noexcept;
 };
 
 template<class... Inputs>
-class Divider<IO<Inputs...>> : public Divider<Inputs...> {};
+class Divider<IO<Inputs...>> : public Divider<Inputs...>
+{
+};
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #include "divider_impl.h"
 

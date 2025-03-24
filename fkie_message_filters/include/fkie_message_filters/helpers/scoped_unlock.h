@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,21 +30,21 @@ template<class BasicLockable>
 class ScopedUnlock
 {
 public:
-    ScopedUnlock (BasicLockable& lockable)
-    : lockable_(lockable), owns_lock_(lockable_.owns_lock())
+    ScopedUnlock(BasicLockable& lockable) : lockable_(lockable), owns_lock_(lockable_.owns_lock())
     {
-        if (owns_lock_) lockable_.unlock();
+        if (owns_lock_)
+            lockable_.unlock();
     }
 
-    ScopedUnlock(ScopedUnlock&& other) noexcept
-    : lockable_(other.lockable_), owns_lock_(other.owns_lock_)
+    ScopedUnlock(ScopedUnlock&& other) noexcept : lockable_(other.lockable_), owns_lock_(other.owns_lock_)
     {
         other.owns_lock_ = false;
     }
 
     ~ScopedUnlock()
     {
-        if (owns_lock_) lockable_.lock();
+        if (owns_lock_)
+            lockable_.lock();
     }
 
     ScopedUnlock(const ScopedUnlock&) = delete;
@@ -61,7 +61,7 @@ ScopedUnlock<BasicLockable> with_scoped_unlock(BasicLockable& lockable)
     return ScopedUnlock<BasicLockable>(lockable);
 }
 
-} // namespace helpers
-} // namespace fkie_message_filters
+}  // namespace helpers
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_SCOPED_UNLOCK_H_ */

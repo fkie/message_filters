@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,26 +18,27 @@
  *
  ****************************************************************************/
 #include "test.h"
-#include <fkie_message_filters/user_source.h>
+
 #include <fkie_message_filters/simple_user_filter.h>
+#include <fkie_message_filters/user_source.h>
 
 TEST(fkie_message_filters, FilterLoop)
 {
-    using Source = mf::UserSource<int_M>;
-    using Filter = mf::SimpleUserFilter<int_M>;
+    using Source = mf::UserSource<int_C>;
+    using Filter = mf::SimpleUserFilter<int_C>;
 
     std::size_t callback_counts = 0;
     Source src;
     Filter flt;
     flt.set_processing_function(
-        [&](const int_M& i) -> bool
+        [&](const int_C& i) -> bool
         {
             ++callback_counts;
             return true;
-        }
-    );
+        });
     mf::chain(src, flt);
     // Connect the filter output to its own input
     mf::chain(flt, flt);
-    ASSERT_THROW(src(int_M(0)), std::logic_error);
+    ASSERT_THROW(src(int_C(0)), std::logic_error);
+    ASSERT_EQ(1u, callback_counts);
 }

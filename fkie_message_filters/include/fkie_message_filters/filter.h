@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,17 +20,17 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_FILTER_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_FILTER_H_
 
-#include "source.h"
 #include "sink.h"
+#include "source.h"
 
 namespace fkie_message_filters
 {
 
- /** \brief Typed base class for filters.
-  *
-  * All filters process some input and generate some output, possibly with different data types.
-  * This class provides the base class for all filter implementations, templated on the input and output data types.
-  */
+/** \brief Typed base class for filters.
+ *
+ * All filters process some input and generate some output, possibly with different data types. This class provides the
+ * base class for all filter implementations, templated on the input and output data types.
+ */
 template<class In, class Out>
 class Filter : public Sink<In>, public Source<Out>
 {
@@ -50,7 +50,7 @@ class Filter : public Sink<In>, public Source<Out>
 template<typename Filter1, typename Filter2, typename... MoreFilters>
 void chain(Filter1& flt1, Filter2& flt2, MoreFilters&... filters) noexcept;
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #include "filter_impl.h"
 

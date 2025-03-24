@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,11 +27,11 @@ namespace fkie_message_filters
 {
 
 template<typename... Outputs>
-void UserSource<Outputs...>::operator()(const Outputs&... out)
+void UserSource<Outputs...>::operator()(helpers::argument_t<Outputs>... out)
 {
-    this->send(out...);
+    this->send(helpers::maybe_move(out)...);
 }
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_USER_SOURCE_IMPL_H_ */

@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,49 +18,61 @@
  *
  ****************************************************************************/
 #include "test.h"
-#include <fkie_message_filters/sequencer.h>
-#include <fkie_message_filters/user_source.h>
-#include <fkie_message_filters/simple_user_filter.h>
 
-TEST(fkie_message_filters, Sequencer)
+#include <fkie_message_filters/sequencer.h>
+#include <fkie_message_filters/simple_user_filter.h>
+#include <fkie_message_filters/user_source.h>
+
+template<typename int_T>
+void sequencer_test_code()
 {
-    using IntegerStamped = Stamped<int>;
+    using IntegerStamped = Stamped<int_T>;
     using Source = mf::UserSource<IntegerStamped>;
-    using Sequencer = mf::Sequencer<Source::Output>;
-    using Sink = mf::SimpleUserFilter<Source::Output>;
+    using Sequencer = mf::Sequencer<typename Source::Output>;
+    using Sink = mf::SimpleUserFilter<typename Source::Output>;
 
     std::size_t callback_counts = 0;
-    ros::Time last_ts;
+    rclcpp::Time last_ts{make_stamp(0)};
     Source src;
-    Sequencer seq(ros::Duration(10, 0));
+    Sequencer seq(rclcpp::Duration(10, 0));
     Sink snk;
     snk.set_processing_function(
         [&](const IntegerStamped& i) -> bool
         {
             ++callback_counts;
-            if (i.header.stamp < last_ts) throw std::logic_error("Time stamp order violated");
+            if (rclcpp::Time(i.header.stamp) < last_ts)
+                throw std::logic_error("Time stamp order violated");
             last_ts = i.header.stamp;
             return true;
-        }
-    );
+        });
     mf::chain(src, seq, snk);
 
-    src(IntegerStamped(0, "", ros::Time(100, 0)));
-    src(IntegerStamped(0, "", ros::Time(95, 0)));
-    src(IntegerStamped(0, "", ros::Time(98, 0)));
-    src(IntegerStamped(0, "", ros::Time(92, 0)));
-    src(IntegerStamped(0, "", ros::Time(91, 0)));
-    src(IntegerStamped(0, "", ros::Time(97, 0)));
-    src(IntegerStamped(0, "", ros::Time(50, 0)));
+    src(IntegerStamped(0, "", make_stamp(100)));
+    src(IntegerStamped(0, "", make_stamp(95)));
+    src(IntegerStamped(0, "", make_stamp(98)));
+    src(IntegerStamped(0, "", make_stamp(92)));
+    src(IntegerStamped(0, "", make_stamp(91)));
+    src(IntegerStamped(0, "", make_stamp(97)));
+    src(IntegerStamped(0, "", make_stamp(50)));
     ASSERT_EQ(0u, callback_counts);
-    src(IntegerStamped(0, "", ros::Time(105, 0)));
+    src(IntegerStamped(0, "", make_stamp(105)));
     ASSERT_EQ(3u, callback_counts);
-    src(IntegerStamped(0, "", ros::Time(120, 0)));
+    src(IntegerStamped(0, "", make_stamp(120)));
     ASSERT_EQ(7u, callback_counts);
-    ASSERT_EQ(ros::Time(105, 0), last_ts);
+    ASSERT_EQ(make_stamp(105), last_ts);
     seq.flush();
     ASSERT_EQ(8u, callback_counts);
-    src(IntegerStamped(0, "", ros::Time(119, 0)));
+    src(IntegerStamped(0, "", make_stamp(119)));
     seq.flush();
     ASSERT_EQ(8u, callback_counts);
+}
+
+TEST(fkie_message_filters, SequencerCopyConstructible)
+{
+    sequencer_test_code<int_C>();
+}
+
+TEST(fkie_message_filters, SequencerMoveConstructible)
+{
+    sequencer_test_code<int_M>();
 }

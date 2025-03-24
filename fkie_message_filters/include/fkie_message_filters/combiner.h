@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,8 +20,9 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_H_
 
-#include "source.h"
+#include "helpers/tuple.h"
 #include "sink.h"
+#include "source.h"
 
 namespace fkie_message_filters
 {
@@ -40,13 +41,11 @@ namespace combiner_policies
  * together. The combiner provides a policy-driven way to aggregate data from multiple sources into a single sink.
  * Policies can be anything from a simple FIFO to an elaborate approximate time stamp synchronization.
  *
- * The output arity of the filter is the sum of all input arities. For example, given two binary input filters 
- * (M1,M2) and (M3,M4), the combiner will create a quaternary output (M1,M2,M3,M4).
- * Furthermore, policies which examine data generally look at the first
- * argument of each input. In this example, the timing policies
- * would match the inputs based on M1 and M3.
- * You can prepend a Selector filter to swap the argument order if you
- * need a different element examined, or the Divider filter to match all arguments independently.
+ * The output arity of the filter is the sum of all input arities. For example, given two binary input filters (M1,M2)
+ * and (M3,M4), the combiner will create a quaternary output (M1,M2,M3,M4). Furthermore, policies which examine data
+ * generally look at the first argument of each input. In this example, the timing policies would match the inputs based
+ * on M1 and M3. You can prepend a Selector filter to swap the argument order if you need a different element examined,
+ * or the Divider filter to match all arguments independently.
  *
  * \code
  * namespace mf = fkie_message_filters;
@@ -90,7 +89,7 @@ public:
      *
      * \nothrow
      */
-    explicit Combiner (const Policy& policy = Policy()) noexcept;
+    explicit Combiner(const Policy& policy = Policy()) noexcept;
     /** \brief Access the sink for the Nth input. */
     template<std::size_t N>
     SinkType<N>& sink() noexcept;
@@ -110,7 +109,7 @@ public:
      *
      * \nothrow
      */
-    Connections connect_to_sources (helpers::io_rewrap_t<IOs, Source>&... sources) noexcept;
+    Connections connect_to_sources(helpers::io_rewrap_t<IOs, Source>&... sources) noexcept;
     /** \brief Disconnect the sinks from their sources.
      *
      * \nothrow
@@ -128,6 +127,7 @@ public:
      * \nothrow
      */
     void disconnect() noexcept override;
+
 private:
     using IncomingTuples = std::tuple<typename helpers::io_tuple_t<IOs>...>;
     using OutgoingTuple = helpers::io_tuple_t<helpers::io_concat_t<IOs...>>;
@@ -136,11 +136,13 @@ private:
     {
     public:
         using Tuple = std::tuple<Inputs...>;
-        using PolicyInFunc = std::function<void(std::unique_lock<std::mutex>&, const Tuple&)>;
+        using PolicyInFunc = std::function<void(std::unique_lock<std::mutex>&, Tuple&&)>;
         void set_parent(Combiner* parent) noexcept;
         void set_policy_input(const PolicyInFunc& f) noexcept;
+
     protected:
-        void receive(const Inputs&... in) override;
+        void receive(helpers::argument_t<Inputs>... in) override;
+
     private:
         PolicyInFunc forward_;
         Combiner* parent_{nullptr};
@@ -151,11 +153,9 @@ private:
     void connect_policy() noexcept;
     template<std::size_t N, typename ThisSource, typename... OtherSources>
     void connect_to_sources_impl(Connections& conn, ThisSource& src, OtherSources&... sources) noexcept;
-    template<std::size_t N>
-    void connect_to_sources_impl(Connections& conn) noexcept;
 };
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #include "combiner_impl.h"
 

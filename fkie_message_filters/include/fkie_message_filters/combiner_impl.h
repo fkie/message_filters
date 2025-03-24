@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,15 +27,10 @@ namespace fkie_message_filters
 {
 
 template<template<typename...> class PolicyTmpl, class... IOs>
-Combiner<PolicyTmpl, IOs...>::Combiner(const Policy& policy) noexcept
-: policy_(policy)
+Combiner<PolicyTmpl, IOs...>::Combiner(const Policy& policy) noexcept : policy_(policy)
 {
-    helpers::for_each_apply<std::tuple_size<IncomingTuples>::value>(
-        [this](auto I)
-        {
-            std::get<I>(this->sinks_).set_parent(this);
-        }
-    );
+    helpers::for_each_apply<std::tuple_size<IncomingTuples>::value>([this](auto I)
+                                                                    { std::get<I>(this->sinks_).set_parent(this); });
     connect_policy();
 }
 
@@ -43,27 +38,19 @@ template<template<typename...> class PolicyTmpl, class... IOs>
 void Combiner<PolicyTmpl, IOs...>::connect_policy() noexcept
 {
     policy_.set_emitter_callback(
-        [this](const OutgoingTuple& out)
+        [this](OutgoingTuple& out)
         {
             helpers::index_apply<std::tuple_size<OutgoingTuple>::value>(
-                [this, &out](auto... Is)
-                {
-                    this->send(std::get<Is>(out)...);
-                }
-            );
-        }
-    );
+                [this, &out](auto... Is) { this->send(helpers::maybe_move(std::get<Is>(out))...); });
+        });
     helpers::for_each_apply<std::tuple_size<IncomingTuples>::value>(
         [this](auto I)
         {
-            std::get<I>(this->sinks_).set_policy_input(
-                [this](std::unique_lock<std::mutex>& lock, auto&& in)
-                {
-                    this->policy_.template add<decltype(I)::value>(lock, std::forward<decltype(in)>(in));
-                }
-            );
-        }
-    );
+            std::get<I>(this->sinks_)
+                .set_policy_input(
+                    [this](std::unique_lock<std::mutex>& lock, auto&& in)
+                    { this->policy_.template add<decltype(I)::value>(lock, std::forward<decltype(in)>(in)); });
+        });
 }
 
 template<template<typename...> class PolicyTmpl, class... IOs>
@@ -104,12 +91,8 @@ const typename Combiner<PolicyTmpl, IOs...>::Policy& Combiner<PolicyTmpl, IOs...
 template<template<typename...> class PolicyTmpl, class... IOs>
 void Combiner<PolicyTmpl, IOs...>::disconnect_from_all_sources() noexcept
 {
-    helpers::for_each_apply<sizeof...(IOs)>(
-        [this](auto I)
-        {
-            std::get<I>(this->sinks_).disconnect_from_all_sources();
-        }
-    );
+    helpers::for_each_apply<sizeof...(IOs)>([this](auto I)
+                                            { std::get<I>(this->sinks_).disconnect_from_all_sources(); });
 }
 
 template<template<typename...> class PolicyTmpl, class... IOs>
@@ -120,24 +103,22 @@ void Combiner<PolicyTmpl, IOs...>::disconnect() noexcept
 }
 
 template<template<typename...> class PolicyTmpl, class... IOs>
-template<std::size_t N>
-void Combiner<PolicyTmpl, IOs...>::connect_to_sources_impl(Connections& conn) noexcept
-{
-}
-
-template<template<typename...> class PolicyTmpl, class... IOs>
 template<std::size_t N, typename ThisSource, typename... OtherSources>
-void Combiner<PolicyTmpl, IOs...>::connect_to_sources_impl(Connections& conn, ThisSource& src, OtherSources&... sources) noexcept
+void Combiner<PolicyTmpl, IOs...>::connect_to_sources_impl(Connections& conn, ThisSource& src,
+                                                           OtherSources&... sources) noexcept
 {
     conn[N] = std::get<N>(sinks_).connect_to_source(src);
-    connect_to_sources_impl<N + 1>(conn, sources...);
+    if constexpr (sizeof...(OtherSources))
+        connect_to_sources_impl<N + 1>(conn, sources...);
 }
 
 template<template<typename...> class PolicyTmpl, class... IOs>
-typename Combiner<PolicyTmpl, IOs...>::Connections Combiner<PolicyTmpl, IOs...>::connect_to_sources (helpers::io_rewrap_t<IOs, Source>&... sources) noexcept
+typename Combiner<PolicyTmpl, IOs...>::Connections
+Combiner<PolicyTmpl, IOs...>::connect_to_sources(helpers::io_rewrap_t<IOs, Source>&... sources) noexcept
 {
     Connections conn;
-    connect_to_sources_impl<0>(conn, sources...);
+    if constexpr (sizeof...(IOs))
+        connect_to_sources_impl<0>(conn, sources...);
     return conn;
 }
 
@@ -157,16 +138,16 @@ void Combiner<PolicyTmpl, IOs...>::CombinerSink<Inputs...>::set_policy_input(con
 
 template<template<typename...> class PolicyTmpl, class... IOs>
 template<class... Inputs>
-void Combiner<PolicyTmpl, IOs...>::CombinerSink<Inputs...>::receive (const Inputs&... in)
+void Combiner<PolicyTmpl, IOs...>::CombinerSink<Inputs...>::receive(helpers::argument_t<Inputs>... in)
 {
     assert(parent_);
     std::unique_lock<std::mutex> lock(parent_->combiner_mutex_);
     if (forward_)
     {
-        forward_(lock, std::forward_as_tuple(in...));
+        forward_(lock, std::forward_as_tuple(helpers::maybe_move(in)...));
     }
 }
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_IMPL_H_ */

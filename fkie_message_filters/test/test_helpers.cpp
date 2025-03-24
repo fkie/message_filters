@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,12 +18,18 @@
  *
  ****************************************************************************/
 #include "test.h"
+
 #include <fkie_message_filters/helpers/access_ros_header.h>
 #include <fkie_message_filters/helpers/io.h>
+#include <fkie_message_filters/helpers/signaling.h>
 #include <fkie_message_filters/helpers/tuple.h>
-#include <boost/shared_ptr.hpp>
+#include <fkie_message_filters/types.h>
+
 #include <memory>
-#include <ros/message_event.h>
+#if FKIE_MESSAGE_FILTERS_HAS_BOOST
+#    include <boost/make_shared.hpp>
+#    include <boost/shared_ptr.hpp>
+#endif
 
 static std::size_t seq_helper(std::size_t a, std::size_t b, std::size_t c)
 {
@@ -33,48 +39,84 @@ static std::size_t seq_helper(std::size_t a, std::size_t b, std::size_t c)
 TEST(fkie_message_filters, SequenceHelpers)
 {
     std::size_t result = 0;
-    mf::helpers::for_each_apply<4>(
-        [&](auto Is)
-        {
-            result += Is;
-        }
-    );
+    mf::helpers::for_each_apply<4>([&](auto Is) { result += Is; });
     ASSERT_EQ(6u, result);
-    mf::helpers::for_each_apply<4>(
-        [&](auto Is)
-        {
-            result += Is;
-        }
-    );
-    result = mf::helpers::index_apply<3>(
-        [](auto... Is) -> std::size_t
-        {
-            return seq_helper(Is...);
-        }
-    );
+    mf::helpers::for_each_apply<4>([&](auto Is) { result += Is; });
+    result = mf::helpers::index_apply<3>([](auto... Is) -> std::size_t { return seq_helper(Is...); });
     ASSERT_EQ(3u, result);
     result = 0;
-    mf::helpers::select_apply<4>(2,
-        [&](auto Is)
-        {
-            result += Is;
-        }
-    );
+    mf::helpers::select_apply<4>(2, [&](auto Is) { result += Is; });
     ASSERT_EQ(2u, result);
 }
 
 TEST(fkie_message_filters, RosHeaderExtraction)
 {
-    // Verify that the access_ros_header() helper function works with all supported data types
-    using IntegerStamped = Stamped<int>;
+    // Verify that the access_ros_header() helper function works with all
+    // supported data types
+    using IntegerStamped = Stamped<int_C>;
 
-    IntegerStamped i1{0, std::string(), ros::Time(1, 0)};
-    std::shared_ptr<IntegerStamped const> i2 = std::make_shared<IntegerStamped>(0, std::string(), ros::Time(2, 0));
-    boost::shared_ptr<IntegerStamped const> i3 = boost::make_shared<IntegerStamped>(0, std::string(), ros::Time(3, 0));
-    ros::MessageEvent<IntegerStamped const> i4{boost::make_shared<IntegerStamped>(0, std::string(), ros::Time(4, 0)), boost::shared_ptr<ros::M_string>(), ros::Time(4, 0), false, []() -> boost::shared_ptr<IntegerStamped> { return boost::shared_ptr<IntegerStamped>();}};
+    IntegerStamped i1{int_C(0), std::string(), rclcpp::Time(1, 0)};
+    std::shared_ptr<IntegerStamped const> i2 =
+        std::make_shared<IntegerStamped>(int_C(0), std::string(), rclcpp::Time(2, 0));
+    std::unique_ptr<IntegerStamped const> i3 =
+        std::make_unique<IntegerStamped const>(int_C(0), std::string(), rclcpp::Time(3, 0));
+#if FKIE_MESSAGE_FILTERS_HAS_BOOST
+    boost::shared_ptr<IntegerStamped const> i4 =
+        boost::make_shared<IntegerStamped>(int_C(0), std::string(), rclcpp::Time(4, 0));
+#endif
+    ASSERT_EQ(rclcpp::Time(1, 0, RCL_ROS_TIME), mf::helpers::access_ros_header_stamp(i1));
+    ASSERT_EQ(rclcpp::Time(2, 0, RCL_ROS_TIME), mf::helpers::access_ros_header_stamp(i2));
+    ASSERT_EQ(rclcpp::Time(3, 0, RCL_ROS_TIME), mf::helpers::access_ros_header_stamp(i3));
+#if FKIE_MESSAGE_FILTERS_HAS_BOOST
+    ASSERT_EQ(rclcpp::Time(4, 0, RCL_ROS_TIME), mf::helpers::access_ros_header_stamp(i4));
+#endif
+}
 
-    ASSERT_EQ(ros::Time(1,0), mf::helpers::access_ros_header_stamp(i1));
-    ASSERT_EQ(ros::Time(2,0), mf::helpers::access_ros_header_stamp(i2));
-    ASSERT_EQ(ros::Time(3,0), mf::helpers::access_ros_header_stamp(i3));
-    ASSERT_EQ(ros::Time(4,0), mf::helpers::access_ros_header_stamp(i4));
+TEST(fkie_message_filters, Signals)
+{
+    std::size_t triggered = 0;
+    mf::Connection c;
+    mf::helpers::Signal<int> sig1;
+    ASSERT_FALSE(c.connected());
+    c = sig1.connect(
+        [&triggered](int i)
+        {
+            ASSERT_EQ(42, i);
+            ++triggered;
+        });
+    ASSERT_TRUE(c.connected());
+    ASSERT_EQ(0, triggered);
+    sig1(42);
+    ASSERT_EQ(1, triggered);
+    c.disconnect();
+    sig1(0);
+    ASSERT_EQ(1, triggered);
+}
+
+TEST(fkie_message_filters, SignalsWithReference)
+{
+    std::size_t triggered = 0;
+    int i = 42;
+    mf::helpers::Signal<int&> sig2;
+    sig2.connect(
+        [&triggered](int& i)
+        {
+            ASSERT_EQ(42, i);
+            ++triggered;
+        });
+    ASSERT_EQ(0, triggered);
+    sig2(i);
+    ASSERT_EQ(1, triggered);
+}
+
+TEST(fkie_message_filters, SignalsWithUniquePtr)
+{
+    mf::helpers::Signal<std::unique_ptr<int>> sig3;
+    sig3.connect([](std::unique_ptr<int> p) { ASSERT_EQ(42, *p); });
+    ASSERT_THROW(sig3.connect([](std::unique_ptr<int> p) { ASSERT_EQ(0, *p); }), std::logic_error);
+    std::unique_ptr<int> q = std::make_unique<int>(42);
+    ASSERT_FALSE(!q);
+    ASSERT_EQ(42, *q);
+    sig3(std::move(q));
+    ASSERT_TRUE(!q);
 }

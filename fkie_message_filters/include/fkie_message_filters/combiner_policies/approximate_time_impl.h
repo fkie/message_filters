@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,11 +21,10 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_APPROXIMATE_TIME_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_APPROXIMATE_TIME_IMPL_H_
 
-#include "approximate_time.h"
 #include "../helpers/access_ros_header.h"
 #include "../helpers/scoped_unlock.h"
 #include "../helpers/tuple.h"
-#include <ros/console.h>
+#include "approximate_time.h"
 
 namespace fkie_message_filters
 {
@@ -34,12 +33,24 @@ namespace combiner_policies
 
 template<typename... IOs>
 ApproximateTime<IOs...>::ApproximateTime()
-: max_age_(ros::Duration(1, 0)), max_queue_size_(0), max_delta_(boost::none), pivot_(UNSET)
+    : max_age_(rclcpp::Duration(1, 0)), max_queue_size_(0), max_delta_(std::nullopt),
+      min_dist_{(static_cast<void>(typeid(IOs)), rclcpp::Duration(0, 0))...}, pivot_(UNSET)
 {
 }
 
 template<typename... IOs>
-ApproximateTime<IOs...>& ApproximateTime<IOs...>::set_max_age(const ros::Duration& max_age) noexcept
+ApproximateTime<IOs...>::ApproximateTime(const ApproximateTime& other)
+    : PolicyBase<IOs...>(other), max_age_(other.max_age_), max_queue_size_(other.max_queue_size_),
+      max_delta_(other.max_delta_), min_dist_(other.min_dist_), pivot_(UNSET)
+{
+    /* The copy constructor deliberately avoids copying the incoming queue and related members, because
+     * a) the connection to any Combiner instance is broken by the copying anyway and
+     * b) it avoids issues with move-only types (std::deque<T> is copyable iff T is copyable)
+     */
+}
+
+template<typename... IOs>
+ApproximateTime<IOs...>& ApproximateTime<IOs...>::set_max_age(const rclcpp::Duration& max_age) noexcept
 {
     max_queue_size_ = 0;
     max_age_ = max_age;
@@ -47,7 +58,9 @@ ApproximateTime<IOs...>& ApproximateTime<IOs...>::set_max_age(const ros::Duratio
 }
 
 template<typename... IOs>
-ApproximateTime<IOs...>& ApproximateTime<IOs...>::set_max_queue_size(std::size_t queue_size, const boost::optional<ros::Duration>& max_age) noexcept
+ApproximateTime<IOs...>&
+ApproximateTime<IOs...>::set_max_queue_size(std::size_t queue_size,
+                                            const std::optional<rclcpp::Duration>& max_age) noexcept
 {
     max_queue_size_ = queue_size;
     max_age_ = max_age;
@@ -55,14 +68,15 @@ ApproximateTime<IOs...>& ApproximateTime<IOs...>::set_max_queue_size(std::size_t
 }
 
 template<typename... IOs>
-ApproximateTime<IOs...>& ApproximateTime<IOs...>::set_max_timespan(const ros::Duration& max_delta) noexcept
+ApproximateTime<IOs...>& ApproximateTime<IOs...>::set_max_timespan(const rclcpp::Duration& max_delta) noexcept
 {
     max_delta_ = max_delta;
     return *this;
 }
 
 template<typename... IOs>
-ApproximateTime<IOs...>& ApproximateTime<IOs...>::set_min_distance(std::size_t i, const ros::Duration& min_dist) noexcept
+ApproximateTime<IOs...>& ApproximateTime<IOs...>::set_min_distance(std::size_t i,
+                                                                   const rclcpp::Duration& min_dist) noexcept
 {
     min_dist_[i] = min_dist;
     return *this;
@@ -70,12 +84,12 @@ ApproximateTime<IOs...>& ApproximateTime<IOs...>::set_min_distance(std::size_t i
 
 template<typename... IOs>
 template<std::size_t N>
-void ApproximateTime<IOs...>::add(std::unique_lock<std::mutex>& lock, const std::tuple_element_t<N, IncomingTuples>& in)
+void ApproximateTime<IOs...>::add(std::unique_lock<std::mutex>& lock, std::tuple_element_t<N, IncomingTuples>&& in)
 {
-    ros::Time stamp = helpers::access_ros_header_stamp(std::get<0>(in));
+    rclcpp::Time stamp = helpers::access_ros_header_stamp(std::get<0>(in));
     if (max_age_)
     {
-        ros::Time cutoff = stamp - *max_age_;
+        rclcpp::Time cutoff = stamp - *max_age_;
         discard_expired(cutoff);
     }
     auto& head = std::get<N>(heads_);
@@ -83,20 +97,24 @@ void ApproximateTime<IOs...>::add(std::unique_lock<std::mutex>& lock, const std:
     /* First, make sure that all slots have in-order arrival of messages */
     if (head)
     {
-        ros::Time latest = helpers::access_ros_header_stamp(std::get<0>(queue.empty() ? *head : queue.back()));
+        rclcpp::Time latest = helpers::access_ros_header_stamp(std::get<0>(queue.empty() ? *head : queue.back()));
         if (stamp < latest)
         {
-            ROS_ERROR_STREAM_NAMED("Combiner<ApproximateTime>", "message with older time stamp " << stamp << "<" << latest << " received, resetting filter");
+            // ROS_ERROR_STREAM_NAMED("Combiner<ApproximateTime>", "message with older time stamp " << stamp << "<" <<
+            // latest << " received, resetting filter");
             reset();
         }
-        else
-        if (latest + min_dist_[N] > stamp)
+        else if (latest + min_dist_[N] > stamp)
         {
-            ROS_WARN_STREAM_NAMED("Combiner<ApproximateTime>", "new message arrived sooner than anticipated: time stamp " << stamp << "<" << latest + min_dist_[N]);
+            // ROS_WARN_STREAM_NAMED("Combiner<ApproximateTime>", "new message arrived sooner than anticipated: time
+            // stamp " << stamp << "<" << latest + min_dist_[N]);
         }
     }
     /* Add data to slot */
-    if (!head) head = in; else queue.push_back(in);
+    if (!head)
+        head = std::move(in);
+    else
+        queue.push_back(std::move(in));
     /* Enforce queue size limit */
     if (max_queue_size_ > 0)
     {
@@ -109,17 +127,20 @@ void ApproximateTime<IOs...>::add(std::unique_lock<std::mutex>& lock, const std:
          * violated. */
         if (pivot_ == UNSET)
         {
-            if (!determine_pivot()) return; /* Head is still incomplete, thus pivot undetermined */
+            if (!determine_pivot())
+                return; /* Head is still incomplete, thus pivot undetermined */
         }
         if (pivot_ != N)
         {
             /* The pivot slot will never advance, because it must be part of the next set.
              * For all other slots, we try to improve and see if we reached an optimum.
              * If we could still improve with a later message, we stop here for now. */
-            if (can_still_improve_at<N>()) return;
+            if (can_still_improve_at<N>())
+                return;
         }
         /* The current slot cannot improve, but maybe some other slot can */
-        if (can_still_improve()) return;
+        if (can_still_improve())
+            return;
         /* We have reached the best possible set with the current pivot */
         if (max_delta_)
         {
@@ -137,7 +158,7 @@ void ApproximateTime<IOs...>::add(std::unique_lock<std::mutex>& lock, const std:
 template<typename... IOs>
 void ApproximateTime<IOs...>::emit_heads(std::unique_lock<std::mutex>& lock)
 {
-    MaybeOutgoingTuples out = heads_;
+    MaybeOutgoingTuples out = std::move(heads_);
     helpers::for_each_apply<NUM_SLOTS>(
         [this](auto I)
         {
@@ -145,23 +166,22 @@ void ApproximateTime<IOs...>::emit_heads(std::unique_lock<std::mutex>& lock)
             auto& queue = std::get<I>(this->queues_);
             if (!queue.empty())
             {
-                head = queue.front();
+                head = std::move(queue.front());
                 queue.pop_front();
             }
             else
             {
                 head.reset();
             }
-        }
-    );
+        });
     pivot_ = UNSET;
     auto unlock = helpers::with_scoped_unlock(lock);
     helpers::index_apply<NUM_SLOTS>(
         [&](auto... Is)
         {
-            this->emit(std::tuple_cat(*std::get<Is>(out)...));
-        }
-    );
+            OutgoingTuple e{std::tuple_cat(std::move(*std::get<Is>(out))...)};
+            this->emit(e);
+        });
 }
 
 template<typename... IOs>
@@ -171,16 +191,16 @@ bool ApproximateTime<IOs...>::can_still_improve_at() noexcept
     // Check we can improve the current set by advancing in slot N
     auto& head = std::get<N>(heads_);
     auto& queue = std::get<N>(queues_);
-    ros::Time stamp = helpers::access_ros_header_stamp(std::get<0>(*head));
+    rclcpp::Time stamp = helpers::access_ros_header_stamp(std::get<0>(*head));
     while (!queue.empty())
     {
-        ros::Time next_stamp = helpers::access_ros_header_stamp(std::get<0>(queue.front()));
+        rclcpp::Time next_stamp = helpers::access_ros_header_stamp(std::get<0>(queue.front()));
         if (pivot_timedelta(next_stamp) < pivot_timedelta(stamp))
         {
             /* The next message is closer to the pivot element */
-            head = queue.front();
-            stamp = next_stamp;
+            head = std::move(queue.front());
             queue.pop_front();
+            stamp = next_stamp;
         }
         else
             return false; /* cannot improve further with this pivot */
@@ -202,22 +222,22 @@ bool ApproximateTime<IOs...>::can_still_improve() noexcept
         {
             if (I != pivot_)
             {
-                if (this->can_still_improve_at<I>()) result = true;
+                if (this->can_still_improve_at<I>())
+                    result = true;
             }
-        }
-    );
+        });
     return result;
 }
 
 template<typename... IOs>
 template<std::size_t N>
-void ApproximateTime<IOs...>::discard_expired_at(const ros::Time& cutoff) noexcept
+void ApproximateTime<IOs...>::discard_expired_at(const rclcpp::Time& cutoff) noexcept
 {
     auto& head = std::get<N>(heads_);
     auto& queue = std::get<N>(queues_);
     if (head)
     {
-        ros::Time stamp = helpers::access_ros_header_stamp(std::get<0>(*head));
+        rclcpp::Time stamp = helpers::access_ros_header_stamp(std::get<0>(*head));
         if (stamp < cutoff)
         {
             head.reset();
@@ -226,18 +246,21 @@ void ApproximateTime<IOs...>::discard_expired_at(const ros::Time& cutoff) noexce
     }
     while (!queue.empty())
     {
-        ros::Time stamp = helpers::access_ros_header_stamp(std::get<0>(queue.front()));
-        if (stamp <= cutoff) queue.pop_front(); else break;
+        rclcpp::Time stamp = helpers::access_ros_header_stamp(std::get<0>(queue.front()));
+        if (stamp <= cutoff)
+            queue.pop_front();
+        else
+            break;
     }
     if (!head && !queue.empty())
     {
-        head = queue.front();
+        head = std::move(queue.front());
         queue.pop_front();
     }
 }
 
 template<typename... IOs>
-void ApproximateTime<IOs...>::discard_expired(const ros::Time& cutoff) noexcept
+void ApproximateTime<IOs...>::discard_expired(const rclcpp::Time& cutoff) noexcept
 {
     helpers::for_each_apply<NUM_SLOTS>([this, cutoff](auto I) { this->discard_expired_at<I>(cutoff); });
 }
@@ -247,10 +270,12 @@ template<std::size_t N>
 void ApproximateTime<IOs...>::prune_queue_at(std::size_t queue_size) noexcept
 {
     auto& queue = std::get<N>(queues_);
-    if (queue.size() <= queue_size) return;
-    while (queue.size() > queue_size + 1) queue.pop_front();
+    if (queue.size() <= queue_size)
+        return;
+    while (queue.size() > queue_size + 1)
+        queue.pop_front();
     auto& head = std::get<N>(heads_);
-    head = queue.front();
+    head = std::move(queue.front());
     queue.pop_front();
     pivot_ = UNSET;
 }
@@ -263,38 +288,36 @@ void ApproximateTime<IOs...>::reset() noexcept
         {
             std::get<I>(heads_).reset();
             std::get<I>(queues_).clear();
-        }
-    );
+        });
     pivot_ = UNSET;
 }
 
 template<typename... IOs>
-ros::Duration ApproximateTime<IOs...>::heads_timespan() noexcept
+rclcpp::Duration ApproximateTime<IOs...>::heads_timespan() noexcept
 {
-    ros::Time first_ts, last_ts;
+    rclcpp::Time first_ts, last_ts;
     helpers::for_each_apply<NUM_SLOTS>(
         [&](auto I)
         {
             auto& head = std::get<I>(this->heads_);
             if (head)
             {
-                ros::Time stamp = helpers::access_ros_header_stamp(std::get<0>(*head));
-                if (first_ts.isZero() || stamp < first_ts)
+                rclcpp::Time stamp = helpers::access_ros_header_stamp(std::get<0>(*head));
+                if (first_ts.nanoseconds() == 0 || stamp < first_ts)
                 {
                     first_ts = stamp;
                 }
-                if (last_ts.isZero() || stamp > last_ts)
+                if (last_ts.nanoseconds() == 0 || stamp > last_ts)
                 {
                     last_ts = stamp;
                 }
             }
-        }
-    );
+        });
     return last_ts - first_ts;
 }
 
 template<typename... IOs>
-ros::Duration ApproximateTime<IOs...>::pivot_timedelta(const ros::Time& ts) noexcept
+rclcpp::Duration ApproximateTime<IOs...>::pivot_timedelta(const rclcpp::Time& ts) noexcept
 {
     /* The pivot timedelta is the absolute temporal distance from the pivot. */
     return ts < pivot_ts_ ? pivot_ts_ - ts : ts - pivot_ts_;
@@ -304,27 +327,26 @@ template<typename... IOs>
 void ApproximateTime<IOs...>::drop_pivot() noexcept
 {
     helpers::select_apply<NUM_SLOTS>(pivot_,
-        [this](auto I)
-        {
-            auto& head = std::get<I>(this->heads_);
-            auto& queue = std::get<I>(this->queues_);
-            if (!queue.empty())
-            {
-                head = queue.front();
-                queue.pop_front();
-            }
-            else
-                head.reset();
-        }
-    );
+                                     [this](auto I)
+                                     {
+                                         auto& head = std::get<I>(this->heads_);
+                                         auto& queue = std::get<I>(this->queues_);
+                                         if (!queue.empty())
+                                         {
+                                             head = std::move(queue.front());
+                                             queue.pop_front();
+                                         }
+                                         else
+                                             head.reset();
+                                     });
     pivot_ = UNSET;
 }
 
 template<typename... IOs>
 bool ApproximateTime<IOs...>::determine_pivot() noexcept
 {
-    assert(pivot_ == UNSET);
-    pivot_ts_ = ros::Time();
+    pivot_ = UNSET;
+    pivot_ts_ = rclcpp::Time(0, 0, RCL_ROS_TIME);
     bool ok = true;
     helpers::for_each_apply<NUM_SLOTS>(
         [&](auto I)
@@ -332,11 +354,12 @@ bool ApproximateTime<IOs...>::determine_pivot() noexcept
             auto& head = std::get<I>(this->heads_);
             if (head)
             {
-                ros::Time stamp = helpers::access_ros_header_stamp(std::get<0>(*head));
+                rclcpp::Time stamp = helpers::access_ros_header_stamp(std::get<0>(*head));
                 if (stamp > pivot_ts_)
                 {
                     pivot_ts_ = stamp;
-                    if (ok) pivot_ = I;
+                    if (ok)
+                        pivot_ = I;
                 }
             }
             else
@@ -344,12 +367,11 @@ bool ApproximateTime<IOs...>::determine_pivot() noexcept
                 pivot_ = UNSET;
                 ok = false;
             }
-        }
-    );
+        });
     return pivot_ != UNSET;
 }
 
-} // namespace combiner_policies
-} // namespace fkie_message_filters
+}  // namespace combiner_policies
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_APPROXIMATE_TIME_IMPL_H_ */

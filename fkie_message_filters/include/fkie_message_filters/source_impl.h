@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,6 +21,7 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_SOURCE_IMPL_H_
 
 #include "source.h"
+
 #include <mutex>
 
 namespace fkie_message_filters
@@ -30,7 +31,7 @@ template<typename... Outputs>
 Connection Source<Outputs...>::connect_to_sink(Sink<Outputs...>& dst) noexcept
 {
     std::lock_guard<std::mutex> lock(dst.mutex_);
-    Connection c = signal_.connect_extended([&dst](const Connection& conn, const Outputs&... out) { dst.receive_cb(conn, out...); });
+    Connection c = signal_.connect([&dst](Outputs&&... out) { dst.receive_cb(std::forward<Outputs&&>(out)...); });
     dst.conn_.push_back(c);
     return c;
 }
@@ -48,11 +49,11 @@ void Source<Outputs...>::disconnect() noexcept
 }
 
 template<typename... Outputs>
-void Source<Outputs...>::send(const Outputs&... out)
+void Source<Outputs...>::send(helpers::argument_t<Outputs>... out)
 {
-    signal_(out...);
+    signal_(helpers::maybe_move(out)...);
 }
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SOURCE_IMPL_H_ */

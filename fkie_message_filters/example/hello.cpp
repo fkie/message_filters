@@ -1,29 +1,28 @@
-#include <ros/ros.h>
-#include <std_msgs/String.h>
 #include <fkie_message_filters/fkie_message_filters.h>
+#include <rclcpp/rclcpp.hpp>
+#include <std_msgs/msg/string.hpp>
 
 namespace mf = fkie_message_filters;
 
-using StringSubscriber = mf::Subscriber<std_msgs::String, mf::RosMessage>;
-using StringPublisher = mf::Publisher<std_msgs::String, mf::RosMessage>;
+using StringSubscriber = mf::Subscriber<std_msgs::msg::String, mf::RosMessage>;
+using StringPublisher = mf::Publisher<std_msgs::msg::String, mf::RosMessage>;
 using GreetingFilter = mf::UserFilter<StringSubscriber::Output, StringPublisher::Input>;
 
 int main(int argc, char** argv)
 {
-    ros::init(argc, argv, "hello");
-    ros::NodeHandle nh;
-    StringSubscriber sub(nh, "name", 1);
-    StringPublisher pub(nh, "greeting", 1);
+    rclcpp::init(argc, argv);
+    rclcpp::Node::SharedPtr node = std::make_shared<rclcpp::Node>("hello");
+    StringSubscriber sub(node, "name");
+    StringPublisher pub(node, "greeting");
     GreetingFilter flt;
     flt.set_processing_function(
-        [](const std_msgs::String& input, const GreetingFilter::CallbackFunction& output)
+        [](const std_msgs::msg::String& input, const GreetingFilter::CallbackFunction& output)
         {
-            std_msgs::String greeting;
+            std_msgs::msg::String greeting;
             greeting.data = "Hello, " + input.data + "!";
             output(greeting);
-        }
-    );
+        });
     mf::chain(sub, flt, pub);
-    ros::spin();
+    rclcpp::spin(node);
     return 0;
 }

@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,7 +22,8 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_FIFO_H_
 
 #include "policy_base.h"
-#include <boost/circular_buffer.hpp>
+
+#include <deque>
 #include <mutex>
 
 namespace fkie_message_filters
@@ -32,18 +33,19 @@ namespace combiner_policies
 
 /** \brief First-In-First-Out policy.
  *
- * This is a policy for the Combiner class. It will assemble data from the connected sources in a FIFO manner.
- * As soon as at least one input from each source has been received, a combined output is created and passed to
- * the sink. There is no attempt to reorder inputs in any way.
+ * This is a policy for the Combiner class. It will assemble data from the connected sources in a FIFO manner. As soon
+ * as at least one input from each source has been received, a combined output is created and passed to the sink. There
+ * is no attempt to reorder inputs in any way.
  *
- * The FIFO policy is sufficient if all corresponding inputs arrive always in order and with the same frequency.
- * The policy has no requirements with regard to the data types it processes.
+ * The FIFO policy is sufficient if all corresponding inputs arrive always in order and with the same frequency. The
+ * policy has no requirements with regard to the data types it processes.
  */
 template<typename... IOs>
 class Fifo : public PolicyBase<IOs...>
 {
 public:
-    template<template<typename...> class, class...> friend class fkie_message_filters::Combiner;
+    template<template<typename...> class, class...>
+    friend class fkie_message_filters::Combiner;
     using typename PolicyBase<IOs...>::EmitterCB;
     using typename PolicyBase<IOs...>::IncomingTuples;
     using typename PolicyBase<IOs...>::OutgoingTuple;
@@ -54,24 +56,29 @@ public:
      * \throw std::invalid_argument if \a max_queue_size is zero
      */
     explicit Fifo(std::size_t max_queue_size = 1);
+    /** \ brief Copy constructor. */
+    Fifo(const Fifo& other);
+
 protected:
     /** \brief Input function.
      *
      * This function will be called by the Combiner class for incoming data.
      */
     template<std::size_t N>
-    void add(std::unique_lock<std::mutex>&, const std::tuple_element_t<N, IncomingTuples>&);
+    void add(std::unique_lock<std::mutex>&, std::tuple_element_t<N, IncomingTuples>&&);
     void reset() noexcept override;
+
 private:
     using typename PolicyBase<IOs...>::MaybeOutgoingTuples;
-    using IncomingQueues = std::tuple<boost::circular_buffer<helpers::io_tuple_t<IOs>>...>;
+    using IncomingQueues = std::tuple<std::deque<helpers::io_tuple_t<IOs>>...>;
     bool has_complete_tuple() noexcept;
     MaybeOutgoingTuples assemble_output() noexcept;
-    IncomingQueues in_;
+    std::size_t max_queue_size_;
+    IncomingQueues queues_;
 };
 
-} // namespace combiner_policies
-} // namespace fkie_message_filters
+}  // namespace combiner_policies
+}  // namespace fkie_message_filters
 
 #include "fifo_impl.h"
 

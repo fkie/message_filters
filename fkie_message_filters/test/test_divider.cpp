@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,16 +18,18 @@
  *
  ****************************************************************************/
 #include "test.h"
-#include <fkie_message_filters/divider.h>
-#include <fkie_message_filters/user_source.h>
-#include <fkie_message_filters/simple_user_filter.h>
 
-TEST(fkie_message_filters, Divider)
+#include <fkie_message_filters/divider.h>
+#include <fkie_message_filters/simple_user_filter.h>
+#include <fkie_message_filters/user_source.h>
+
+template<typename int_T, typename double_T>
+void divider_test_code()
 {
-    using Source = mf::UserSource<int_M, double_M>;
-    using Divider = mf::Divider<Source::Output>;
-    using Sink1 = mf::SimpleUserFilter<int_M>;
-    using Sink2 = mf::SimpleUserFilter<double_M>;
+    using Source = mf::UserSource<int_T, double_T>;
+    using Divider = mf::Divider<typename Source::Output>;
+    using Sink1 = mf::SimpleUserFilter<int_T>;
+    using Sink2 = mf::SimpleUserFilter<double_T>;
 
     std::size_t callback_counts = 0;
     Source src;
@@ -36,23 +38,33 @@ TEST(fkie_message_filters, Divider)
     Sink2 snk2;
 
     snk1.set_processing_function(
-        [&](const int_M& i) -> bool
+        [&](const int_T& i) -> bool
         {
             ++callback_counts;
-            if (i != 42) throw std::domain_error("i != 42");
+            if (i != 42)
+                throw std::domain_error("i != 42");
             return true;
-        }
-    );
+        });
     snk2.set_processing_function(
-        [&](const double_M& d) -> bool
+        [&](const double_T& d) -> bool
         {
             ++callback_counts;
-            if (d != 3.14) throw std::domain_error("d != 3.14");
+            if (d != 3.14)
+                throw std::domain_error("d != 3.14");
             return true;
-        }
-    );
+        });
     mf::chain(src, div);
     div.connect_to_sinks(snk1, snk2);
-    src(int_M(42), double_M(3.14));
+    src(int_T(42), double_T(3.14));
     ASSERT_EQ(2u, callback_counts);
+}
+
+TEST(fkie_message_filters, DividerCopyConstructible)
+{
+    divider_test_code<int_C, double_C>();
+}
+
+TEST(fkie_message_filters, DividerMoveConstructible)
+{
+    divider_test_code<int_M, double_M>();
 }

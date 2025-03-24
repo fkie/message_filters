@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,12 +22,14 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_POLICY_BASE_H_
 
 #include "../types.h"
-#include <boost/optional.hpp>
+
+#include <optional>
 
 namespace fkie_message_filters
 {
 
-template<template<typename...> class, class...> class Combiner;
+template<template<typename...> class, class...>
+class Combiner;
 
 namespace combiner_policies
 {
@@ -37,14 +39,16 @@ template<class... IOs>
 class PolicyBase
 {
 public:
-    template<template<typename...> class, class...> friend class fkie_message_filters::Combiner;
+    template<template<typename...> class, class...>
+    friend class fkie_message_filters::Combiner;
     /** \brief Tuple type of incoming data tuples. */
     using IncomingTuples = std::tuple<helpers::io_tuple_t<IOs>...>;
     /** \brief Combined tuple type for data output. */
     using OutgoingTuple = helpers::io_tuple_t<helpers::io_concat_t<IOs...>>;
     /** \brief Callback for assembled outputs. */
-    using EmitterCB = std::function<void(const OutgoingTuple&)>;
+    using EmitterCB = std::function<void(OutgoingTuple&)>;
     virtual ~PolicyBase() {}
+
 protected:
     /** \brief Set output function.
      *
@@ -61,18 +65,19 @@ protected:
      * This is basically a tuple of optionals, so elements can remain empty until a suitable
      * data element has been found by the policy.
      */
-    using MaybeOutgoingTuples = std::tuple<boost::optional<helpers::io_tuple_t<IOs>>...>;
+    using MaybeOutgoingTuples = std::tuple<std::optional<helpers::io_tuple_t<IOs>>...>;
     /** \brief Emit data.
      *
      * This returns combined data back to the Combiner class.
      */
-    void emit (const OutgoingTuple& out);
+    void emit(OutgoingTuple& out);
+
 private:
     EmitterCB emit_;
 };
 
-} // namespace combiner_policies
-} // namespace fkie_message_filters
+}  // namespace combiner_policies
+}  // namespace fkie_message_filters
 
 #include "policy_base_impl.h"
 

@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,52 +24,112 @@
 #define FKIE_MESSAGE_FILTERS_IGNORE_ROS_OK
 
 #include <gtest/gtest.h>
-#include <std_msgs/Header.h>
-#include <ros/message_traits.h>
+#include <image_transport/image_transport.hpp>
+#include <rclcpp/publisher.hpp>
+#include <rclcpp/subscription.hpp>
+#include <rclcpp/time.hpp>
+#include <std_msgs/msg/header.hpp>
 
+#include <type_traits>
 namespace fkie_message_filters
 {
 }
 
 template<class T>
-struct NotDefaultConstructable
+struct CopyConstructable
 {
-    NotDefaultConstructable() = delete;
-    explicit NotDefaultConstructable(const T& t) : data(t) {}
-    NotDefaultConstructable(const NotDefaultConstructable&) = default;
-    operator const T() const { return data; }
-    bool operator == (const NotDefaultConstructable& other) const { return data == other.data; }
-    bool operator != (const NotDefaultConstructable& other) const { return data != other.data; }
+    CopyConstructable() = delete;
+    explicit CopyConstructable(const T& t) : data_(t) {}
+    CopyConstructable(const CopyConstructable&) = default;
+    operator const T&() const
+    {
+        return data_;
+    }
+    bool operator==(const CopyConstructable& other) const
+    {
+        return data_ == other.data_;
+    }
+    bool operator!=(const CopyConstructable& other) const
+    {
+        return data_ != other.data_;
+    }
+
 private:
-    T data;
+    T data_;
 };
 
-using int_M = NotDefaultConstructable<int>;
-using double_M = NotDefaultConstructable<double>;
-using string_M = NotDefaultConstructable<std::string>;
+using int_C = CopyConstructable<int>;
+using double_C = CopyConstructable<double>;
+using string_C = CopyConstructable<std::string>;
+
+static_assert(std::is_copy_constructible_v<int_C>);
 
 template<class T>
-struct Stamped : public NotDefaultConstructable<T>
+struct MoveConstructable
 {
-    explicit Stamped (const T& t, const std::string& frame_id = std::string(), const ros::Time& stamp = ros::Time())
-    : NotDefaultConstructable<T>(t)
+    MoveConstructable() = delete;
+    MoveConstructable(const MoveConstructable&) = delete;
+    explicit MoveConstructable(const T& t) : data_(t), valid_(true) {}
+    MoveConstructable(MoveConstructable&& other) : data_(std::move(other.data_)), valid_(other.valid_)
+    {
+        other.valid_ = false;
+    }
+    MoveConstructable& operator=(const MoveConstructable&) = delete;
+    MoveConstructable& operator=(MoveConstructable&& other)
+    {
+        data_ = std::move(other.data_);
+        valid_ = other.valid_;
+        other.valid_ = false;
+        return *this;
+    }
+    bool is_valid() const
+    {
+        return valid_;
+    }
+
+    operator const T&() const
+    {
+        return data_;
+    }
+    bool operator==(const MoveConstructable& other) const
+    {
+        return valid_ && other.valid_ && data_ == other.data_;
+    }
+    bool operator!=(const MoveConstructable& other) const
+    {
+        return !valid_ || !other.valid_ || data_ != other.data_;
+    }
+
+private:
+    T data_;
+    bool valid_;
+};
+
+using int_M = MoveConstructable<int>;
+using double_M = MoveConstructable<double>;
+using string_M = MoveConstructable<std::string>;
+
+static_assert(!std::is_copy_constructible_v<int_M>);
+static_assert(std::is_move_constructible_v<int_M>);
+
+template<class T>
+struct Stamped : public T
+{
+    template<class U, std::enable_if_t<std::is_constructible_v<T, U>, bool> = true>
+    explicit Stamped(const U& u, const std::string& frame_id = std::string(),
+                     const rclcpp::Time& stamp = rclcpp::Time(0, 0, RCL_ROS_TIME))
+        : T(u)
     {
         header.frame_id = frame_id;
         header.stamp = stamp;
     }
-    std_msgs::Header header;
+    std_msgs::msg::Header header;
 };
 
-namespace ros
+inline rclcpp::Time make_stamp(int32_t seconds, uint32_t nanoseconds = 0)
 {
-namespace message_traits
-{
-
-template<class T>
-struct HasHeader<Stamped<T>> : public TrueType {};
-
-} // namespace message_traits
-} // namespace ros
+    return rclcpp::Time(seconds, nanoseconds, RCL_ROS_TIME);
+}
 
 class ExpectedException : public std::runtime_error
 {
@@ -77,6 +137,55 @@ public:
     ExpectedException(const char* what) : std::runtime_error(what) {}
 };
 
+template<class PublisherT>
+std::size_t get_subscription_count(const std::shared_ptr<PublisherT>& pub)
+{
+    return pub->get_subscription_count();
+}
+
+inline std::size_t get_subscription_count(image_transport::Publisher& pub)
+{
+    return pub.getNumSubscribers();
+}
+
+inline std::size_t get_subscription_count(image_transport::CameraPublisher& pub)
+{
+    return pub.getNumSubscribers();
+}
+
+template<class SubscriberT>
+std::size_t get_publisher_count(std::shared_ptr<SubscriberT>& sub)
+{
+    return sub->get_publisher_count();
+}
+
+inline std::size_t get_publisher_count(image_transport::Subscriber& sub)
+{
+    return sub.getNumPublishers();
+}
+
+inline std::size_t get_publisher_count(image_transport::CameraSubscriber& sub)
+{
+    return sub.getNumPublishers();
+}
+
+template<class PublisherT, class... MessagesT>
+void publish(std::shared_ptr<PublisherT>& pub, MessagesT&&... msgs)
+{
+    pub->publish(std::forward<MessagesT&&>(msgs)...);
+}
+
+template<class... MessagesT>
+void publish(image_transport::Publisher& pub, MessagesT&&... msgs)
+{
+    pub.publish(std::forward<MessagesT&&>(msgs)...);
+}
+
+template<class... MessagesT>
+void publish(image_transport::CameraPublisher& pub, MessagesT&&... msgs)
+{
+    pub.publish(std::forward<MessagesT&&>(msgs)...);
+}
 
 namespace mf = fkie_message_filters;
 

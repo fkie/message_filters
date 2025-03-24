@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,15 +20,16 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_TYPES_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_TYPES_H_
 
-#include <boost/signals2/connection.hpp>
-#include <tuple>
 #include "helpers/io.h"
+#include "helpers/signaling.h"
+
+#include <tuple>
 
 namespace fkie_message_filters
 {
 
 /** \brief Tracks connections from sources to sinks. */
-using Connection = boost::signals2::connection;
+using Connection = helpers::Connection;
 
 /** \brief Group multiple data types as filter input or output.
  *
@@ -42,8 +43,8 @@ using Connection = boost::signals2::connection;
  * Filter<IO<Type1>, IO<Type2, Type3>> flt1;
  * Filter<IO<Type1, Type2>, IO<Type3>> flt2;
  * \endcode
- * This declaration makes it clear that the first filter accepts \c Type1 as input and will pass \c Type2 and \c Type3 as
- * output, while the second filter will take \c Type1 and \c Type2 as input and pass \c Type3 as output.
+ * This declaration makes it clear that the first filter accepts \c Type1 as input and will pass \c Type2 and \c Type3
+ * as output, while the second filter will take \c Type1 and \c Type2 as input and pass \c Type3 as output.
  */
 template<typename... Types>
 class IO
@@ -62,6 +63,6 @@ public:
     using Rewrap = Outer<helpers::io_unwrap_t<Types>...>;
 };
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_TYPES_H_ */

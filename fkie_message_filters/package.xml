@@ -1,20 +1,24 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>fkie_message_filters</name>
-  <version>1.1.2</version>
+  <version>2.0.0</version>
   <description>Improved ROS message filters</description>
 
   <maintainer email="timo.roehling@fkie.fraunhofer.de">Timo Röhling</maintainer>
   <author email="timo.roehling@fkie.fraunhofer.de">Timo Röhling</author>
   <license>Apache-2.0</license>
 
-  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>image_transport</depend>
-  <depend>roscpp</depend>
+  <depend>rclcpp</depend>
   <depend>sensor_msgs</depend>
   <depend>tf2_ros</depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_cmake_ros</test_depend>
   <test_depend>std_msgs</test_depend>
-  <test_depend>rosunit</test_depend>
-  <test_depend>rostest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
 </package>

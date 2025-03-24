@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,9 +22,11 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_TF_FILTER_H_
 
 #include "filter.h"
-#include <tf2/buffer_core.h>
-#include <ros/node_handle.h>
-#include <ros/callback_queue_interface.h>
+
+#include <tf2/buffer_core.hpp>
+
+#include <memory>
+#include <vector>
 
 namespace fkie_message_filters
 {
@@ -53,8 +55,7 @@ enum class TfFilterResult
 /** \brief Wait for TF transformations for incoming messages.
  *
  * This filter is intended to be used with a Subscriber as source, and will delay incoming messages until they can be
- * transformed to the specified TF target frames. If the filter input is not unary, only the first argument is examined,
- * which must have an accessible ROS header as determined by the \c ros::message_traits template.
+ * transformed to the specified TF target frames. If the filter input is not unary, only the first argument is examined.
  *
  * \code
  * namespace mf = fkie_message_filters;
@@ -72,6 +73,9 @@ template<class... Inputs>
 class TfFilter : public Filter<IO<Inputs...>, IO<Inputs...>>
 {
 public:
+    /** \brief Type alias for \c std::vector<std::string> */
+    using V_string = std::vector<std::string>;
+
     /** \brief Callback for failed transform queries. */
     using FilterFailureCB = std::function<void(const Inputs&..., TfFilterResult)>;
 
@@ -84,52 +88,24 @@ public:
      *
      * The constructor calls init() and set_target_frame() for you.
      *
-     * \arg \c bc a TF2 buffer instance
+     * \arg \c bc a tf2 buffer instance
      * \arg \c target_frame the TF target frame for the incoming messages
      * \arg \c queue_size the maximum number of queued messages
-     * \arg \c nh the ROS node handle whose callback queue is used to pass transformable messages
      *
      * \nothrow
      */
-    TfFilter(tf2::BufferCore& bc, const std::string& target_frame, uint32_t queue_size, const ros::NodeHandle& nh) noexcept;
+    TfFilter(tf2::BufferCore& bc, const std::string& target_frame, uint32_t queue_size) noexcept;
     /** \brief Construct and initialize the filter.
      *
      * The constructor calls init() and set_target_frame() for you.
      *
-     * \arg \c bc a TF2 buffer instance
-     * \arg \c target_frame the TF target frame for the incoming messages
+     * \arg \c bc a tf2 buffer instance
+     * \arg \c target_frames the TF target frames for the incoming messages
      * \arg \c queue_size the maximum number of queued messages
-     * \arg \c cbq the ROS callback queue that is used to pass transformable messages. If \c nullptr, the send() function is called
-     * directly from the TF2 buffer callback or receive() method.
      *
      * \nothrow
      */
-    TfFilter(tf2::BufferCore& bc, const std::string& target_frame, uint32_t queue_size, ros::CallbackQueueInterface* cbq) noexcept;
-    /** \brief Construct and initialize the filter.
-     *
-     * The constructor calls init() and set_target_frames() for you.
-     *
-     * \arg \c bc a TF2 buffer instance
-     * \arg \c target_frames the TF target frames for the incoming messages. Passed message will be transformable to all these frames.
-     * \arg \c queue_size the maximum number of queued messages
-     * \arg \c nh the ROS node handle whose callback queue is used to pass transformable messages
-     *
-     * \nothrow
-     */
-    TfFilter(tf2::BufferCore& bc, const ros::V_string& target_frames, uint32_t queue_size, const ros::NodeHandle& nh) noexcept;
-    /** \brief Construct and initialize the filter.
-     *
-     * The constructor calls init() and set_target_frames() for you.
-     *
-     * \arg \c bc a TF2 buffer instance
-     * \arg \c target_frames the TF target frames for the incoming messages. Passed message will be transformable to all these frames.
-     * \arg \c queue_size the maximum number of queued messages
-     * \arg \c cbq the ROS callback queue that is used to pass transformable messages. If \c nullptr, the send() function is called
-     * directly from the TF2 buffer callback or receive() method.
-     *
-     * \nothrow
-     */
-    TfFilter(tf2::BufferCore& bc, const ros::V_string& target_frames, uint32_t queue_size, ros::CallbackQueueInterface* cbq) noexcept;
+    TfFilter(tf2::BufferCore& bc, const V_string& target_frames, uint32_t queue_size) noexcept;
     /** \brief Initialize the filter.
      *
      * This function allocates internal data structures and makes the filter operational. If the function is called on
@@ -137,38 +113,24 @@ public:
      *
      * \arg \c bc a TF2 buffer instance
      * \arg \c queue_size the maximum number of queued messages
-     * \arg \c nh the ROS node handle whose callback queue is used to pass transformable messages
      *
      * \nothrow
      */
-    void init(tf2::BufferCore& bc, uint32_t queue_size, const ros::NodeHandle& nh) noexcept;
-    /** \brief Initialize the filter.
-     *
-     * This function allocates internal data structures and makes the filter operational. If the function is called on
-     * an already initialized filter, the filter is reinitialized and reset() is called implicitly.
-     *
-     * \arg \c bc a TF2 buffer instance
-     * \arg \c queue_size the maximum number of queued messages
-     * \arg \c cbq the ROS callback queue that is used to pass transformable messages. If \c nullptr, the send() function is called
-     * directly from the TF2 buffer callback or receive() method.
-     *
-     * \nothrow
-     */
-    void init(tf2::BufferCore& bc, uint32_t queue_size, ros::CallbackQueueInterface* cbq) noexcept;
+    void init(tf2::BufferCore& bc, uint32_t queue_size) noexcept;
     /** \brief Choose the TF target frame.
      *
      * \arg \c target_frame all passed messages will be transformable to this TF frame
      *
      * \throw std::logic_error if the filter is uninitialized
      */
-    void set_target_frame (const std::string& target_frame);
+    void set_target_frame(const std::string& target_frame);
     /** \brief Choose the TF target frames.
      *
      * \arg \c target_frames all passed messages will be transformable to all these TF frames
      *
      * \throw std::logic_error if the filter is uninitialized
      */
-    void set_target_frames (const ros::V_string& target_frames);
+    void set_target_frames(const V_string& target_frames);
     /** \brief Reset filter state.
      *
      * Discards all queued messages. Existing connections to sources and sinks are unaffected.
@@ -186,22 +148,26 @@ public:
      * \throw std::logic_error if the filter is uninitialized
      */
     void set_filter_failure_function(FilterFailureCB cb);
+
 protected:
-    void receive (const Inputs&... in) override;
+    void receive(helpers::argument_t<Inputs>... in) override;
+
 private:
     using MessageTuple = std::tuple<Inputs...>;
     struct Impl;
-    class RosCB;
     std::shared_ptr<Impl> impl_;
-    void transformable(tf2::TransformableRequestHandle request_handle, const std::string& target_frame, const std::string& source_frame, ros::Time time, tf2::TransformableResult result);
-    void report_failure (std::unique_lock<std::mutex>&, const MessageTuple&, TfFilterResult);
-    void send_message (std::unique_lock<std::mutex>&, const MessageTuple& m);
+    void transformable(tf2::TransformableRequestHandle request_handle, const std::string& target_frame,
+                       const std::string& source_frame, tf2::TimePoint time, tf2::TransformableResult result);
+    void report_failure(std::unique_lock<std::mutex>&, MessageTuple&, TfFilterResult);
+    void send_message(std::unique_lock<std::mutex>&, MessageTuple& m);
 };
 
 template<class... Inputs>
-class TfFilter<IO<Inputs...>> : public TfFilter<Inputs...> {};
+class TfFilter<IO<Inputs...>> : public TfFilter<Inputs...>
+{
+};
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #include "tf_filter_impl.h"
 

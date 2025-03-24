@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,11 +26,11 @@ namespace fkie_message_filters
 {
 
 template<class... Inputs, std::size_t... Is>
-void Selector<IO<Inputs...>, Is...>::receive(const Inputs&... in)
+void Selector<IO<Inputs...>, Is...>::receive(helpers::argument_t<Inputs>... in)
 {
-    this->send(std::get<Is>(std::forward_as_tuple(in...))...);
+    this->send(std::get<Is>(std::forward_as_tuple(helpers::maybe_move(in)...))...);
 }
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SELECTOR_IMPL_H_ */

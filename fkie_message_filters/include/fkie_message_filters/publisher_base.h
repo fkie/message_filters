@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,11 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_PUBLISHER_BASE_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_PUBLISHER_BASE_H_
 
-#include <boost/signals2.hpp>
+#include "helpers/signaling.h"
+#include "types.h"
+
+#include <rclcpp/node.hpp>
+
 #include <tuple>
 
 namespace fkie_message_filters
@@ -31,16 +35,17 @@ class SubscriberBase;
 
 /** \brief Base class for ROS publishers in a filter pipeline.
  *
- * ROS subscribers and publishers can act as sources and sinks in the message filter library. This class provides
- * some basic functionality for on-demand subscriptions.
+ * ROS subscribers and publishers can act as sources and sinks in the message filter library. This class provides some
+ * basic functionality for on-demand subscriptions.
  *
  * \sa Publisher
  */
 class PublisherBase
 {
     friend class SubscriberBase;
+
 public:
-    virtual ~PublisherBase() {}
+    virtual ~PublisherBase();
     /** \brief Check if the publisher is active.
      *
      * Returns \c true if the number of subscribers is greater than zero. The result of the function is used to
@@ -54,6 +59,7 @@ public:
      * \abstractthrow
      */
     virtual std::string topic() const = 0;
+
 protected:
     /** \brief Cause all linked subscribers to subscribe or unsubscribe to their ROS topics.
      *
@@ -70,11 +76,26 @@ protected:
      *
      * \implthrow
      */
-    std::tuple<boost::signals2::connection, boost::signals2::connection> link_with_subscriber(SubscriberBase& sub);
+    std::tuple<Connection, Connection> link_with_subscriber(SubscriberBase& sub);
+    /** \brief Start monitoring thread for the number of subscribers.
+     *
+     * This is needed in ROS 2 because there is no longer a dedicated callback for created publishers.
+     *
+     * \nothrow
+     */
+    void start_monitor(const rclcpp::Node::SharedPtr& node) noexcept;
+    /** \brief Shutdown monitoring thread for the number of subscribers.
+     *
+     * This function is called automatically when the publisher object is destroyed.
+     */
+    void shutdown_monitor() noexcept;
+
 private:
-    boost::signals2::signal<void()> enable_signal_, disable_signal_;
+    helpers::Signal<> enable_signal_, disable_signal_;
+    class Monitor;
+    std::shared_ptr<Monitor> monitor_;
 };
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_PUBLISHER_BASE_H_ */

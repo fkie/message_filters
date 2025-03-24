@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,12 +35,13 @@ void PolicyBase<IOs...>::set_emitter_callback(const EmitterCB& cb) noexcept
 }
 
 template<class... IOs>
-void PolicyBase<IOs...>::emit(const OutgoingTuple& out)
+void PolicyBase<IOs...>::emit(OutgoingTuple& out)
 {
-    if (emit_) emit_(out);
+    if (emit_)
+        emit_(out);
 }
 
-} // namespace combiner_policies
-} // namespace fkie_message_filters
+}  // namespace combiner_policies
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_POLICY_BASE_IMPL_H_ */

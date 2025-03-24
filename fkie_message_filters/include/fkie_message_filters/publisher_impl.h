@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,6 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_PUBLISHER_IMPL_H_
 
 #include "publisher.h"
-#include <ros/advertise_options.h>
 
 namespace fkie_message_filters
 {
@@ -32,72 +31,45 @@ Publisher<M, Translate>::Publisher() noexcept
 }
 
 template<class M, template<typename> class Translate>
-Publisher<M, Translate>::Publisher(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, bool latch, ros::CallbackQueueInterface* callback_queue) noexcept
+Publisher<M, Translate>::~Publisher()
 {
-    advertise(nh, topic, queue_size, latch, callback_queue);
+    shutdown_monitor();
+}
+
+template<class M, template<typename> class Translate>
+Publisher<M, Translate>::Publisher(rclcpp::Node::SharedPtr& node, const std::string& topic, const rclcpp::QoS& qos,
+                                   const rclcpp::PublisherOptions& options) noexcept
+{
+    advertise(node, topic, qos, options);
 }
 
 template<class M, template<typename> class Translate>
 bool Publisher<M, Translate>::is_active() const noexcept
 {
-    return pub_.getNumSubscribers() > 0;
+    return pub_ ? pub_->get_subscription_count() > 0 : false;
 }
 
 template<class M, template<typename> class Translate>
 std::string Publisher<M, Translate>::topic() const noexcept
 {
-    return pub_.getTopic();
+    return pub_ ? pub_->get_topic_name() : std::string();
 }
 
 template<class M, template<typename> class Translate>
-void Publisher<M, Translate>::advertise(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, bool latch, ros::CallbackQueueInterface* callback_queue) noexcept
+void Publisher<M, Translate>::advertise(rclcpp::Node::SharedPtr& node, const std::string& topic, const rclcpp::QoS& qos,
+                                        const rclcpp::PublisherOptions& options) noexcept
 {
-    ros::AdvertiseOptions opts;
-    opts.init<M>(topic, queue_size,
-            [this](const ros::SingleSubscriberPublisher&)
-            {
-                this->update_subscriber_state();
-            },
-            [this](const ros::SingleSubscriberPublisher&)
-            {
-                this->update_subscriber_state();
-            }
-    );
-    opts.latch = latch;
-    opts.callback_queue = callback_queue;
-    pub_ = nh.advertise(opts);
+    pub_ = node->create_publisher<MessageType>(topic, qos, options);
+    start_monitor(node);
     update_subscriber_state();
 }
 
 template<class M, template<typename> class Translate>
-void Publisher<M, Translate>::advertise(ros::NodeHandle& nh, const std::string& topic, uint32_t queue_size, const ros::SubscriberStatusCallback& connect_cb, const ros::SubscriberStatusCallback& disconnect_cb, const ros::VoidConstPtr& tracked_object, bool latch, ros::CallbackQueueInterface* callback_queue) noexcept
+void Publisher<M, Translate>::receive(helpers::argument_t<typename Translate<M>::FilterType> m) noexcept
 {
-    ros::AdvertiseOptions opts;
-    opts.init<M>(topic, queue_size,
-            [this, connect_cb](const ros::SingleSubscriberPublisher& ssp)
-            {
-                this->update_subscriber_state();
-                if (connect_cb) connect_cb(ssp);
-            },
-            [this, disconnect_cb](const ros::SingleSubscriberPublisher& ssp)
-            {
-                this->update_subscriber_state();
-                if (disconnect_cb) disconnect_cb(ssp);
-            }
-    );
-    opts.latch = latch;
-    opts.callback_queue = callback_queue;
-    opts.tracked_object = tracked_object;
-    pub_ = nh.advertise(opts);
-    update_subscriber_state();
-}    
-
-template<class M, template<typename> class Translate>
-void Publisher<M, Translate>::receive (const typename Translate<M>::FilterType& m) noexcept
-{
-    pub_.publish(Translate<M>::filterToPublish(m));
+    Translate<M>::publish(*pub_, m);
 }
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_PUBLISHER_IMPL_H_ */

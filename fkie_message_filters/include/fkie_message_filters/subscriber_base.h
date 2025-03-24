@@ -1,7 +1,7 @@
 /****************************************************************************
  *
  * fkie_message_filters
- * Copyright © 2018-2020 Fraunhofer FKIE
+ * Copyright © 2018-2025 Fraunhofer FKIE
  * Author: Timo Röhling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,7 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_SUBSCRIBER_BASE_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_SUBSCRIBER_BASE_H_
 
-#include <boost/signals2.hpp>
+#include "types.h"
 
 namespace fkie_message_filters
 {
@@ -38,6 +38,7 @@ class PublisherBase;
 class SubscriberBase
 {
     friend class PublisherBase;
+
 public:
     virtual ~SubscriberBase();
     /** \brief Subscribe to the configured ROS topic.
@@ -73,6 +74,7 @@ public:
      * \abstractthrow
      */
     virtual std::string topic() const = 0;
+
 protected:
     /** \brief Check if the subscriber is properly configured.
      *
@@ -118,10 +120,11 @@ protected:
      * \nothrow
      */
     void unlink_from_publisher();
+
 private:
-    boost::signals2::connection conn1_, conn2_;
+    Connection conn1_, conn2_;
 };
 
-} // namespace fkie_message_filters
+}  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SUBSCRIBER_BASE_H_ */
