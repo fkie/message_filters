@@ -2,6 +2,11 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Reimplementation for ROS 2
+* Contributors: Timo Röhling
+
 1.1.2 (2020-09-03)
 ------------------
 * Fix compiler warnings with Clang 9
