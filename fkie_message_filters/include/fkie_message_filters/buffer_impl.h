@@ -46,9 +46,10 @@ struct Buffer<Inputs...>::Impl
     bool wait_for_queue_element(std::unique_lock<std::mutex>& lock) noexcept
     {
 #ifndef FKIE_MESSAGE_FILTERS_IGNORE_RCLCPP_OK
+        using namespace std::chrono_literals;
         while (rclcpp::ok() && policy_ == BufferPolicy::Queue && queue_.empty())
         {
-            cond_.wait_for(lock, std::chrono::milliseconds(100));
+            cond_.wait_for(lock, 100ms);
         }
         return rclcpp::ok() && !queue_.empty();
 #else
@@ -63,11 +64,12 @@ struct Buffer<Inputs...>::Impl
     {
         std::chrono::system_clock::time_point deadline = std::chrono::system_clock::now() + timeout;
 #ifndef FKIE_MESSAGE_FILTERS_IGNORE_RCLCPP_OK
+        using namespace std::chrono_literals;
         while (rclcpp::ok() && policy_ == BufferPolicy::Queue && queue_.empty())
         {
             std::chrono::system_clock::duration remaining = deadline - std::chrono::system_clock::now();
-            if (remaining > std::chrono::milliseconds(100))
-                cond_.wait_for(lock, std::chrono::milliseconds(100));
+            if (remaining > 100ms)
+                cond_.wait_for(lock, 100ms);
             else
                 cond_.wait_until(lock, deadline);
         }
@@ -86,13 +88,26 @@ struct Buffer<Inputs...>::Impl
         {
             QueueElement e{std::move(queue_.front())};
             queue_.pop_front();
+            if (queue_.empty())
+                timer_.reset();
             lock.unlock();
             parent_->send_queue_element(e);
             lock.lock();
         }
-        if (queue_.empty())
+        else
         {
             timer_.reset();
+        }
+    }
+
+    void arm_rclcpp_timer(std::unique_lock<std::mutex>& lock)
+    {
+        using namespace std::chrono_literals;
+        if (node_ && !timer_)
+        {
+            timer_ = node_->create_wall_timer(
+                0ns, static_cast<rclcpp::VoidCallbackType>([this]() { this->rclcpp_timer_callback(); }),
+                callback_group_);
         }
     }
 
@@ -106,21 +121,14 @@ struct Buffer<Inputs...>::Impl
 
     void insert_queue_element(std::unique_lock<std::mutex>& lock, QueueElement& e)
     {
-        using namespace std::chrono_literals;
         queue_.push_back(std::move(e));
         while (queue_.size() > max_queue_size_)
             queue_.pop_front();
-        if (node_ && !timer_)
-        {
-            timer_ = node_->create_wall_timer(
-                0ns, static_cast<rclcpp::VoidCallbackType>([this]() { this->rclcpp_timer_callback(); }),
-                callback_group_);
-        }
+        arm_rclcpp_timer(lock);
     }
 
     void set_node(std::unique_lock<std::mutex>& lock, const rclcpp::Node::SharedPtr& node)
     {
-        using namespace std::chrono_literals;
         if (node_ != node)
         {
             timer_.reset();
@@ -130,9 +138,7 @@ struct Buffer<Inputs...>::Impl
             {
                 callback_group_ = node_->create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
                 if (!queue_.empty())
-                    timer_ = node_->create_wall_timer(
-                        0ns, static_cast<rclcpp::VoidCallbackType>([this]() { this->rclcpp_timer_callback(); }),
-                        callback_group_);
+                    arm_rclcpp_timer(lock);
             }
         }
     }
@@ -159,7 +165,8 @@ template<class... Inputs>
 Buffer<Inputs...>::Buffer(const rclcpp::Node::SharedPtr& node, std::size_t max_queue_size) noexcept
     : impl_(std::make_shared<Impl>(this, BufferPolicy::Queue, max_queue_size))
 {
-    impl_->set_node(node);
+    std::unique_lock<std::mutex> lock{impl_->mutex_};
+    impl_->set_node(lock, node);
 }
 
 template<class... Inputs>
@@ -197,7 +204,7 @@ void Buffer<Inputs...>::set_policy(BufferPolicy policy, std::size_t max_queue_si
 template<class... Inputs>
 void Buffer<Inputs...>::set_node(const rclcpp::Node::SharedPtr& node) noexcept
 {
-    std::lock_guard<std::mutex> lock{impl_->mutex_};
+    std::unique_lock<std::mutex> lock{impl_->mutex_};
     impl_->set_node(lock, node);
 }
 

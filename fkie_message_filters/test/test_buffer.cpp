@@ -22,6 +22,9 @@
 #include <fkie_message_filters/buffer.h>
 #include <fkie_message_filters/simple_user_filter.h>
 #include <fkie_message_filters/user_source.h>
+#include <rclcpp/executors.hpp>
+
+#include <chrono>
 
 template<typename int_T>
 void buffer_test_code()
@@ -73,4 +76,53 @@ TEST(fkie_message_filters, BufferCopyConstructible)
 TEST(fkie_message_filters, BufferMoveConstructible)
 {
     buffer_test_code<int_M>();
+}
+
+template<class Buffer, class Rep, class Period>
+bool wait_for_buffer_processing(rclcpp::Node::SharedPtr& node, Buffer& buffer,
+                                const std::chrono::duration<Rep, Period>& timeout)
+{
+    if (buffer.has_some())
+    {
+        rclcpp::spin_all(node, std::chrono::duration_cast<std::chrono::nanoseconds>(timeout));
+    }
+    return !buffer.has_some();
+}
+
+TEST(fkie_message_filters, BufferCallbackGroup)
+{
+    using namespace std::chrono_literals;
+    using Source = mf::UserSource<int_C>;
+    using Buffer = mf::Buffer<int_C>;
+    using Sink = mf::SimpleUserFilter<int_C>;
+
+    std::size_t callback_counts = 0;
+    int last_value = 0;
+    rclcpp::Node::SharedPtr node = std::make_shared<rclcpp::Node>("buffer_callback_group");
+    Source src;
+    Buffer buf(node, 3);
+    Sink snk;
+    snk.set_processing_function(
+        [&callback_counts, &last_value](const int_C& i) -> bool
+        {
+            ++callback_counts;
+            if (i < last_value)
+                throw std::domain_error("invalid value");
+            last_value = i;
+            return true;
+        });
+    mf::chain(src, buf, snk);
+    src(int_C(0));  // Note: this will be discarded before processing
+    src(int_C(1));
+    src(int_C(2));
+    src(int_C(3));
+    ASSERT_TRUE(wait_for_buffer_processing(node, buf, 1s));
+    ASSERT_EQ(3u, callback_counts);
+    ASSERT_EQ(3, last_value);
+    src(int_C(4));
+    src(int_C(5));
+    src(int_C(6));
+    ASSERT_TRUE(wait_for_buffer_processing(node, buf, 1s));
+    ASSERT_EQ(6u, callback_counts);
+    ASSERT_EQ(6, last_value);
 }
