@@ -2,8 +2,8 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.0.1 (2025-03-27)
+------------------
 * Minor bugfixes for buffer/callback group interaction
 * Improve support for older image_transport API versions
 * Add pre-commit hook for code formatting
