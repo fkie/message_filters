@@ -46,7 +46,7 @@ While you are free to derive your own classes from the one of the base classes,
 most programs will want to register a custom callback function for their
 application logic.
 
-The [SimpleUserFilter](https://fkie.github.io/message_filters/classfkie__message__filters_1_1SimpleUserFilter.html) 
+The [SimpleUserFilter](https://fkie.github.io/message_filters/classfkie__message__filters_1_1SimpleUserFilter.html)
 works almost like a regular ROS callback, but it expects a
 boolean return value that determines if the data is passed on to subsequent
 filters in the pipeline (if any), or if processing terminates. You can use this
@@ -139,4 +139,3 @@ detect cycles in the pipeline and abort with a `std::logic_error` exception.
 
 Certain filters, such as the `Buffer` or the `TfFilter`, can interoperate with
 ROS callback queues for convenient workload scheduling.
-

@@ -69,8 +69,8 @@ enum class BufferPolicy
  *    You can toggle between the BufferPolicy::Discard and BufferPolicy::Passthru modes to selectively disable or enable
  *    data processing at specific times. This is the simplest use case without any asynchronous processing.
  * -# <b>Run multiple ROS callback groups</b><br>
- *    You can let the buffer processing happen in a dedicated ROS 2 callback group. This is the simplest way to deal with
- *    computationally expensive message processing:
+ *    You can let the buffer processing happen in a dedicated ROS 2 callback group. This is the simplest way to deal
+ *    with computationally expensive message processing:
  *    \code
  *    namespace mf = fkie_message_filters;
  *
