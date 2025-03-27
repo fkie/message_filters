@@ -18,6 +18,7 @@
  *
  ****************************************************************************/
 #include "test.h"
+#include "version.h"
 
 #include <fkie_message_filters/buffer.h>
 #include <fkie_message_filters/simple_user_filter.h>
@@ -82,10 +83,18 @@ template<class Buffer, class Rep, class Period>
 bool wait_for_buffer_processing(rclcpp::Node::SharedPtr& node, Buffer& buffer,
                                 const std::chrono::duration<Rep, Period>& timeout)
 {
+#if FKIE_MESSAGE_FILTERS_RCLCPP >= 0x160100
     if (buffer.has_some())
     {
         rclcpp::spin_all(node, std::chrono::duration_cast<std::chrono::nanoseconds>(timeout));
     }
+#else
+    std::chrono::system_clock::time_point deadline = std::chrono::system_clock::now() + timeout;
+    while (buffer.has_some() && std::chrono::system_clock::now() < deadline)
+    {
+        rclcpp::spin_some(node);
+    }
+#endif
     return !buffer.has_some();
 }
 

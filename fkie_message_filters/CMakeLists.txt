@@ -58,6 +58,12 @@ math(
     "0x10000 * ${image_transport_VERSION_MAJOR} + 0x100 * ${image_transport_VERSION_MINOR} + ${image_transport_VERSION_PATCH}"
     OUTPUT_FORMAT HEXADECIMAL
 )
+math(
+    EXPR
+    computed_rclcpp_version
+    "0x10000 * ${rclcpp_VERSION_MAJOR} + 0x100 * ${rclcpp_VERSION_MINOR} + ${rclcpp_VERSION_PATCH}"
+    OUTPUT_FORMAT HEXADECIMAL
+)
 
 configure_file(
     src/version.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/version.h @ONLY

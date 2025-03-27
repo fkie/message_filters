@@ -27,5 +27,6 @@
 #define FKIE_MESSAGE_FILTERS_VERSION       "@PROJECT_VERSION@"
 
 #define FKIE_MESSAGE_FILTERS_IMAGE_TRANSPORT @computed_image_transport_version@
+#define FKIE_MESSAGE_FILTERS_RCLCPP          @computed_rclcpp_version@
 
 #endif
