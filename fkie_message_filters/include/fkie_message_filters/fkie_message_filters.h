@@ -59,9 +59,9 @@
  *
  * \section getting-started Getting Started
  *
- * While you are free to derive your own classes from the one of the base
- * classes, most programs will want to register a custom callback function for
- * their application logic.
+ * While you are free to derive your own filters from the basic source and sink
+ * classes, it is most likely better to integrate the application logic with
+ * custom callback functions.
  *
  * The \link fkie_message_filters::SimpleUserFilter SimpleUserFilter \endlink
  * works almost like a regular ROS callback, but it expects a boolean return
@@ -94,6 +94,10 @@
  * mechanism, the error messages can be quite verbose and difficult to parse
  * (looking at you, GCC). It is very much recommended to use the \c Input and
  * \c Output typedefs which are provided by every filter.
+ *
+ * Starting with version 2.0, the library supports \c std::unique_ptr and other
+ * noncopyable but movable types. Sources which use these types can only have
+ * a single sink connected for obvious reasons, though.
  *
  * \section n-ary-filters N-ary filters
  *

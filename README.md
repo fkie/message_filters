@@ -10,22 +10,22 @@ the original version.
 
 The data flow is modeled with a pipeline metaphor, where data always flows from
 a source to a sink. A filter is both source and sink for data, possibly with
-different data types. For integration with ROS, the library provides a number
-of subscribers and publishers which act as sources or sinks of the data flow.
+different data types. For integration with ROS, the library provides a number of
+subscribers and publishers which act as sources or sinks of the data flow.
 
 Requirements
 ------------
 
-The `fkie_message_filters` library requires C++17 or newer. Some filters
-depend on `image_transport` or `tf2_ros`.
+The `fkie_message_filters` library requires C++17 or newer. Some filters depend
+on `image_transport` or `tf2_ros`.
 
 Design
 ------
 
 The filters are written to be as data agnostic as possible. Therefore, many
-filters can process arbitrary data types and are not restricted to ROS
-messages. A few filters need access to ROS header information, such as
-time stamp or TF frame identifier.
+filters can process arbitrary data types and are not restricted to ROS messages.
+A few filters need access to ROS header information, such as time stamp or TF
+frame identifier.
 
 Sources and sinks are strongly typed, i.e., each source will only pass on data
 of a particular type, and each sink will only accept data of a particular type.
@@ -34,17 +34,17 @@ strong typing relies on the C++ template mechanism, the error messages can be
 quite verbose and difficult to parse sometimes (looking at you, GCC).
 
 The library filters support arbitrary arities, i.e., the grouping of multiple
-data types, where items of different types are combined and passed on as a
-unit. This is particularly useful to process messages from distinct topics
-which belong together conceptually, e.g., the `sensor_msgs::msg::Image` and
+data types, where items of different types are combined and passed on as a unit.
+This is particularly useful to process messages from distinct topics which
+belong together conceptually, e.g., the `sensor_msgs::msg::Image` and
 `sensor_msgs::msg::CameraInfo` messages from a calibrated camera.
 
 Getting Started
 ---------------
 
-While you are free to derive your own classes from the one of the base classes,
-most programs will want to register a custom callback function for their
-application logic.
+While you are free to derive your own filters from the basic source and sink
+classes, it is most likely better to integrate the application logic with custom
+callback functions.
 
 The [SimpleUserFilter](https://fkie.github.io/message_filters/classfkie__message__filters_1_1SimpleUserFilter.html)
 works almost like a regular ROS callback, but it expects a
@@ -58,7 +58,8 @@ is more generic and can be used if your filter outputs differ
 from its inputs. You can implement pretty much any kind of transforming filter.
 
 The [UserSource](https://fkie.github.io/message_filters/classfkie__message__filters_1_1UserSource.html)
-is a simple data source which can be used as callback in third-party code.
+is a simple data source which behaves like a function wrapper and can be used as
+callback in third-party code.
 
 As a simple "Hello World" example, consider:
 
@@ -96,13 +97,13 @@ int main(int argc, char** argv)
 The user-defined filter accepts a `std_msgs::msg::String` message with a name as
 input and composes a new `std_msgs::msg::String` message with a personalized
 greeting as output. Note that each source can have arbitrarily many sinks
-connected to it, and vice vera, so the simplicity of the three-link chain in
+connected to it, and vice versa, so the simplicity of the three-link chain in
 this example is by no means a limitation of the library.
 
 Available Filters
 -----------------
 
-See the [API documentation](https://fkie.github.io/message_filters/) for more
+See the [API documentation](https://fkie.github.io/message_filters/2.x) for more
 details.
 
 * `Buffer`: Store and forward data
@@ -137,5 +138,9 @@ yet. If there is no upstream user-defined filter that catches the exception, the
 uncaught exception will eventually terminate the program. The library will
 detect cycles in the pipeline and abort with a `std::logic_error` exception.
 
-Certain filters, such as the `Buffer` or the `TfFilter`, can interoperate with
-ROS callback queues for convenient workload scheduling.
+The `Buffer` filter can interoperate with ROS callback groups for convenient
+workload scheduling.
+
+Starting with version 2.0, the library supports `std::unique_ptr` and other
+noncopyable but movable types. Sources which use these types can only have
+a single sink connected for obvious reasons, though.
