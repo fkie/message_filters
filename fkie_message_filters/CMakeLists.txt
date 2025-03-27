@@ -18,13 +18,13 @@
 #
 ############################################################################
 
-cmake_minimum_required(VERSION 3.8...3.28)
+cmake_minimum_required(VERSION 3.13...3.28)
 project(fkie_message_filters VERSION 2.0.0)
 
 # Dependencies
 find_package(ament_cmake REQUIRED)
 find_package(Boost QUIET)
-find_package(image_transport REQUIRED)
+find_package(image_transport 3.0 REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
@@ -51,6 +51,13 @@ target_link_libraries(tf2_bug PUBLIC tf2_ros::tf2_ros)
 
 add_executable(hello_example example/hello.cpp)
 target_link_libraries(hello_example PRIVATE ${PROJECT_NAME})
+
+math(
+    EXPR
+    computed_image_transport_version
+    "0x10000 * ${image_transport_VERSION_MAJOR} + 0x100 * ${image_transport_VERSION_MINOR} + ${image_transport_VERSION_PATCH}"
+    OUTPUT_FORMAT HEXADECIMAL
+)
 
 configure_file(
     src/version.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/version.h @ONLY

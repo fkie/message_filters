@@ -55,8 +55,7 @@ template<template<typename> class Translate>
 void CameraPublisher<Translate>::advertise(rclcpp::Node::SharedPtr& node, const std::string& base_topic,
                                            const rclcpp::QoS& qos, const rclcpp::PublisherOptions& options) noexcept
 {
-#if RCLCPP_VERSION_MAJOR >= 28
-    // ROS jazzy and newer
+#if FKIE_MESSAGE_FILTERS_IMAGE_TRANSPORT >= 0x40400
     pub_ = image_transport::create_camera_publisher(node.get(), base_topic, qos.get_rmw_qos_profile(), options);
 #else
     pub_ = image_transport::create_camera_publisher(node.get(), base_topic, qos.get_rmw_qos_profile());

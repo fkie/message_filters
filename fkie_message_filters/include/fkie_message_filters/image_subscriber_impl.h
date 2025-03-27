@@ -21,6 +21,7 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_IMAGE_SUBSCRIBER_IMPL_H_
 
 #include "image_subscriber.h"
+#include "version.h"
 
 namespace fkie_message_filters
 {
@@ -79,9 +80,7 @@ void ImageSubscriber<Translate>::subscribe_impl() noexcept
         sub_ = image_transport::create_subscription(
             node_.get(), base_topic_, [this](const sensor_msgs::msg::Image::ConstSharedPtr& message)
             { this->send(Translate<sensor_msgs::msg::Image>::subscriberToFilter(message)); }, transport_,
-            qos_.get_rmw_qos_profile(), options_
-
-        );
+            qos_.get_rmw_qos_profile(), options_);
     }
 }
 
