@@ -1,0 +1,9 @@
+<map id="fkie_message_filters::ImagePublisher&lt; Translate &gt;" name="fkie_message_filters::ImagePublisher&lt; Translate &gt;">
+<area shape="rect" id="Node000001" title="Publish consumed data to a ROS image topic." alt="" coords="65,181,285,221"/>
+<area shape="rect" id="Node000002" href="$classfkie__message__filters_1_1PublisherBase.html" title="Base class for ROS publishers in a filter pipeline." alt="" coords="5,93,163,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,141,156,179,153,183,112,145"/>
+<area shape="rect" id="Node000003" href="$classfkie__message__filters_1_1Sink.html" title="Base class for data consumers." alt="" coords="187,93,344,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="237,145,197,183,193,179,234,141"/>
+<area shape="rect" id="Node000004" href="$classfkie__message__filters_1_1FilterBase.html" title="Base class for filters." alt="" coords="187,5,344,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="268,59,268,93,263,93,263,59"/>
+</map>

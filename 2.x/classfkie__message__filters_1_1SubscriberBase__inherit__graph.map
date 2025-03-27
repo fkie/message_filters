@@ -1,0 +1,9 @@
+<map id="fkie_message_filters::SubscriberBase" name="fkie_message_filters::SubscriberBase">
+<area shape="rect" id="Node000001" title="Base class for ROS subscribers in a filter pipeline." alt="" coords="5,69,163,109"/>
+<area shape="rect" id="Node000002" href="$classfkie__message__filters_1_1CameraSubscriber.html" title="Subscribe to ROS camera topics as data provider." alt="" coords="211,5,449,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,63,252,43,253,48,175,68"/>
+<area shape="rect" id="Node000003" href="$classfkie__message__filters_1_1ImageSubscriber.html" title="Subscribe to a ROS image topic as data provider." alt="" coords="216,69,444,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="177,87,216,87,216,92,177,92"/>
+<area shape="rect" id="Node000004" href="$classfkie__message__filters_1_1Subscriber.html" title="Subscribe to a ROS topic as data provider." alt="" coords="227,133,433,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="175,110,253,131,252,136,174,115"/>
+</map>

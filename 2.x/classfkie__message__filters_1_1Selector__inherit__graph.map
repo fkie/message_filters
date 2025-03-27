@@ -1,0 +1,12 @@
+<map id="fkie_message_filters::Selector&lt; Inputs, Is &gt;" name="fkie_message_filters::Selector&lt; Inputs, Is &gt;">
+<area shape="rect" id="Node000001" title="Reorder or reduce an N&#45;ary filter." alt="" coords="672,37,844,77"/>
+<area shape="rect" id="Node000002" href="$classfkie__message__filters_1_1Filter.html" title=" " alt="" coords="416,23,624,92"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="638,55,672,55,672,60,638,60"/>
+<area shape="rect" id="Node000003" href="$classfkie__message__filters_1_1Sink.html" title="Base class for data consumers." alt="" coords="211,5,368,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="382,35,416,40,415,46,382,41"/>
+<area shape="rect" id="Node000004" href="$classfkie__message__filters_1_1FilterBase.html" title="Base class for filters." alt="" coords="5,37,163,77"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="176,40,210,35,211,40,177,46"/>
+<area shape="rect" id="Node000005" href="$classfkie__message__filters_1_1Source.html" title="Base class for data providers." alt="" coords="211,69,368,109"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="177,69,211,74,210,80,176,74"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="382,74,415,69,416,74,382,79"/>
+</map>

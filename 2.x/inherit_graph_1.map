@@ -1,0 +1,9 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$classfkie__message__filters_1_1combiner__policies_1_1PolicyBase.html" title=" " alt="" coords="5,84,163,139"/>
+<area shape="rect" id="Node000001" href="$classfkie__message__filters_1_1combiner__policies_1_1ApproximateTime.html" title="Approximate time policy." alt="" coords="211,5,401,60"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="174,77,227,58,229,63,176,82"/>
+<area shape="rect" id="Node000002" href="$classfkie__message__filters_1_1combiner__policies_1_1ExactTime.html" title="Exact time policy." alt="" coords="227,84,385,139"/>
+<area shape="poly" id="edge2_Node000000_Node000002" title=" " alt="" coords="177,109,227,109,227,114,177,114"/>
+<area shape="rect" id="Node000003" href="$classfkie__message__filters_1_1combiner__policies_1_1Fifo.html" title="First&#45;In&#45;First&#45;Out policy." alt="" coords="227,163,385,217"/>
+<area shape="poly" id="edge3_Node000000_Node000003" title=" " alt="" coords="176,141,229,160,227,165,174,146"/>
+</map>
