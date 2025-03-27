@@ -2,6 +2,13 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Minor bugfixes for buffer/callback group interaction
+* Improve support for older image_transport API versions
+* Add pre-commit hook for code formatting
+* Contributors: Timo Röhling
+
 2.0.0 (2025-03-24)
 ------------------
 * Reimplementation for ROS 2
