@@ -34,14 +34,15 @@ namespace combiner_policies
 template<typename... IOs>
 ApproximateTime<IOs...>::ApproximateTime()
     : max_age_(rclcpp::Duration(1, 0)), max_queue_size_(0), max_delta_(std::nullopt),
-      min_dist_{(static_cast<void>(typeid(IOs)), rclcpp::Duration(0, 0))...}, pivot_(UNSET)
+      min_dist_{(static_cast<void>(typeid(IOs)), rclcpp::Duration(0, 0))...}, pivot_(UNSET),
+      logger_(rclcpp::get_logger("Combiner<ApproximateTime>"))
 {
 }
 
 template<typename... IOs>
 ApproximateTime<IOs...>::ApproximateTime(const ApproximateTime& other)
     : PolicyBase<IOs...>(other), max_age_(other.max_age_), max_queue_size_(other.max_queue_size_),
-      max_delta_(other.max_delta_), min_dist_(other.min_dist_), pivot_(UNSET)
+      max_delta_(other.max_delta_), min_dist_(other.min_dist_), pivot_(UNSET), logger_(other.logger_)
 {
     /* The copy constructor deliberately avoids copying the incoming queue and related members, because
      * a) the connection to any Combiner instance is broken by the copying anyway and
@@ -95,21 +96,26 @@ void ApproximateTime<IOs...>::add(std::unique_lock<std::mutex>& lock, std::tuple
     auto& head = std::get<N>(heads_);
     auto& queue = std::get<N>(queues_);
     /* First, make sure that all slots have in-order arrival of messages */
-    if (head)
+    if (latest_[N].nanoseconds())
     {
-        rclcpp::Time latest = helpers::access_ros_header_stamp(std::get<0>(queue.empty() ? *head : queue.back()));
-        if (stamp < latest)
+        if (stamp < latest_[N])
         {
-            // ROS_ERROR_STREAM_NAMED("Combiner<ApproximateTime>", "message with older time stamp " << stamp << "<" <<
-            // latest << " received, resetting filter");
+            RCLCPP_ERROR_STREAM(logger_, "message with earlier time stamp "
+                                             << std::fixed << std::setprecision(9) << stamp.seconds()
+                                             << " received (latest is " << latest_[N].seconds()
+                                             << "), resetting filter");
             reset();
         }
-        else if (latest + min_dist_[N] > stamp)
+        else if (latest_[N] + min_dist_[N] > stamp)
         {
-            // ROS_WARN_STREAM_NAMED("Combiner<ApproximateTime>", "new message arrived sooner than anticipated: time
-            // stamp " << stamp << "<" << latest + min_dist_[N]);
+            RCLCPP_WARN_STREAM(logger_, "new message arrived sooner than anticipated: time stamp "
+                                            << std::fixed << std::setprecision(9) << stamp.seconds()
+                                            << " is earlier than latest " << latest_[N].seconds() << " + "
+                                            << min_dist_[N].seconds() << " = "
+                                            << (latest_[N] + min_dist_[N]).seconds());
         }
     }
+    latest_[N] = stamp;
     /* Add data to slot */
     if (!head)
         head = std::move(in);
@@ -289,6 +295,7 @@ void ApproximateTime<IOs...>::reset() noexcept
             std::get<I>(heads_).reset();
             std::get<I>(queues_).clear();
         });
+    std::fill(latest_.begin(), latest_.end(), rclcpp::Time());
     pivot_ = UNSET;
 }
 

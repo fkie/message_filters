@@ -42,8 +42,10 @@ void exact_time_test_code()
         [&](const IntegerStamped& m1, const IntegerStamped& m2) -> bool
         {
             ++callback_counts;
+            if (m1 != 0 || m2 != 0)
+                throw std::invalid_argument("expected only messages with zero value");
             if (m1.header.stamp != m2.header.stamp)
-                throw std::domain_error("timestamps do not match");
+                throw std::invalid_argument("timestamps do not match");
             return true;
         });
     // Check that matching messages will be passed together
@@ -54,6 +56,7 @@ void exact_time_test_code()
     ASSERT_EQ(0u, callback_counts);
     src2(IntegerStamped(0, "", make_stamp(11)));
     ASSERT_EQ(0u, callback_counts);
+    src1(IntegerStamped(1, "", make_stamp(15)));  // Duplicate, gets ignored
     src2(IntegerStamped(0, "", make_stamp(15)));
     ASSERT_EQ(1u, callback_counts);
     src2(IntegerStamped(0, "", make_stamp(18)));

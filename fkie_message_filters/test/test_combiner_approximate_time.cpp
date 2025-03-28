@@ -79,6 +79,12 @@ void approximate_time_test_code()
     src2(IntegerStamped(7, "", make_stamp(130, 0)));
     src3(IntegerStamped(7, "", make_stamp(130, 0)));
     ASSERT_EQ(5u, callback_counts);
+    /* Check that filter resets if earlier time stamps come in */
+    src1(IntegerStamped(8, "", make_stamp(140, 0)));
+    src2(IntegerStamped(8, "", make_stamp(140, 0)));
+    src2(IntegerStamped(0, "", make_stamp(99, 0)));
+    src3(IntegerStamped(8, "", make_stamp(140, 0)));
+    ASSERT_EQ(5u, callback_counts);
 }
 
 TEST(fkie_message_filters, ApproximateTimeCombinerCopyConstructible)

@@ -24,6 +24,7 @@
 #include "policy_base.h"
 
 #include <rclcpp/duration.hpp>
+#include <rclcpp/logger.hpp>
 #include <rclcpp/time.hpp>
 
 #include <deque>
@@ -168,10 +169,12 @@ private:
     std::size_t max_queue_size_;
     std::optional<rclcpp::Duration> max_delta_;
     std::array<rclcpp::Duration, NUM_SLOTS> min_dist_;
+    std::array<rclcpp::Time, NUM_SLOTS> latest_;
     std::size_t pivot_;
     rclcpp::Time pivot_ts_;
     IncomingQueues queues_;
     MaybeOutgoingTuples heads_;
+    rclcpp::Logger logger_;
 };
 
 }  // namespace combiner_policies
