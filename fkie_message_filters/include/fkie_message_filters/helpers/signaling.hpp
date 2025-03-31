@@ -114,9 +114,30 @@ public:
 
     Signal() = default;
     Signal(const Signal&) = delete;
-    Signal(Signal&&) = delete;
     Signal& operator=(const Signal&) = delete;
-    Signal& operator=(Signal&&) = delete;
+    Signal(Signal&& other)
+    {
+        std::lock_guard<std::mutex> lock{other.slot_mutex_};
+        slots_ = std::move(other.slots_);
+        for (Slot& slot : slots_)
+        {
+            slot.priv->owner = this;
+        }
+    }
+    Signal& operator=(Signal&& other)
+    {
+        if (this != &other)
+        {
+            std::lock_guard<std::mutex> lock1{slot_mutex_};
+            std::lock_guard<std::mutex> lock2{other.slot_mutex_};
+            slots_ = std::move(other.slots_);
+            for (Slot& slot : slots_)
+            {
+                slot.priv->owner = this;
+            }
+        }
+        return *this;
+    }
 
     virtual ~Signal()
     {

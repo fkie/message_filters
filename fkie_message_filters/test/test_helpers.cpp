@@ -76,7 +76,7 @@ TEST(fkie_message_filters, Signals)
 {
     std::size_t triggered = 0;
     mf::Connection c;
-    mf::helpers::Signal<int> sig1;
+    mf::helpers::Signal<int> sig1, sig2;
     ASSERT_FALSE(c.connected());
     c = sig1.connect(
         [&triggered](int i)
@@ -88,9 +88,24 @@ TEST(fkie_message_filters, Signals)
     ASSERT_EQ(0, triggered);
     sig1(42);
     ASSERT_EQ(1, triggered);
-    c.disconnect();
+    sig2(0);
+    ASSERT_EQ(1, triggered);
+    sig2 = std::move(sig1);
     sig1(0);
     ASSERT_EQ(1, triggered);
+    sig2(42);
+    ASSERT_EQ(2, triggered);
+    mf::helpers::Signal<int> sig3{std::move(sig2)};
+    sig1(0);
+    sig2(0);
+    ASSERT_EQ(2, triggered);
+    sig3(42);
+    ASSERT_EQ(3, triggered);
+    c.disconnect();
+    sig1(0);
+    sig2(0);
+    sig3(0);
+    ASSERT_EQ(3, triggered);
 }
 
 TEST(fkie_message_filters, SignalsWithReference)
