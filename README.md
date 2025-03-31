@@ -144,3 +144,8 @@ workload scheduling.
 Starting with version 2.0, the library supports `std::unique_ptr` and other
 noncopyable but movable types. Sources which use these types can only have
 a single sink connected for obvious reasons, though.
+
+Quality Declaration
+-------------------
+
+See [QUALITY.md](fkie_message_filters/QUALITY.md) in the package source directory.
