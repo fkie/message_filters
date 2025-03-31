@@ -23,6 +23,7 @@
 
 #include "helpers/access_ros_header.h"
 #include "helpers/tuple.h"
+#include "logging.h"
 #include "tf_filter.h"
 
 #include <mutex>
@@ -294,6 +295,10 @@ void TfFilter<Inputs...>::report_failure(std::unique_lock<std::mutex>& lock, Mes
         auto unlock = helpers::with_scoped_unlock(lock);
         helpers::index_apply<sizeof...(Inputs)>([&cb, &msg, &reason](auto... Is)
                                                 { cb(helpers::maybe_move(std::get<Is>(msg))..., reason); });
+    }
+    else
+    {
+        FKIE_MESSAGE_FILTERS_WARN("TF transform failed and no failure callback registered");
     }
 }
 

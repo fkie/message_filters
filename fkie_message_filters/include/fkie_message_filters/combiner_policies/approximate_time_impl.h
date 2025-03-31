@@ -24,6 +24,7 @@
 #include "../helpers/access_ros_header.h"
 #include "../helpers/scoped_unlock.h"
 #include "../helpers/tuple.h"
+#include "../logging.h"
 #include "approximate_time.h"
 
 namespace fkie_message_filters
@@ -34,15 +35,14 @@ namespace combiner_policies
 template<typename... IOs>
 ApproximateTime<IOs...>::ApproximateTime()
     : max_age_(rclcpp::Duration(1, 0)), max_queue_size_(0), max_delta_(std::nullopt),
-      min_dist_{(static_cast<void>(typeid(IOs)), rclcpp::Duration(0, 0))...}, pivot_(UNSET),
-      logger_(rclcpp::get_logger("Combiner<ApproximateTime>"))
+      min_dist_{(static_cast<void>(typeid(IOs)), rclcpp::Duration(0, 0))...}, pivot_(UNSET)
 {
 }
 
 template<typename... IOs>
 ApproximateTime<IOs...>::ApproximateTime(const ApproximateTime& other)
     : PolicyBase<IOs...>(other), max_age_(other.max_age_), max_queue_size_(other.max_queue_size_),
-      max_delta_(other.max_delta_), min_dist_(other.min_dist_), pivot_(UNSET), logger_(other.logger_)
+      max_delta_(other.max_delta_), min_dist_(other.min_dist_), pivot_(UNSET)
 {
     /* The copy constructor deliberately avoids copying the incoming queue and related members, because
      * a) the connection to any Combiner instance is broken by the copying anyway and
@@ -100,19 +100,17 @@ void ApproximateTime<IOs...>::add(std::unique_lock<std::mutex>& lock, std::tuple
     {
         if (stamp < latest_[N])
         {
-            RCLCPP_ERROR_STREAM(logger_, "message with earlier time stamp "
-                                             << std::fixed << std::setprecision(9) << stamp.seconds()
-                                             << " received (latest is " << latest_[N].seconds()
-                                             << "), resetting filter");
+            FKIE_MESSAGE_FILTERS_ERROR("message with earlier time stamp "
+                                       << std::fixed << std::setprecision(9) << stamp.seconds()
+                                       << " received (latest is " << latest_[N].seconds() << "), resetting filter");
             reset();
         }
         else if (latest_[N] + min_dist_[N] > stamp)
         {
-            RCLCPP_WARN_STREAM(logger_, "new message arrived sooner than anticipated: time stamp "
-                                            << std::fixed << std::setprecision(9) << stamp.seconds()
-                                            << " is earlier than latest " << latest_[N].seconds() << " + "
-                                            << min_dist_[N].seconds() << " = "
-                                            << (latest_[N] + min_dist_[N]).seconds());
+            FKIE_MESSAGE_FILTERS_WARN("new message arrived sooner than anticipated: time stamp "
+                                      << std::fixed << std::setprecision(9) << stamp.seconds()
+                                      << " is earlier than latest " << latest_[N].seconds() << " + "
+                                      << min_dist_[N].seconds() << " = " << (latest_[N] + min_dist_[N]).seconds());
         }
     }
     latest_[N] = stamp;

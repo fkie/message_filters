@@ -24,6 +24,7 @@
 #include "../helpers/access_ros_header.h"
 #include "../helpers/scoped_unlock.h"
 #include "../helpers/tuple.h"
+#include "../logging.h"
 #include "exact_time.h"
 
 namespace fkie_message_filters
@@ -32,15 +33,13 @@ namespace combiner_policies
 {
 
 template<typename... IOs>
-ExactTime<IOs...>::ExactTime()
-    : max_age_(rclcpp::Duration(1, 0)), max_queue_size_(0), logger_(rclcpp::get_logger("Combiner<ExactTime>"))
+ExactTime<IOs...>::ExactTime() : max_age_(rclcpp::Duration(1, 0)), max_queue_size_(0)
 {
 }
 
 template<typename... IOs>
 ExactTime<IOs...>::ExactTime(const ExactTime& other)
-    : PolicyBase<IOs...>(other), max_age_(other.max_age_), max_queue_size_(other.max_queue_size_),
-      logger_(other.logger_)
+    : PolicyBase<IOs...>(other), max_age_(other.max_age_), max_queue_size_(other.max_queue_size_)
 {
     /* The copy constructor deliberately avoids copying the incoming queue, because
      * a) the connection to any Combiner instance is broken by the copying anyway and
@@ -72,8 +71,8 @@ void ExactTime<IOs...>::add(std::unique_lock<std::mutex>& lock, std::tuple_eleme
     rclcpp::Time stamp = helpers::access_ros_header_stamp(std::get<0>(in));
     if (!std::get<N>(queues_).try_emplace(stamp, std::move(in)).second)
     {
-        RCLCPP_WARN_STREAM(logger_, "message with repeating time stamp " << std::fixed << std::setprecision(9)
-                                                                         << stamp.seconds() << " is being dropped");
+        FKIE_MESSAGE_FILTERS_WARN("message with repeating time stamp " << std::fixed << std::setprecision(9)
+                                                                       << stamp.seconds() << " is being dropped");
         return;
     }
     bool complete;

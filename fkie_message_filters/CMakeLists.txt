@@ -32,7 +32,7 @@ find_package(tf2_ros REQUIRED)
 find_program(DOXYGEN doxygen)
 
 # Targets
-add_library(${PROJECT_NAME} src/publisher_subscriber_base.cpp)
+add_library(${PROJECT_NAME} src/logging.cpp src/publisher_subscriber_base.cpp)
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 target_include_directories(
     ${PROJECT_NAME}

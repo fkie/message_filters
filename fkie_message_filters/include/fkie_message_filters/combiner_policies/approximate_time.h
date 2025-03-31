@@ -24,7 +24,6 @@
 #include "policy_base.h"
 
 #include <rclcpp/duration.hpp>
-#include <rclcpp/logger.hpp>
 #include <rclcpp/time.hpp>
 
 #include <deque>
@@ -174,7 +173,6 @@ private:
     rclcpp::Time pivot_ts_;
     IncomingQueues queues_;
     MaybeOutgoingTuples heads_;
-    rclcpp::Logger logger_;
 };
 
 }  // namespace combiner_policies

@@ -24,7 +24,6 @@
 #include "policy_base.h"
 
 #include <rclcpp/duration.hpp>
-#include <rclcpp/logger.hpp>
 #include <rclcpp/time.hpp>
 
 #include <map>
@@ -103,7 +102,6 @@ private:
     std::optional<rclcpp::Duration> max_age_;
     std::size_t max_queue_size_;
     IncomingQueues queues_;
-    rclcpp::Logger logger_;
 };
 
 }  // namespace combiner_policies
