@@ -2,6 +2,12 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Clean up includes
+* Add logging with configurable ROS logger
+* Contributors: Timo Röhling
+
 2.0.1 (2025-03-27)
 ------------------
 * Minor bugfixes for buffer/callback group interaction
