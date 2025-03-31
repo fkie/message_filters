@@ -17,10 +17,10 @@
  * limitations under the License.
  *
  ****************************************************************************/
-#include "test.h"
+#include "test.hpp"
 
-#include <fkie_message_filters/simple_user_filter.h>
-#include <fkie_message_filters/user_source.h>
+#include <fkie_message_filters/simple_user_filter.hpp>
+#include <fkie_message_filters/user_source.hpp>
 
 template<typename int_T>
 void simple_user_filter_test_code()

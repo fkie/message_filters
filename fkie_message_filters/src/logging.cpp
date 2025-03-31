@@ -18,7 +18,7 @@
  *
  ****************************************************************************/
 
-#include <fkie_message_filters/logging.h>
+#include <fkie_message_filters/logging.hpp>
 
 namespace fkie_message_filters
 {

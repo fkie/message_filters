@@ -1,4 +1,4 @@
-#include <fkie_message_filters/fkie_message_filters.h>
+#include <fkie_message_filters/fkie_message_filters.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
 

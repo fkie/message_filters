@@ -17,12 +17,12 @@
  * limitations under the License.
  *
  ****************************************************************************/
-#include "test.h"
-#include "version.h"
+#include "test.hpp"
+#include "version.hpp"
 
-#include <fkie_message_filters/buffer.h>
-#include <fkie_message_filters/simple_user_filter.h>
-#include <fkie_message_filters/user_source.h>
+#include <fkie_message_filters/buffer.hpp>
+#include <fkie_message_filters/simple_user_filter.hpp>
+#include <fkie_message_filters/user_source.hpp>
 #include <rclcpp/executors.hpp>
 
 #include <chrono>

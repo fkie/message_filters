@@ -18,17 +18,16 @@
  *
  ****************************************************************************/
 
-#include "test.h"
+#include "test.hpp"
 
-#include <fkie_message_filters/camera_publisher.h>
-#include <fkie_message_filters/camera_subscriber.h>
-#include <fkie_message_filters/image_publisher.h>
-#include <fkie_message_filters/image_subscriber.h>
-#include <fkie_message_filters/publisher.h>
-#include <fkie_message_filters/simple_user_filter.h>
-#include <fkie_message_filters/subscriber.h>
-#include <fkie_message_filters/user_source.h>
-#include <gtest/gtest.h>
+#include <fkie_message_filters/camera_publisher.hpp>
+#include <fkie_message_filters/camera_subscriber.hpp>
+#include <fkie_message_filters/image_publisher.hpp>
+#include <fkie_message_filters/image_subscriber.hpp>
+#include <fkie_message_filters/publisher.hpp>
+#include <fkie_message_filters/simple_user_filter.hpp>
+#include <fkie_message_filters/subscriber.hpp>
+#include <fkie_message_filters/user_source.hpp>
 #include <rclcpp/executors.hpp>
 #include <rclcpp/node.hpp>
 #include <std_msgs/msg/empty.hpp>

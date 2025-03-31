@@ -17,13 +17,13 @@
  * limitations under the License.
  *
  ****************************************************************************/
-#include "test.h"
+#include "test.hpp"
 
-#include <fkie_message_filters/helpers/access_ros_header.h>
-#include <fkie_message_filters/helpers/io.h>
-#include <fkie_message_filters/helpers/signaling.h>
-#include <fkie_message_filters/helpers/tuple.h>
-#include <fkie_message_filters/types.h>
+#include <fkie_message_filters/helpers/access_ros_header.hpp>
+#include <fkie_message_filters/helpers/io.hpp>
+#include <fkie_message_filters/helpers/signaling.hpp>
+#include <fkie_message_filters/helpers/tuple.hpp>
+#include <fkie_message_filters/types.hpp>
 
 #include <memory>
 #if FKIE_MESSAGE_FILTERS_HAS_BOOST

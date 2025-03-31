@@ -18,8 +18,8 @@
  *
  ****************************************************************************/
 
-#include <fkie_message_filters/publisher_base.h>
-#include <fkie_message_filters/subscriber_base.h>
+#include <fkie_message_filters/publisher_base.hpp>
+#include <fkie_message_filters/subscriber_base.hpp>
 #include <rclcpp/event.hpp>
 #include <rclcpp/node.hpp>
 

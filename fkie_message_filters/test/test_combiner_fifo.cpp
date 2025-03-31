@@ -17,12 +17,12 @@
  * limitations under the License.
  *
  ****************************************************************************/
-#include "test.h"
+#include "test.hpp"
 
-#include <fkie_message_filters/combiner.h>
-#include <fkie_message_filters/combiner_policies/fifo.h>
-#include <fkie_message_filters/simple_user_filter.h>
-#include <fkie_message_filters/user_source.h>
+#include <fkie_message_filters/combiner.hpp>
+#include <fkie_message_filters/combiner_policies/fifo.hpp>
+#include <fkie_message_filters/simple_user_filter.hpp>
+#include <fkie_message_filters/user_source.hpp>
 
 template<typename int_T, typename double_T>
 void fifo_test_code()

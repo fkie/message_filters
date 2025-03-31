@@ -72,7 +72,7 @@ math(
 )
 
 configure_file(
-    src/version.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/version.h @ONLY
+    src/version.hpp.in ${CMAKE_CURRENT_BINARY_DIR}/include/version.hpp @ONLY
 )
 
 # Testing
@@ -126,7 +126,7 @@ install(
 )
 
 install(DIRECTORY include/ DESTINATION include)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/include/version.h
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/include/version.hpp
         DESTINATION include/${PROJECT_NAME}
 )
 
