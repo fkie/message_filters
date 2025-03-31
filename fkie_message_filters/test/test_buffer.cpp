@@ -83,7 +83,7 @@ template<class Buffer, class Rep, class Period>
 bool wait_for_buffer_processing(rclcpp::Node::SharedPtr& node, Buffer& buffer,
                                 const std::chrono::duration<Rep, Period>& timeout)
 {
-#if FKIE_MESSAGE_FILTERS_RCLCPP >= 0x160100
+#if FKIE_MF_RCLCPP_VERSION >= FKIE_MF_VERSION_TUPLE(22, 1, 0)
     if (buffer.has_some())
     {
         rclcpp::spin_all(node, std::chrono::duration_cast<std::chrono::nanoseconds>(timeout));

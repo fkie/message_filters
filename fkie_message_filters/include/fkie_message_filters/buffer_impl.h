@@ -22,15 +22,15 @@
 
 // IWYU pragma: private; include "buffer.h"
 
-#ifndef FKIE_MESSAGE_FILTERS_IGNORE_RCLCPP_OK
+#ifndef FKIE_MF_IGNORE_RCLCPP_OK
 #    ifdef FKIE_MESSAGE_FILTERS_IGNORE_ROS_OK
-#        define FKIE_MESSAGE_FILTERS_IGNORE_RCLCPP_OK FKIE_MESSAGE_FILTERS_IGNORE_ROS_OK
+#        define FKIE_MF_IGNORE_RCLCPP_OK FKIE_MESSAGE_FILTERS_IGNORE_ROS_OK
 #    endif
 #endif
 
 #include "buffer.h"
 #include "helpers/tuple.h"
-#ifndef FKIE_MESSAGE_FILTERS_IGNORE_RCLCPP_OK
+#ifndef FKIE_MF_IGNORE_RCLCPP_OK
 #    include <rclcpp/utilities.hpp>
 #endif
 
@@ -51,7 +51,7 @@ struct Buffer<Inputs...>::Impl
 
     bool wait_for_queue_element(std::unique_lock<std::mutex>& lock) noexcept
     {
-#ifndef FKIE_MESSAGE_FILTERS_IGNORE_RCLCPP_OK
+#ifndef FKIE_MF_IGNORE_RCLCPP_OK
         using namespace std::chrono_literals;
         while (rclcpp::ok() && policy_ == BufferPolicy::Queue && queue_.empty())
         {
@@ -69,7 +69,7 @@ struct Buffer<Inputs...>::Impl
                                 const std::chrono::duration<Rep, Period>& timeout) noexcept
     {
         std::chrono::system_clock::time_point deadline = std::chrono::system_clock::now() + timeout;
-#ifndef FKIE_MESSAGE_FILTERS_IGNORE_RCLCPP_OK
+#ifndef FKIE_MF_IGNORE_RCLCPP_OK
         using namespace std::chrono_literals;
         while (rclcpp::ok() && policy_ == BufferPolicy::Queue && queue_.empty())
         {

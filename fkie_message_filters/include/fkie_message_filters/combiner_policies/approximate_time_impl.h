@@ -102,17 +102,17 @@ void ApproximateTime<IOs...>::add(std::unique_lock<std::mutex>& lock, std::tuple
     {
         if (stamp < latest_[N])
         {
-            FKIE_MESSAGE_FILTERS_ERROR("message with earlier time stamp "
-                                       << std::fixed << std::setprecision(9) << stamp.seconds()
-                                       << " received (latest is " << latest_[N].seconds() << "), resetting filter");
+            FKIE_MF_ERROR("message with earlier time stamp " << std::fixed << std::setprecision(9) << stamp.seconds()
+                                                             << " received (latest is " << latest_[N].seconds()
+                                                             << "), resetting filter");
             reset();
         }
         else if (latest_[N] + min_dist_[N] > stamp)
         {
-            FKIE_MESSAGE_FILTERS_WARN("new message arrived sooner than anticipated: time stamp "
-                                      << std::fixed << std::setprecision(9) << stamp.seconds()
-                                      << " is earlier than latest " << latest_[N].seconds() << " + "
-                                      << min_dist_[N].seconds() << " = " << (latest_[N] + min_dist_[N]).seconds());
+            FKIE_MF_WARN("new message arrived sooner than anticipated: time stamp "
+                         << std::fixed << std::setprecision(9) << stamp.seconds() << " is earlier than latest "
+                         << latest_[N].seconds() << " + " << min_dist_[N].seconds() << " = "
+                         << (latest_[N] + min_dist_[N]).seconds());
         }
     }
     latest_[N] = stamp;

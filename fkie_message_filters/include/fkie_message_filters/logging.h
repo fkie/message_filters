@@ -24,9 +24,9 @@
 #include <rclcpp/logging.hpp>
 #include <rclcpp/node.hpp>
 
-#define FKIE_MESSAGE_FILTERS_INFO(...)  RCLCPP_INFO_STREAM(fkie_message_filters::get_logger(), __VA_ARGS__)
-#define FKIE_MESSAGE_FILTERS_WARN(...)  RCLCPP_WARN_STREAM(fkie_message_filters::get_logger(), __VA_ARGS__)
-#define FKIE_MESSAGE_FILTERS_ERROR(...) RCLCPP_ERROR_STREAM(fkie_message_filters::get_logger(), __VA_ARGS__)
+#define FKIE_MF_INFO(...)  RCLCPP_INFO_STREAM(fkie_message_filters::get_logger(), __VA_ARGS__)
+#define FKIE_MF_WARN(...)  RCLCPP_WARN_STREAM(fkie_message_filters::get_logger(), __VA_ARGS__)
+#define FKIE_MF_ERROR(...) RCLCPP_ERROR_STREAM(fkie_message_filters::get_logger(), __VA_ARGS__)
 
 namespace fkie_message_filters
 {

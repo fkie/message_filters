@@ -6,6 +6,7 @@ Forthcoming
 -----------
 * Clean up includes
 * Add logging with configurable ROS logger
+* Use FKIE_MF as macro prefix (instead of FKIE_MESSAGE_FILTERS)
 * Contributors: Timo Röhling
 
 2.0.1 (2025-03-27)

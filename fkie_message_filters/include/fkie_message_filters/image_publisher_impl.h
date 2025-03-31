@@ -57,7 +57,7 @@ template<template<typename> class Translate>
 void ImagePublisher<Translate>::advertise(rclcpp::Node::SharedPtr& node, const std::string& base_topic,
                                           const rclcpp::QoS& qos, const rclcpp::PublisherOptions& options) noexcept
 {
-#if FKIE_MESSAGE_FILTERS_IMAGE_TRANSPORT >= 0x30200
+#if FKIE_MF_IMAGE_TRANSPORT_VERSION >= FKIE_MF_VERSION_TUPLE(3, 2, 0)
     pub_ = image_transport::create_publisher(node.get(), base_topic, qos.get_rmw_qos_profile(), options);
 #else
     pub_ = image_transport::create_publisher(node.get(), base_topic, qos.get_rmw_qos_profile());

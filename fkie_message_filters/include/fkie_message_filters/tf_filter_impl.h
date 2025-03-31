@@ -300,7 +300,7 @@ void TfFilter<Inputs...>::report_failure(std::unique_lock<std::mutex>& lock, Mes
     }
     else
     {
-        FKIE_MESSAGE_FILTERS_WARN("TF transform failed and no failure callback registered");
+        FKIE_MF_WARN("TF transform failed and no failure callback registered");
     }
 }
 

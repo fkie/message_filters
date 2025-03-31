@@ -19,7 +19,7 @@
 ############################################################################
 
 cmake_minimum_required(VERSION 3.13...3.28)
-project(fkie_message_filters VERSION 2.0.0)
+project(fkie_message_filters VERSION 2.1.0)
 
 # Dependencies
 find_package(ament_cmake REQUIRED)
@@ -52,6 +52,12 @@ target_link_libraries(tf2_bug PUBLIC tf2_ros::tf2_ros)
 add_executable(hello_example example/hello.cpp)
 target_link_libraries(hello_example PRIVATE ${PROJECT_NAME})
 
+math(
+    EXPR
+    computed_fkie_mf_version
+    "0x10000 * ${PROJECT_VERSION_MAJOR} + 0x100 * ${PROJECT_VERSION_MINOR} + ${PROJECT_VERSION_PATCH}"
+    OUTPUT_FORMAT HEXADECIMAL
+)
 math(
     EXPR
     computed_image_transport_version

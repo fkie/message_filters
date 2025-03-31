@@ -73,8 +73,8 @@ void ExactTime<IOs...>::add(std::unique_lock<std::mutex>& lock, std::tuple_eleme
     rclcpp::Time stamp = helpers::access_ros_header_stamp(std::get<0>(in));
     if (!std::get<N>(queues_).try_emplace(stamp, std::move(in)).second)
     {
-        FKIE_MESSAGE_FILTERS_WARN("message with repeating time stamp " << std::fixed << std::setprecision(9)
-                                                                       << stamp.seconds() << " is being dropped");
+        FKIE_MF_WARN("message with repeating time stamp " << std::fixed << std::setprecision(9) << stamp.seconds()
+                                                          << " is being dropped");
         return;
     }
     bool complete;
