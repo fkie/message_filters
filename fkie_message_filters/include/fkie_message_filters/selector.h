@@ -64,6 +64,6 @@ protected:
 
 }  // namespace fkie_message_filters
 
-#include "selector_impl.h"
+#include "selector_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SELECTOR_H_ */

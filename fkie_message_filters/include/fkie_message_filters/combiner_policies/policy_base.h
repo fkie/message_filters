@@ -21,7 +21,7 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_POLICY_BASE_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_POLICY_BASE_H_
 
-#include "../types.h"
+#include "../types.h"  // IWYU pragma: export
 
 #include <optional>
 
@@ -79,6 +79,6 @@ private:
 }  // namespace combiner_policies
 }  // namespace fkie_message_filters
 
-#include "policy_base_impl.h"
+#include "policy_base_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_POLICY_BASE_H_ */

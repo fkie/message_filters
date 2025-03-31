@@ -21,6 +21,8 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_TF_FILTER_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_TF_FILTER_IMPL_H_
 
+// IWYU pragma: private; include "tf_filter.h"
+
 #include "helpers/access_ros_header.h"
 #include "helpers/tuple.h"
 #include "logging.h"

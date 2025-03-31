@@ -31,7 +31,6 @@
 
 #include <memory>
 #include <string>
-#include <type_traits>
 
 namespace fkie_message_filters
 {

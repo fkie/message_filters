@@ -24,8 +24,6 @@
 
 #include <rclcpp/node.hpp>
 
-#include <condition_variable>
-#include <deque>
 #include <memory>
 #include <mutex>
 #include <tuple>
@@ -255,6 +253,6 @@ class Buffer<IO<Inputs...>> : public Buffer<Inputs...>
 
 }  // namespace fkie_message_filters
 
-#include "buffer_impl.h"
+#include "buffer_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_BUFFER_H_ */

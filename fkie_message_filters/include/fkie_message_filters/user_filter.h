@@ -112,6 +112,6 @@ private:
 
 }  // namespace fkie_message_filters
 
-#include "user_filter_impl.h"
+#include "user_filter_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_USER_FILTER_H_ */

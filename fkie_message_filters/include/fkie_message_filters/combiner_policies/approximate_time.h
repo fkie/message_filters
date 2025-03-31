@@ -178,6 +178,6 @@ private:
 }  // namespace combiner_policies
 }  // namespace fkie_message_filters
 
-#include "approximate_time_impl.h"
+#include "approximate_time_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_APPROXIMATE_TIME_H_ */

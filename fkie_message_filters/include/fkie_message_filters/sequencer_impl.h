@@ -21,6 +21,8 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_SEQUENCER_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_SEQUENCER_IMPL_H_
 
+// IWYU pragma: private; include "sequencer.h"
+
 #include "helpers/access_ros_header.h"
 #include "helpers/tuple.h"
 #include "sequencer.h"

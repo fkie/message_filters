@@ -144,6 +144,6 @@ private:
 
 }  // namespace fkie_message_filters
 
-#include "image_subscriber_impl.h"
+#include "image_subscriber_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_IMAGE_SUBSCRIBER_H_ */

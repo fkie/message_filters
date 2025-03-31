@@ -20,6 +20,8 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_USER_FILTER_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_USER_FILTER_IMPL_H_
 
+// IWYU pragma: private; include "user_filter.h"
+
 #include "user_filter.h"
 
 namespace fkie_message_filters

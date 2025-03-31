@@ -107,6 +107,6 @@ class Source<IO<Outputs...>> : public Source<Outputs...>
 }  // namespace fkie_message_filters
 
 #include "sink.h"
-#include "source_impl.h"
+#include "source_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SOURCE_H_ */

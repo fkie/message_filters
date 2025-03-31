@@ -71,6 +71,6 @@ class SimpleUserFilter<IO<Inputs...>> : public SimpleUserFilter<Inputs...>
 
 }  // namespace fkie_message_filters
 
-#include "simple_user_filter_impl.h"
+#include "simple_user_filter_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SIMPLE_USER_FILTER_H_ */

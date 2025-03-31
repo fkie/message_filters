@@ -21,6 +21,8 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_FIFO_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_FIFO_IMPL_H_
 
+// IWYU pragma: private; include "fifo.h"
+
 #include "../helpers/scoped_unlock.h"
 #include "../helpers/tuple.h"
 #include "fifo.h"

@@ -169,6 +169,6 @@ class TfFilter<IO<Inputs...>> : public TfFilter<Inputs...>
 
 }  // namespace fkie_message_filters
 
-#include "tf_filter_impl.h"
+#include "tf_filter_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_TF_FILTER_H_ */

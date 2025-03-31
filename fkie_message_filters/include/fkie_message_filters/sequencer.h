@@ -97,6 +97,6 @@ public:
 
 }  // namespace fkie_message_filters
 
-#include "sequencer_impl.h"
+#include "sequencer_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SEQUENCER_H_ */

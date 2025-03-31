@@ -26,8 +26,6 @@
 
 #include <rclcpp/node.hpp>
 
-#include <memory>
-
 namespace fkie_message_filters
 {
 
@@ -140,6 +138,6 @@ private:
 
 }  // namespace fkie_message_filters
 
-#include "subscriber_impl.h"
+#include "subscriber_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SUBSCRIBER_H_ */

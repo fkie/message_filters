@@ -21,6 +21,8 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_APPROXIMATE_TIME_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_APPROXIMATE_TIME_IMPL_H_
 
+// IWYU pragma: private; include "approximate_time.h"
+
 #include "../helpers/access_ros_header.h"
 #include "../helpers/scoped_unlock.h"
 #include "../helpers/tuple.h"

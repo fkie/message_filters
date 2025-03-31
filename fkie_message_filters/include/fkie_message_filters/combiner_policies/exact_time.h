@@ -107,6 +107,6 @@ private:
 }  // namespace combiner_policies
 }  // namespace fkie_message_filters
 
-#include "exact_time_impl.h"
+#include "exact_time_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_FIFO_H_ */

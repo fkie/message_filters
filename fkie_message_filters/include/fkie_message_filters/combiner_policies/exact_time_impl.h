@@ -21,6 +21,8 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_EXACT_TIME_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_EXACT_TIME_IMPL_H_
 
+// IWYU pragma: private; include "exact_time.h"
+
 #include "../helpers/access_ros_header.h"
 #include "../helpers/scoped_unlock.h"
 #include "../helpers/tuple.h"

@@ -20,6 +20,8 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_SUBSCRIBER_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_SUBSCRIBER_IMPL_H_
 
+// IWYU pragma: private; include "subscriber.h"
+
 #include "subscriber.h"
 
 namespace fkie_message_filters

@@ -111,7 +111,7 @@ class Sink<IO<Inputs...>> : public Sink<Inputs...>
 
 }  // namespace fkie_message_filters
 
-#include "sink_impl.h"
+#include "sink_impl.h"  // IWYU pragma: keep
 #include "source.h"
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SINK_H_ */

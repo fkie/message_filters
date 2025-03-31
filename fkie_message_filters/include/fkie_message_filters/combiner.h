@@ -157,6 +157,6 @@ private:
 
 }  // namespace fkie_message_filters
 
-#include "combiner_impl.h"
+#include "combiner_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_H_ */

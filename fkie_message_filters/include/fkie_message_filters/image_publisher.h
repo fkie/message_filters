@@ -109,6 +109,6 @@ private:
 
 }  // namespace fkie_message_filters
 
-#include "image_publisher_impl.h"
+#include "image_publisher_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_IMAGE_PUBLISHER_H_ */

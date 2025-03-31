@@ -20,6 +20,8 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_SELECTOR_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_SELECTOR_IMPL_H_
 
+// IWYU pragma: private; include "selector.h"
+
 #include "selector.h"
 
 namespace fkie_message_filters

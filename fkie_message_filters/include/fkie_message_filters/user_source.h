@@ -52,6 +52,6 @@ class UserSource<IO<Outputs...>> : public UserSource<Outputs...>
 
 }  // namespace fkie_message_filters
 
-#include "user_source_impl.h"
+#include "user_source_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_USER_SOURCE_H_ */

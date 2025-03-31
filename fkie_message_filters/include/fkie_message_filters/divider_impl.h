@@ -20,6 +20,8 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_DIVIDER_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_DIVIDER_IMPL_H_
 
+// IWYU pragma: private; include "divider.h"
+
 #include "divider.h"
 #include "helpers/tuple.h"
 

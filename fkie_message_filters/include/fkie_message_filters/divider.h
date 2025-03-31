@@ -110,6 +110,6 @@ class Divider<IO<Inputs...>> : public Divider<Inputs...>
 
 }  // namespace fkie_message_filters
 
-#include "divider_impl.h"
+#include "divider_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_DIVIDER_H_ */

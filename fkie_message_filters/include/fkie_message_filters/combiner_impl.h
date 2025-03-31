@@ -21,6 +21,8 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_IMPL_H_
 
+// IWYU pragma: private; include "combiner.h"
+
 #include "combiner.h"
 
 namespace fkie_message_filters

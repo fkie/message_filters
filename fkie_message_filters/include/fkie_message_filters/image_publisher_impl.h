@@ -20,6 +20,8 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_IMAGE_PUBLISHER_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_IMAGE_PUBLISHER_IMPL_H_
 
+// IWYU pragma: private; include "image_publisher.h"
+
 #include "image_publisher.h"
 #include "version.h"
 

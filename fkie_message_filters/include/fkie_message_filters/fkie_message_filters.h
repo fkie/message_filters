@@ -20,24 +20,25 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_FKIE_MESSAGE_FILTERS_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_FKIE_MESSAGE_FILTERS_H_
 
-#include "buffer.h"
-#include "camera_publisher.h"
-#include "camera_subscriber.h"
-#include "combiner.h"
-#include "combiner_policies/approximate_time.h"
-#include "combiner_policies/exact_time.h"
-#include "combiner_policies/fifo.h"
-#include "divider.h"
-#include "image_publisher.h"
-#include "image_subscriber.h"
-#include "publisher.h"
-#include "selector.h"
-#include "simple_user_filter.h"
-#include "subscriber.h"
-#include "tf_filter.h"
-#include "types.h"
-#include "user_filter.h"
-#include "user_source.h"
+#include "buffer.h"                              // IWYU pragma: export
+#include "camera_publisher.h"                    // IWYU pragma: export
+#include "camera_subscriber.h"                   // IWYU pragma: export
+#include "combiner.h"                            // IWYU pragma: export
+#include "combiner_policies/approximate_time.h"  // IWYU pragma: export
+#include "combiner_policies/exact_time.h"        // IWYU pragma: export
+#include "combiner_policies/fifo.h"              // IWYU pragma: export
+#include "divider.h"                             // IWYU pragma: export
+#include "image_publisher.h"                     // IWYU pragma: export
+#include "image_subscriber.h"                    // IWYU pragma: export
+#include "logging.h"                             // IWYU pragma: export
+#include "publisher.h"                           // IWYU pragma: export
+#include "selector.h"                            // IWYU pragma: export
+#include "simple_user_filter.h"                  // IWYU pragma: export
+#include "subscriber.h"                          // IWYU pragma: export
+#include "tf_filter.h"                           // IWYU pragma: export
+#include "types.h"                               // IWYU pragma: export
+#include "user_filter.h"                         // IWYU pragma: export
+#include "user_source.h"                         // IWYU pragma: export
 
 /**
  * \namespace fkie_message_filters

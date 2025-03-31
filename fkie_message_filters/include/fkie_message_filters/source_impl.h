@@ -20,6 +20,8 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_SOURCE_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_SOURCE_IMPL_H_
 
+// IWYU pragma: private; include "source.h"
+
 #include "source.h"
 
 #include <mutex>

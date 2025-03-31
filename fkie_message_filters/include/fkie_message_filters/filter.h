@@ -52,6 +52,6 @@ void chain(Filter1& flt1, Filter2& flt2, MoreFilters&... filters) noexcept;
 
 }  // namespace fkie_message_filters
 
-#include "filter_impl.h"
+#include "filter_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_FILTER_H_ */

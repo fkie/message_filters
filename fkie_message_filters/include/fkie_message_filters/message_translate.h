@@ -23,7 +23,6 @@
 #include <rclcpp/publisher.hpp>
 #include <rclcpp/subscription.hpp>
 
-#include <functional>
 #include <memory>
 
 namespace fkie_message_filters

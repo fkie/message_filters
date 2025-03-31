@@ -20,6 +20,8 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_BUFFER_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_BUFFER_IMPL_H_
 
+// IWYU pragma: private; include "buffer.h"
+
 #ifndef FKIE_MESSAGE_FILTERS_IGNORE_RCLCPP_OK
 #    ifdef FKIE_MESSAGE_FILTERS_IGNORE_ROS_OK
 #        define FKIE_MESSAGE_FILTERS_IGNORE_RCLCPP_OK FKIE_MESSAGE_FILTERS_IGNORE_ROS_OK
@@ -31,6 +33,10 @@
 #ifndef FKIE_MESSAGE_FILTERS_IGNORE_RCLCPP_OK
 #    include <rclcpp/utilities.hpp>
 #endif
+
+#include <condition_variable>
+#include <deque>
+#include <mutex>
 
 namespace fkie_message_filters
 {

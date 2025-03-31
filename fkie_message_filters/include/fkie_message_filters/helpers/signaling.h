@@ -21,9 +21,6 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_SIGNALING_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_SIGNALING_H_
 
-#include "io.h"
-#include "scoped_unlock.h"
-
 #include <functional>
 #include <list>
 #include <memory>

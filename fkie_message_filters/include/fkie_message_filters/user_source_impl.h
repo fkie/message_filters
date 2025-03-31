@@ -21,6 +21,8 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_USER_SOURCE_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_USER_SOURCE_IMPL_H_
 
+// IWYU pragma: private; include "user_source.h"
+
 #include "user_source.h"
 
 namespace fkie_message_filters

@@ -80,6 +80,6 @@ private:
 }  // namespace combiner_policies
 }  // namespace fkie_message_filters
 
-#include "fifo_impl.h"
+#include "fifo_impl.h"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_FIFO_H_ */

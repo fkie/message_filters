@@ -20,6 +20,8 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_CAMERA_PUBLISHER_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_CAMERA_PUBLISHER_IMPL_H_
 
+// IWYU pragma: private; include "camera_publisher.h"
+
 #include "camera_publisher.h"
 #include "version.h"
 

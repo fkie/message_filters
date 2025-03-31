@@ -21,8 +21,8 @@
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_ARGUMENT_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_ARGUMENT_H_
 
-#include <memory>
 #include <type_traits>
+#include <utility>
 
 namespace fkie_message_filters
 {
