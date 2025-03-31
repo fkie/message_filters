@@ -45,10 +45,12 @@ public:
     void operator()(helpers::argument_t<Outputs>... out);
 };
 
+#ifndef DOXYGEN
 template<class... Outputs>
 class UserSource<IO<Outputs...>> : public UserSource<Outputs...>
 {
 };
+#endif
 
 }  // namespace fkie_message_filters
 

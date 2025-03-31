@@ -85,6 +85,7 @@ private:
     Queue queue_;
 };
 
+#ifndef DOXYGEN
 template<class... Inputs>
 class Sequencer<IO<Inputs...>> : public Sequencer<Inputs...>
 {
@@ -94,6 +95,7 @@ public:
     {
     }
 };
+#endif
 
 }  // namespace fkie_message_filters
 

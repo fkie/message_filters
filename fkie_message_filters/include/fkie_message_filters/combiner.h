@@ -131,6 +131,7 @@ public:
 private:
     using IncomingTuples = std::tuple<typename helpers::io_tuple_t<IOs>...>;
     using OutgoingTuple = helpers::io_tuple_t<helpers::io_concat_t<IOs...>>;
+#ifndef DOXYGEN
     template<typename... Inputs>
     class CombinerSink : public Sink<Inputs...>
     {
@@ -147,6 +148,7 @@ private:
         PolicyInFunc forward_;
         Combiner* parent_{nullptr};
     };
+#endif
     std::mutex combiner_mutex_;
     Policy policy_;
     std::tuple<typename IOs::template Rewrap<CombinerSink>...> sinks_;

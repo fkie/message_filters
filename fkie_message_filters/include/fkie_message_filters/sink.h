@@ -104,10 +104,12 @@ private:
     std::set<std::thread::id> running_;
 };
 
+#ifndef DOXYGEN
 template<typename... Inputs>
 class Sink<IO<Inputs...>> : public Sink<Inputs...>
 {
 };
+#endif
 
 }  // namespace fkie_message_filters
 

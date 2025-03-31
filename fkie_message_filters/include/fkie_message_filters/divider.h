@@ -89,6 +89,7 @@ protected:
     void receive(helpers::argument_t<Inputs>... in) override;
 
 private:
+#ifndef DOXYGEN
     template<class Input>
     class DividerSource : public Source<Input>
     {
@@ -96,6 +97,7 @@ private:
         template<class ForwardedInput>
         void forward(ForwardedInput&& in);
     };
+#endif
     std::tuple<DividerSource<Inputs>...> sources_;
     template<std::size_t N, typename ThisInput, typename... OtherInputs>
     void forward_to_sources(ThisInput&& in, OtherInputs&&... ins);
@@ -103,10 +105,12 @@ private:
     void connect_to_sinks_impl(Connections& conn, ThisSink& sink, OtherSinks&... sinks) noexcept;
 };
 
+#ifndef DOXYGEN
 template<class... Inputs>
 class Divider<IO<Inputs...>> : public Divider<Inputs...>
 {
 };
+#endif
 
 }  // namespace fkie_message_filters
 

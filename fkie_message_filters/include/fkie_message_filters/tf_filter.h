@@ -162,10 +162,12 @@ private:
     void send_message(std::unique_lock<std::mutex>&, MessageTuple& m);
 };
 
+#ifndef DOXYGEN
 template<class... Inputs>
 class TfFilter<IO<Inputs...>> : public TfFilter<Inputs...>
 {
 };
+#endif
 
 }  // namespace fkie_message_filters
 

@@ -246,10 +246,12 @@ private:
     std::shared_ptr<Impl> impl_;
 };
 
+#ifndef DOXYGEN
 template<class... Inputs>
 class Buffer<IO<Inputs...>> : public Buffer<Inputs...>
 {
 };
+#endif
 
 }  // namespace fkie_message_filters
 

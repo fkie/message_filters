@@ -28,6 +28,7 @@
 namespace fkie_message_filters
 {
 
+#ifndef DOXYGEN
 class PublisherBase::Monitor
 {
 public:
@@ -94,6 +95,7 @@ private:
     static std::mutex singleton_mutex_;
     static std::shared_ptr<Monitor> singleton_;
 };
+#endif
 
 std::mutex PublisherBase::Monitor::singleton_mutex_;
 std::shared_ptr<PublisherBase::Monitor> PublisherBase::Monitor::singleton_;

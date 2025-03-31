@@ -23,7 +23,9 @@
 namespace fkie_message_filters
 {
 
+#ifndef DOXYGEN
 rclcpp::Logger logger_ = rclcpp::get_logger("fkie_message_filters");
+#endif
 
 void set_logger(const std::string& name)
 {

@@ -23,9 +23,9 @@
 
 #if __has_include(<boost/shared_ptr.hpp>)
 #    include <boost/shared_ptr.hpp>
-#    define FKIE_MESSAGE_FILTERS_HAS_BOOST 1
+#    define FKIE_MF_HAS_BOOST 1
 #else
-#    define FKIE_MESSAGE_FILTERS_HAS_BOOST 0
+#    define FKIE_MF_HAS_BOOST 0
 #endif
 #include <rclcpp/time.hpp>
 
@@ -76,7 +76,7 @@ struct AccessRosHeader<std::unique_ptr<M>>
     }
 };
 
-#if FKIE_MESSAGE_FILTERS_HAS_BOOST
+#if FKIE_MF_HAS_BOOST
 template<class M>
 struct AccessRosHeader<boost::shared_ptr<M>>
 {

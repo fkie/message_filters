@@ -99,10 +99,12 @@ private:
     helpers::Signal<Outputs...> signal_;
 };
 
+#ifndef DOXYGEN
 template<typename... Outputs>
 class Source<IO<Outputs...>> : public Source<Outputs...>
 {
 };
+#endif
 
 }  // namespace fkie_message_filters
 

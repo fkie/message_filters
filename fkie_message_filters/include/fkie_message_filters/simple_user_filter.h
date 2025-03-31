@@ -64,10 +64,12 @@ private:
     ProcessingFunction f_;
 };
 
+#ifndef DOXYGEN
 template<typename... Inputs>
 class SimpleUserFilter<IO<Inputs...>> : public SimpleUserFilter<Inputs...>
 {
 };
+#endif
 
 }  // namespace fkie_message_filters
 
