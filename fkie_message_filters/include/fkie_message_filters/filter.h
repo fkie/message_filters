@@ -19,6 +19,7 @@
  ****************************************************************************/
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_FILTER_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_FILTER_H_
+#pragma once
 
 #include "sink.h"
 #include "source.h"

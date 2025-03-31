@@ -17,9 +17,9 @@
  * limitations under the License.
  *
  ****************************************************************************/
-
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_ACCESS_ROS_HEADER_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_ACCESS_ROS_HEADER_H_
+#pragma once
 
 #if __has_include(<boost/shared_ptr.hpp>)
 #    include <boost/shared_ptr.hpp>

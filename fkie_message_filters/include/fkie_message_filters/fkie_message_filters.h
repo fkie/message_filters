@@ -19,6 +19,7 @@
  ****************************************************************************/
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_FKIE_MESSAGE_FILTERS_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_FKIE_MESSAGE_FILTERS_H_
+#pragma once
 
 #include "buffer.h"                              // IWYU pragma: export
 #include "camera_publisher.h"                    // IWYU pragma: export

@@ -19,6 +19,7 @@
  ****************************************************************************/
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_CAMERA_PUBLISHER_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_CAMERA_PUBLISHER_H_
+#pragma once
 
 #include "message_translate.h"
 #include "publisher_base.h"

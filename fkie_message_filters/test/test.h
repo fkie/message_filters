@@ -17,11 +17,9 @@
  * limitations under the License.
  *
  ****************************************************************************/
-
 #ifndef TEST_TEST_H_
 #define TEST_TEST_H_
-
-#define FKIE_MESSAGE_FILTERS_IGNORE_ROS_OK
+#pragma once
 
 #include <gtest/gtest.h>
 #include <image_transport/image_transport.hpp>

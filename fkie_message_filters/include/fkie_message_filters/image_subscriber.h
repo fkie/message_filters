@@ -19,6 +19,7 @@
  ****************************************************************************/
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_IMAGE_SUBSCRIBER_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_IMAGE_SUBSCRIBER_H_
+#pragma once
 
 #include "message_translate.h"
 #include "source.h"

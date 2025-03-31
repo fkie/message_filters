@@ -19,6 +19,7 @@
  ****************************************************************************/
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_PUBLISHER_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_PUBLISHER_IMPL_H_
+#pragma once
 
 // IWYU pragma: private; include "publisher.h"
 

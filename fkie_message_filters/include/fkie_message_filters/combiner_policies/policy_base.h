@@ -17,9 +17,9 @@
  * limitations under the License.
  *
  ****************************************************************************/
-
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_POLICY_BASE_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_POLICY_BASE_H_
+#pragma once
 
 #include "../types.h"  // IWYU pragma: export
 

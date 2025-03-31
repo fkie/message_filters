@@ -19,6 +19,7 @@
  ****************************************************************************/
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_CAMERA_SUBSCRIBER_IMPL_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_CAMERA_SUBSCRIBER_IMPL_H_
+#pragma once
 
 // IWYU pragma: private; include "camera_subscriber.h"
 

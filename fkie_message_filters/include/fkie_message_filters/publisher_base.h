@@ -17,9 +17,9 @@
  * limitations under the License.
  *
  ****************************************************************************/
-
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_PUBLISHER_BASE_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_PUBLISHER_BASE_H_
+#pragma once
 
 #include "helpers/signaling.h"
 #include "types.h"

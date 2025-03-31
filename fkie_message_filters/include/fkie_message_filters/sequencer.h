@@ -17,9 +17,9 @@
  * limitations under the License.
  *
  ****************************************************************************/
-
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_SEQUENCER_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_SEQUENCER_H_
+#pragma once
 
 #include "filter.h"
 

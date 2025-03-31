@@ -19,6 +19,7 @@
  ****************************************************************************/
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_SOURCE_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_SOURCE_H_
+#pragma once
 
 #include "filter_base.h"
 #include "helpers/argument.h"

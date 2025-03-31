@@ -17,9 +17,9 @@
  * limitations under the License.
  *
  ****************************************************************************/
-
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_SCOPED_UNLOCK_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_SCOPED_UNLOCK_H_
+#pragma once
 
 namespace fkie_message_filters
 {

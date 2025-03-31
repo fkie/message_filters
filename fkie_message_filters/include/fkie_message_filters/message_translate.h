@@ -19,6 +19,7 @@
  ****************************************************************************/
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_MESSAGE_TRANSLATE_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_MESSAGE_TRANSLATE_H_
+#pragma once
 
 #include <rclcpp/publisher.hpp>
 #include <rclcpp/subscription.hpp>

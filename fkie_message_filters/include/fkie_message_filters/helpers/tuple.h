@@ -17,10 +17,11 @@
  * limitations under the License.
  *
  ****************************************************************************/
-
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_TUPLE_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_TUPLE_H_
+#pragma once
 
+#include <initializer_list>
 #include <tuple>
 
 namespace fkie_message_filters

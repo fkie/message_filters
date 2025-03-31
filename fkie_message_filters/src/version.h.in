@@ -17,9 +17,9 @@
  * limitations under the License.
  *
  ****************************************************************************/
-
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_VERSION_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_VERSION_H_
+#pragma once
 
 #define FKIE_MF_VERSION_MAJOR  @PROJECT_VERSION_MAJOR@
 #define FKIE_MF_VERSION_MINOR  @PROJECT_VERSION_MINOR@

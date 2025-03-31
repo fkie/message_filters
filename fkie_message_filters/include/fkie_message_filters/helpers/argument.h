@@ -17,9 +17,9 @@
  * limitations under the License.
  *
  ****************************************************************************/
-
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_ARGUMENT_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_ARGUMENT_H_
+#pragma once
 
 #include <type_traits>
 #include <utility>

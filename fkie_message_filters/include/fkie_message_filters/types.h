@@ -19,6 +19,7 @@
  ****************************************************************************/
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_TYPES_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_TYPES_H_
+#pragma once
 
 #include "helpers/io.h"
 #include "helpers/signaling.h"

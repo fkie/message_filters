@@ -19,6 +19,7 @@
  ****************************************************************************/
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_H_
+#pragma once
 
 #include "helpers/tuple.h"
 #include "sink.h"

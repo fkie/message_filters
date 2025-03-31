@@ -19,6 +19,7 @@
  ****************************************************************************/
 #ifndef INCLUDE_FKIE_MESSAGE_FILTERS_IMAGE_LOGGING_H_
 #define INCLUDE_FKIE_MESSAGE_FILTERS_IMAGE_LOGGING_H_
+#pragma once
 
 #include <rclcpp/logger.hpp>
 #include <rclcpp/logging.hpp>
