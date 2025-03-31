@@ -2,8 +2,8 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.1.0 (2025-03-31)
+------------------
 * Clean up includes
 * Add logging with configurable ROS logger
 * Use FKIE_MF as macro prefix (instead of FKIE_MESSAGE_FILTERS)
