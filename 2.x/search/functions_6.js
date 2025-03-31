@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['has_5fsome_0',['has_some',['../classfkie__message__filters_1_1Buffer.html#a61d7ea782d7d4390f7b6ae4fecc4ecde',1,'fkie_message_filters::Buffer']]]
+  ['get_5flogger_0',['get_logger',['../namespacefkie__message__filters.html#a4f1fc47f61e9b425b6a3b845149b6bff',1,'fkie_message_filters']]]
 ];
