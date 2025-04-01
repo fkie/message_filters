@@ -52,7 +52,7 @@ void approximate_time_test_code()
     src1(IntegerStamped(0, "", make_stamp(99, 2)));
     src2(IntegerStamped(1, "", make_stamp(100, 1)));
     // Extra message
-    src2(IntegerStamped(1, "", make_stamp(100, 20)));
+    src2(IntegerStamped(0, "", make_stamp(100, 20)));
     src3(IntegerStamped(1, "", make_stamp(100, 2)));
     src1(IntegerStamped(1, "", make_stamp(100, 0)));
     src1(IntegerStamped(2, "", make_stamp(101, 0)));

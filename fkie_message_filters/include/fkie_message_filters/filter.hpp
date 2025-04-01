@@ -38,6 +38,7 @@ inline namespace abi2
 template<class In, class Out>
 class Filter : public Sink<In>, public Source<Out>
 {
+public:
     /** \brief Disconnect from all connected sources and sinks.
      *
      * Convenience function that calls disconnect_from_all_sources() and disonnect_from_all_sinks().

@@ -48,7 +48,7 @@ void tf_filter_test_code()
     using Sink = mf::SimpleUserFilter<typename TfFilter::Output>;
     using namespace std::chrono_literals;
 
-    std::size_t callback_counts = 0, expired_counts = 0, overflow_counts = 0, failure_counts = 0;
+    std::size_t callback_counts = 0, empty_counts = 0, expired_counts = 0, overflow_counts = 0, failure_counts = 0;
     tf2::BufferCore bc{10s};
     Source src;
     TfFilter flt;
@@ -62,6 +62,9 @@ void tf_filter_test_code()
             {
                 case mf::TfFilterResult::TransformExpired:
                     ++expired_counts;
+                    break;
+                case mf::TfFilterResult::EmptyFrameID:
+                    ++empty_counts;
                     break;
                 case mf::TfFilterResult::QueueOverflow:
                     ++overflow_counts;
@@ -88,30 +91,35 @@ void tf_filter_test_code()
     // Check that filter will wait when the transform is older than needed
     src(IntegerStamped(0, "alpha", make_stamp(100)));
     ASSERT_EQ(0u, callback_counts);
+    ASSERT_EQ(0u, empty_counts);
     ASSERT_EQ(0u, expired_counts);
     ASSERT_EQ(0u, overflow_counts);
     ASSERT_EQ(0u, failure_counts);
     // Check that filter pass the message once the transform updates
     set_tf_transform(bc, "target", "alpha", make_stamp(101));
     ASSERT_EQ(1u, callback_counts);
+    ASSERT_EQ(0u, empty_counts);
     ASSERT_EQ(0u, expired_counts);
     ASSERT_EQ(0u, overflow_counts);
     ASSERT_EQ(0u, failure_counts);
     // If the message is older than the cache length, instant fail
     src(IntegerStamped(0, "alpha", make_stamp(50)));
     ASSERT_EQ(1u, callback_counts);
+    ASSERT_EQ(0u, empty_counts);
     ASSERT_EQ(1u, expired_counts);
     ASSERT_EQ(0u, overflow_counts);
     ASSERT_EQ(0u, failure_counts);
     // If the transform is available, instant pass
     src(IntegerStamped(0, "alpha", make_stamp(100)));
     ASSERT_EQ(2u, callback_counts);
+    ASSERT_EQ(0u, empty_counts);
     ASSERT_EQ(1u, expired_counts);
     ASSERT_EQ(0u, overflow_counts);
     ASSERT_EQ(0u, failure_counts);
     // The filter will wait for unknown transforms
     src(IntegerStamped(0, "gamma", make_stamp(100)));
     ASSERT_EQ(2u, callback_counts);
+    ASSERT_EQ(0u, empty_counts);
     ASSERT_EQ(1u, expired_counts);
     ASSERT_EQ(0u, overflow_counts);
     ASSERT_EQ(0u, failure_counts);
@@ -119,6 +127,7 @@ void tf_filter_test_code()
     src(IntegerStamped(0, "beta", make_stamp(102)));
     src(IntegerStamped(0, "alpha", make_stamp(102)));
     ASSERT_EQ(2u, callback_counts);
+    ASSERT_EQ(0u, empty_counts);
     ASSERT_EQ(1u, expired_counts);
     ASSERT_EQ(1u, overflow_counts);
     ASSERT_EQ(0u, failure_counts);
@@ -126,6 +135,7 @@ void tf_filter_test_code()
     set_tf_transform(bc, "target", "alpha", make_stamp(103));
     set_tf_transform(bc, "target", "beta", make_stamp(103));
     ASSERT_EQ(4u, callback_counts);
+    ASSERT_EQ(0u, empty_counts);
     ASSERT_EQ(1u, expired_counts);
     ASSERT_EQ(1u, overflow_counts);
     ASSERT_EQ(0u, failure_counts);
@@ -133,6 +143,7 @@ void tf_filter_test_code()
     src(IntegerStamped(0, "gamma", make_stamp(100)));
     src(IntegerStamped(0, "gamma", make_stamp(100)));
     ASSERT_EQ(4u, callback_counts);
+    ASSERT_EQ(0u, empty_counts);
     ASSERT_EQ(1u, expired_counts);
     ASSERT_EQ(1u, overflow_counts);
     ASSERT_EQ(0u, failure_counts);
@@ -143,6 +154,13 @@ void tf_filter_test_code()
     src(IntegerStamped(0, "alpha", make_stamp(100)));
     src(IntegerStamped(0, "beta", make_stamp(100)));
     ASSERT_EQ(6u, callback_counts);
+    ASSERT_EQ(0u, empty_counts);
+    ASSERT_EQ(1u, expired_counts);
+    ASSERT_EQ(1u, overflow_counts);
+    ASSERT_EQ(0u, failure_counts);
+    src(IntegerStamped(0, "", make_stamp(100)));
+    ASSERT_EQ(6u, callback_counts);
+    ASSERT_EQ(1u, empty_counts);
     ASSERT_EQ(1u, expired_counts);
     ASSERT_EQ(1u, overflow_counts);
     ASSERT_EQ(0u, failure_counts);

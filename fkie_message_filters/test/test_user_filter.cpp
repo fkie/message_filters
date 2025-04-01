@@ -23,6 +23,8 @@
 #include <fkie_message_filters/user_filter.hpp>
 #include <fkie_message_filters/user_source.hpp>
 
+#include <stdexcept>
+
 template<typename int_T, typename double_T>
 void user_filter_test_code()
 {
@@ -40,6 +42,8 @@ void user_filter_test_code()
         {
             if (i == 42)
                 f(double_T(3.14));
+            if (i == 99)
+                throw std::invalid_argument("99 is evil!");
         });
     snk.set_processing_function(
         [&](const double_T& d) -> bool
@@ -53,6 +57,8 @@ void user_filter_test_code()
     src(int_T(42));
     src(int_T(-1));
     ASSERT_EQ(1u, callback_counts);
+    flt.disconnect();
+    src(int_T(99));
 }
 
 TEST(fkie_message_filters, UserFilterCopyConstructible)

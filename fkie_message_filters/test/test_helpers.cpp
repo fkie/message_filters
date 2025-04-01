@@ -26,7 +26,7 @@
 #include <fkie_message_filters/types.hpp>
 
 #include <memory>
-#if FKIE_MESSAGE_FILTERS_HAS_BOOST
+#if FKIE_MF_HAS_BOOST
 #    include <boost/make_shared.hpp>
 #    include <boost/shared_ptr.hpp>
 #endif
@@ -55,20 +55,23 @@ TEST(fkie_message_filters, RosHeaderExtraction)
     // supported data types
     using IntegerStamped = Stamped<int_C>;
 
-    IntegerStamped i1{int_C(0), std::string(), rclcpp::Time(1, 0)};
-    std::shared_ptr<IntegerStamped const> i2 =
-        std::make_shared<IntegerStamped>(int_C(0), std::string(), rclcpp::Time(2, 0));
+    IntegerStamped i1{int_C(0), "frame1", rclcpp::Time(1, 0)};
+    std::shared_ptr<IntegerStamped const> i2 = std::make_shared<IntegerStamped>(int_C(0), "frame2", rclcpp::Time(2, 0));
     std::unique_ptr<IntegerStamped const> i3 =
-        std::make_unique<IntegerStamped const>(int_C(0), std::string(), rclcpp::Time(3, 0));
-#if FKIE_MESSAGE_FILTERS_HAS_BOOST
+        std::make_unique<IntegerStamped const>(int_C(0), "frame3", rclcpp::Time(3, 0));
+#if FKIE_MF_HAS_BOOST
     boost::shared_ptr<IntegerStamped const> i4 =
-        boost::make_shared<IntegerStamped>(int_C(0), std::string(), rclcpp::Time(4, 0));
+        boost::make_shared<IntegerStamped>(int_C(0), "frame4", rclcpp::Time(4, 0));
 #endif
     ASSERT_EQ(rclcpp::Time(1, 0, RCL_ROS_TIME), mf::helpers::access_ros_header_stamp(i1));
+    ASSERT_EQ("frame1", mf::helpers::access_ros_header_frame_id(i1));
     ASSERT_EQ(rclcpp::Time(2, 0, RCL_ROS_TIME), mf::helpers::access_ros_header_stamp(i2));
+    ASSERT_EQ("frame2", mf::helpers::access_ros_header_frame_id(i2));
     ASSERT_EQ(rclcpp::Time(3, 0, RCL_ROS_TIME), mf::helpers::access_ros_header_stamp(i3));
-#if FKIE_MESSAGE_FILTERS_HAS_BOOST
+    ASSERT_EQ("frame3", mf::helpers::access_ros_header_frame_id(i3));
+#if FKIE_MF_HAS_BOOST
     ASSERT_EQ(rclcpp::Time(4, 0, RCL_ROS_TIME), mf::helpers::access_ros_header_stamp(i4));
+    ASSERT_EQ("frame4", mf::helpers::access_ros_header_frame_id(i4));
 #endif
 }
 

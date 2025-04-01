@@ -51,9 +51,12 @@ void common_publisher_test_code(rclcpp::Node::SharedPtr& node, Source& src, Publ
 {
     src.connect_to_sink(pub);
     ASSERT_EQ(0, get_publisher_count(sub));
+    ASSERT_FALSE(pub.is_active());
     pub.advertise(node, "publisher_test", 1);
+    ASSERT_EQ("/publisher_test", pub.topic());
     process_pending_events(node);
     ASSERT_EQ(1, get_publisher_count(sub));
+    ASSERT_TRUE(pub.is_active());
     ASSERT_EQ(0, received_msgs);
     auto msg = create();
     src(mf::helpers::maybe_move(msg));
@@ -142,8 +145,11 @@ void camera_publisher_test_code(rclcpp::Node::SharedPtr& node, Source& src, Publ
 {
     src.connect_to_sink(pub);
     ASSERT_EQ(0, get_publisher_count(sub));
+    ASSERT_FALSE(pub.is_active());
     pub.advertise(node, "publisher_test", 1);
+    ASSERT_EQ("/publisher_test", pub.topic());
     process_pending_events(node);
+    ASSERT_TRUE(pub.is_active());
     ASSERT_EQ(1, get_publisher_count(sub));
     ASSERT_EQ(0, received_msgs);
     auto img = MessageCreator<sensor_msgs::msg::Image>::create();
@@ -208,6 +214,7 @@ void common_subscriber_test_code(rclcpp::Node::SharedPtr& node, Publisher& pub, 
         });
     ASSERT_EQ(0, get_subscription_count(pub));
     sub.subscribe(node, "subscriber_test", 1);
+    ASSERT_EQ("/subscriber_test", sub.topic());
     process_pending_events(node);
     ASSERT_EQ(1, get_subscription_count(pub));
     ASSERT_EQ(0, received_msgs);
@@ -284,6 +291,7 @@ void camera_subscriber_test_code(rclcpp::Node::SharedPtr& node, Publisher& pub, 
         });
     ASSERT_EQ(0, get_subscription_count(pub));
     sub.subscribe(node, "subscriber_test", 1);
+    ASSERT_EQ("/subscriber_test", sub.topic());
     process_pending_events(node);
     ASSERT_EQ(1, get_subscription_count(pub));
     ASSERT_EQ(0, received_msgs);
