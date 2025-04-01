@@ -87,7 +87,7 @@ $(function() {
 <p>Reorder or reduce an N-ary filter.  
  <a href="classfkie__message__filters_1_1Selector.html#details">More...</a></p>
 
-<p><code>#include &lt;fkie_message_filters/selector.h&gt;</code></p>
+<p><code>#include &lt;fkie_message_filters/selector.hpp&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for fkie_message_filters::Selector&lt; Inputs, Is &gt;:</div>
 <div class="dyncontent">
@@ -134,12 +134,15 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1a831b68e0dfab4aa7164f2281ae566b" id="r_a1a831b68e0dfab4aa7164f2281ae566b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefkie__message__filters.html#a9dd9a4e49ee46628b6edf6411641825d">Connection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Source.html#a1a831b68e0dfab4aa7164f2281ae566b">connect_to_sink</a> (<a class="el" href="classfkie__message__filters_1_1Sink.html">Sink</a>&lt; Outputs... &gt; &amp;<a class="el" href="classfkie__message__filters_1_1Buffer.html">dst</a>) <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a></td></tr>
-<tr class="memdesc:a1a831b68e0dfab4aa7164f2281ae566b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect this source to a sink.  <br /></td></tr>
-<tr class="separator:a1a831b68e0dfab4aa7164f2281ae566b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fe2a1caab76c11260a357b89eb66320" id="r_a6fe2a1caab76c11260a357b89eb66320"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefkie__message__filters.html#a9dd9a4e49ee46628b6edf6411641825d">Connection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Source.html#a6fe2a1caab76c11260a357b89eb66320">connect_to_sink</a> (<a class="el" href="classfkie__message__filters_1_1Sink.html">Sink</a>&lt; Outputs... &gt; &amp;<a class="el" href="classfkie__message__filters_1_1Buffer.html">dst</a>) <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a></td></tr>
+<tr class="memdesc:a6fe2a1caab76c11260a357b89eb66320"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect this source to a sink.  <br /></td></tr>
+<tr class="separator:a6fe2a1caab76c11260a357b89eb66320"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6f66493ea85a32a0c44f33d7a51974e" id="r_ab6f66493ea85a32a0c44f33d7a51974e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefkie__message__filters.html#a9dd9a4e49ee46628b6edf6411641825d">Connection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Sink.html#ab6f66493ea85a32a0c44f33d7a51974e">connect_to_source</a> (<a class="el" href="classfkie__message__filters_1_1Source.html">Source</a>&lt; Inputs... &gt; &amp;<a class="el" href="classfkie__message__filters_1_1Buffer.html">src</a>) <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a></td></tr>
 <tr class="memdesc:ab6f66493ea85a32a0c44f33d7a51974e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect this sink to a source.  <br /></td></tr>
 <tr class="separator:ab6f66493ea85a32a0c44f33d7a51974e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abedadd63a1d28286856069bcad86d798" id="r_abedadd63a1d28286856069bcad86d798"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Filter.html#abedadd63a1d28286856069bcad86d798">disconnect</a> () <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">override</a></td></tr>
+<tr class="memdesc:abedadd63a1d28286856069bcad86d798"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect from all connected sources and sinks.  <br /></td></tr>
+<tr class="separator:abedadd63a1d28286856069bcad86d798"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add3cbfc888cca3b41a7236f5c314fc43" id="r_add3cbfc888cca3b41a7236f5c314fc43"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Source.html#add3cbfc888cca3b41a7236f5c314fc43">disconnect_from_all_sinks</a> () <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a></td></tr>
 <tr class="memdesc:add3cbfc888cca3b41a7236f5c314fc43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect from all connected sinks.  <br /></td></tr>
 <tr class="separator:add3cbfc888cca3b41a7236f5c314fc43"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,9 +166,9 @@ Static Public Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a1e3ab2c0df22d14109f0bffcf763e353" id="r_a1e3ab2c0df22d14109f0bffcf763e353"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Selector.html#a1e3ab2c0df22d14109f0bffcf763e353">receive</a> (helpers::argument_t&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Inputs</a> &gt;... <a class="el" href="classfkie__message__filters_1_1Buffer.html">in</a>) <a class="el" href="classfkie__message__filters_1_1Buffer.html">override</a></td></tr>
-<tr class="memdesc:a1e3ab2c0df22d14109f0bffcf763e353"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process incoming data.  <br /></td></tr>
-<tr class="separator:a1e3ab2c0df22d14109f0bffcf763e353"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac86d3c6590788b380ad2b2fb5c39fcca" id="r_ac86d3c6590788b380ad2b2fb5c39fcca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Selector.html#ac86d3c6590788b380ad2b2fb5c39fcca">receive</a> (helpers::argument_t&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Inputs</a> &gt;... <a class="el" href="classfkie__message__filters_1_1Buffer.html">in</a>) <a class="el" href="classfkie__message__filters_1_1Buffer.html">override</a></td></tr>
+<tr class="memdesc:ac86d3c6590788b380ad2b2fb5c39fcca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process incoming data.  <br /></td></tr>
+<tr class="separator:ac86d3c6590788b380ad2b2fb5c39fcca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a195d9d234472fb4f2d1e6e2d1381c31f" id="r_a195d9d234472fb4f2d1e6e2d1381c31f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Source.html#a195d9d234472fb4f2d1e6e2d1381c31f">send</a> (helpers::argument_t&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Outputs</a> &gt;... <a class="el" href="classfkie__message__filters_1_1Buffer.html">out</a>)</td></tr>
 <tr class="memdesc:a195d9d234472fb4f2d1e6e2d1381c31f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pass data to all connected sinks.  <br /></td></tr>
 <tr class="separator:a195d9d234472fb4f2d1e6e2d1381c31f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -184,8 +187,8 @@ class fkie_message_filters::Selector&lt; Inputs, Is &gt;</div><p>Reorder or redu
 <div class="line">Select <a class="code hl_class" href="classfkie__message__filters_1_1Buffer.html">select</a>;</div>
 <div class="line"><a class="code hl_class" href="classfkie__message__filters_1_1Buffer.html">BufferOut</a> <a class="code hl_class" href="classfkie__message__filters_1_1Buffer.html">buf_out</a>;</div>
 <div class="line">mf::chain(<a class="code hl_class" href="classfkie__message__filters_1_1Buffer.html">buf_in</a>, <a class="code hl_class" href="classfkie__message__filters_1_1Buffer.html">select</a>, <a class="code hl_class" href="classfkie__message__filters_1_1Buffer.html">buf_out</a>);</div>
-<div class="ttc" id="aclassfkie__message__filters_1_1Buffer_html"><div class="ttname"><a href="classfkie__message__filters_1_1Buffer.html">fkie_message_filters::Buffer</a></div><div class="ttdoc">Store and forward data.</div><div class="ttdef"><b>Definition</b> buffer.h:96</div></div>
-<div class="ttc" id="anamespacefkie__message__filters_html"><div class="ttname"><a href="namespacefkie__message__filters.html">fkie_message_filters</a></div><div class="ttdoc">Primary namespace.</div><div class="ttdef"><b>Definition</b> buffer.h:32</div></div>
+<div class="ttc" id="aclassfkie__message__filters_1_1Buffer_html"><div class="ttname"><a href="classfkie__message__filters_1_1Buffer.html">fkie_message_filters::Buffer</a></div><div class="ttdoc">Store and forward data.</div><div class="ttdef"><b>Definition</b> buffer.hpp:100</div></div>
+<div class="ttc" id="anamespacefkie__message__filters_html"><div class="ttname"><a href="namespacefkie__message__filters.html">fkie_message_filters</a></div><div class="ttdoc">Primary namespace.</div><div class="ttdef"><b>Definition</b> buffer.hpp:34</div></div>
 </div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><a class="el" href="classfkie__message__filters_1_1Divider.html" title="Split an N-ary source into N unary ones.">Divider</a>, <a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one.">Combiner</a> </dd></dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a0f68fa081ebeca7074f24306762002f3" name="a0f68fa081ebeca7074f24306762002f3"></a>
@@ -243,8 +246,8 @@ template&lt;typename... Outputs&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1a831b68e0dfab4aa7164f2281ae566b" name="a1a831b68e0dfab4aa7164f2281ae566b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a831b68e0dfab4aa7164f2281ae566b">&#9670;&#160;</a></span>connect_to_sink()</h2>
+<a id="a6fe2a1caab76c11260a357b89eb66320" name="a6fe2a1caab76c11260a357b89eb66320"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fe2a1caab76c11260a357b89eb66320">&#9670;&#160;</a></span>connect_to_sink()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -255,7 +258,7 @@ template&lt;typename... Outputs&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefkie__message__filters.html#a9dd9a4e49ee46628b6edf6411641825d">Connection</a> <a class="el" href="classfkie__message__filters_1_1Source.html">fkie_message_filters::Source</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Outputs</a> &gt;::connect_to_sink </td>
+          <td class="memname"><a class="el" href="classfkie__message__filters_1_1Buffer.html">FKIE_ML_BEGIN_ABI_NAMESPACE</a> <a class="el" href="namespacefkie__message__filters.html#a9dd9a4e49ee46628b6edf6411641825d">Connection</a> <a class="el" href="classfkie__message__filters_1_1Source.html">fkie_message_filters::Source</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Outputs</a> &gt;::connect_to_sink </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classfkie__message__filters_1_1Sink.html">Sink</a>&lt; Outputs... &gt; &amp;&#160;</td>
           <td class="paramname"><em>dst</em></td><td>)</td>
@@ -306,12 +309,43 @@ template&lt;typename... Inputs&gt; </div>
 </div><div class="memdoc">
 
 <p>Connect this sink to a source. </p>
-<p>Can be called multiple times to connect multiple sources; in that case, the sink receives data from all connected sources. This function does basically the same thing as <a class="el" href="classfkie__message__filters_1_1Source.html#a1a831b68e0dfab4aa7164f2281ae566b" title="Connect this source to a sink.">Source::connect_to_sink()</a>, only from the opposite point of view.</p>
+<p>Can be called multiple times to connect multiple sources; in that case, the sink receives data from all connected sources. This function does basically the same thing as <a class="el" href="classfkie__message__filters_1_1Source.html#a6fe2a1caab76c11260a357b89eb66320" title="Connect this source to a sink.">Source::connect_to_sink()</a>, only from the opposite point of view.</p>
 <ul>
 <li><code>src</code> the source that is to be connected</li>
 </ul>
 <dl class="section return"><dt>Returns</dt><dd>a connection object that can be used to monitor or sever the created connection </dd></dl>
 <dl class="section user"><dt><b>Exceptions</b></dt><dd>Does not throw any exceptions. </dd></dl>
+
+</div>
+</div>
+<a id="abedadd63a1d28286856069bcad86d798" name="abedadd63a1d28286856069bcad86d798"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abedadd63a1d28286856069bcad86d798">&#9670;&#160;</a></span>disconnect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classfkie__message__filters_1_1Buffer.html">FKIE_ML_BEGIN_ABI_NAMESPACE</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a> <a class="el" href="classfkie__message__filters_1_1Filter.html">fkie_message_filters::Filter</a>&lt; <a class="el" href="classfkie__message__filters_1_1IO.html">IO</a>&lt; Inputs... &gt; , <a class="el" href="classfkie__message__filters_1_1IO.html">IO</a>&lt; Inputs... &gt;::template Select&lt; Is... &gt;  &gt;::disconnect </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Disconnect from all connected sources and sinks. </p>
+<p>Convenience function that calls <a class="el" href="classfkie__message__filters_1_1Sink.html#ac2c8d910b03662ff68a4a1c9b4be4147" title="Disconnect from all connected sources.">disconnect_from_all_sources()</a> and disonnect_from_all_sinks().</p>
+<dl class="section user"><dt><b>Exceptions</b></dt><dd>Does not throw any exceptions. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classfkie__message__filters_1_1Sink.html#a5768a24dc48f6caddd1d7bb614bc1404">fkie_message_filters::Sink&lt; Inputs &gt;</a>.</p>
 
 </div>
 </div>
@@ -372,13 +406,13 @@ template&lt;typename... Inputs&gt; </div>
 </div><div class="memdoc">
 
 <p>Disconnect from all connected sources. </p>
-<p>Severs the connection to all sources. The <a class="el" href="classfkie__message__filters_1_1Selector.html#a1e3ab2c0df22d14109f0bffcf763e353" title="Process incoming data.">receive()</a> method will not be called any more.</p>
+<p>Severs the connection to all sources. The <a class="el" href="classfkie__message__filters_1_1Selector.html#ac86d3c6590788b380ad2b2fb5c39fcca" title="Process incoming data.">receive()</a> method will not be called any more.</p>
 <dl class="section user"><dt><b>Exceptions</b></dt><dd>Does not throw any exceptions. </dd></dl>
 
 </div>
 </div>
-<a id="a1e3ab2c0df22d14109f0bffcf763e353" name="a1e3ab2c0df22d14109f0bffcf763e353"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e3ab2c0df22d14109f0bffcf763e353">&#9670;&#160;</a></span>receive()</h2>
+<a id="ac86d3c6590788b380ad2b2fb5c39fcca" name="ac86d3c6590788b380ad2b2fb5c39fcca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac86d3c6590788b380ad2b2fb5c39fcca">&#9670;&#160;</a></span>receive()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -389,7 +423,7 @@ template&lt;class... Inputs, std::size_t... Is&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a> <a class="el" href="classfkie__message__filters_1_1Selector.html">fkie_message_filters::Selector</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Inputs</a>, <a class="el" href="classfkie__message__filters_1_1Buffer.html">Is</a> &gt;::receive </td>
+          <td class="memname"><a class="el" href="classfkie__message__filters_1_1Buffer.html">FKIE_ML_BEGIN_ABI_NAMESPACE</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a> <a class="el" href="classfkie__message__filters_1_1Selector.html">fkie_message_filters::Selector</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Inputs</a>, <a class="el" href="classfkie__message__filters_1_1Buffer.html">Is</a> &gt;::receive </td>
           <td>(</td>
           <td class="paramtype">helpers::argument_t&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Inputs</a> &gt;...&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -439,7 +473,7 @@ template&lt;class... Inputs, std::size_t... Is&gt; </div>
 <p>The default implementation does nothing.</p>
 <dl class="section user"><dt><b>Exceptions</b></dt><dd>Does not throw any exceptions. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classfkie__message__filters_1_1Buffer.html#a55b6e088784aa02b6efec16ad1348955">fkie_message_filters::Buffer&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Buffer.html#a55b6e088784aa02b6efec16ad1348955">fkie_message_filters::Buffer&lt; Inputs... &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Combiner.html#a66c120a55ffe1030b05d8782c02a9bb3">fkie_message_filters::Combiner&lt; PolicyTmpl, IOs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Sequencer.html#a9567daf21eb7e5cfea514ec80a60ee55">fkie_message_filters::Sequencer&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Sequencer.html#a9567daf21eb7e5cfea514ec80a60ee55">fkie_message_filters::Sequencer&lt; Inputs... &gt;</a>, <a class="el" href="classfkie__message__filters_1_1TfFilter.html#a4f16258958004a3c1d4ef6d9e22b7898">fkie_message_filters::TfFilter&lt; Inputs &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1TfFilter.html#a4f16258958004a3c1d4ef6d9e22b7898">fkie_message_filters::TfFilter&lt; Inputs... &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classfkie__message__filters_1_1Buffer.html#a55b6e088784aa02b6efec16ad1348955">fkie_message_filters::Buffer&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Combiner.html#a66c120a55ffe1030b05d8782c02a9bb3">fkie_message_filters::Combiner&lt; PolicyTmpl, IOs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Sequencer.html#a9567daf21eb7e5cfea514ec80a60ee55">fkie_message_filters::Sequencer&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1TfFilter.html#a4f16258958004a3c1d4ef6d9e22b7898">fkie_message_filters::TfFilter&lt; Inputs &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1TfFilter.html#a4f16258958004a3c1d4ef6d9e22b7898">fkie_message_filters::TfFilter&lt; Inputs... &gt;</a>.</p>
 
 </div>
 </div>
@@ -477,8 +511,9 @@ template&lt;typename... Outputs&gt; </div>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>include/fkie_message_filters/<b>selector.h</b></li>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>include/fkie_message_filters/<b>selector.hpp</b></li>
+<li>include/fkie_message_filters/<b>selector_impl.hpp</b></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

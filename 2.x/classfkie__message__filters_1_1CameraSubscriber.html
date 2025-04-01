@@ -87,7 +87,7 @@ $(function() {
 <p>Subscribe to ROS camera topics as data provider.  
  <a href="classfkie__message__filters_1_1CameraSubscriber.html#details">More...</a></p>
 
-<p><code>#include &lt;fkie_message_filters/camera_subscriber.h&gt;</code></p>
+<p><code>#include &lt;fkie_message_filters/camera_subscriber.hpp&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for fkie_message_filters::CameraSubscriber&lt; Translate &gt;:</div>
 <div class="dyncontent">
@@ -128,15 +128,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6c52673d55123c72f1d4c640d7c36e2c" id="r_a6c52673d55123c72f1d4c640d7c36e2c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a6c52673d55123c72f1d4c640d7c36e2c">CameraSubscriber</a> () <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a></td></tr>
 <tr class="memdesc:a6c52673d55123c72f1d4c640d7c36e2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty subscriber.  <br /></td></tr>
 <tr class="separator:a6c52673d55123c72f1d4c640d7c36e2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40cb5b335cffda213b398ed3b11d5a26" id="r_a40cb5b335cffda213b398ed3b11d5a26"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a40cb5b335cffda213b398ed3b11d5a26">CameraSubscriber</a> (<a class="el" href="classfkie__message__filters_1_1Buffer.html">const</a> rclcpp::Node::SharedPtr &amp;<a class="el" href="classfkie__message__filters_1_1Buffer.html">node</a>, <a class="el" href="classfkie__message__filters_1_1Buffer.html">const</a> std::string &amp;<a class="el" href="classfkie__message__filters_1_1Buffer.html">base_topic</a>, <a class="el" href="classfkie__message__filters_1_1Buffer.html">const</a> rclcpp::QoS &amp;<a class="el" href="classfkie__message__filters_1_1Buffer.html">qos</a>=rclcpp::QoS(rclcpp::KeepLast(10), <a class="el" href="classfkie__message__filters_1_1Buffer.html">rmw_qos_profile_default</a>), <a class="el" href="classfkie__message__filters_1_1Buffer.html">const</a> std::optional&lt; image_transport::TransportHints &gt; &amp;<a class="el" href="classfkie__message__filters_1_1Buffer.html">transport_hints</a>=std::nullopt, <a class="el" href="classfkie__message__filters_1_1Buffer.html">const</a> rclcpp::SubscriptionOptions &amp;<a class="el" href="classfkie__message__filters_1_1Buffer.html">options</a>=rclcpp::SubscriptionOptions()) <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a></td></tr>
-<tr class="memdesc:a40cb5b335cffda213b398ed3b11d5a26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that subscribes to the given ROS camera base topic.  <br /></td></tr>
-<tr class="separator:a40cb5b335cffda213b398ed3b11d5a26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a831b68e0dfab4aa7164f2281ae566b" id="r_a1a831b68e0dfab4aa7164f2281ae566b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefkie__message__filters.html#a9dd9a4e49ee46628b6edf6411641825d">Connection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Source.html#a1a831b68e0dfab4aa7164f2281ae566b">connect_to_sink</a> (<a class="el" href="classfkie__message__filters_1_1Sink.html">Sink</a>&lt; Outputs... &gt; &amp;<a class="el" href="classfkie__message__filters_1_1Buffer.html">dst</a>) <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a></td></tr>
-<tr class="memdesc:a1a831b68e0dfab4aa7164f2281ae566b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect this source to a sink.  <br /></td></tr>
-<tr class="separator:a1a831b68e0dfab4aa7164f2281ae566b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ad0f05e67a918975075f64401ba9d0e" id="r_a4ad0f05e67a918975075f64401ba9d0e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Source.html#a4ad0f05e67a918975075f64401ba9d0e">disconnect</a> () <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">override</a></td></tr>
-<tr class="memdesc:a4ad0f05e67a918975075f64401ba9d0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect from all connected sinks.  <br /></td></tr>
-<tr class="separator:a4ad0f05e67a918975075f64401ba9d0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd8b319015a6a867ee47d4dc66bb347c" id="r_acd8b319015a6a867ee47d4dc66bb347c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#acd8b319015a6a867ee47d4dc66bb347c">CameraSubscriber</a> (<a class="el" href="classfkie__message__filters_1_1Buffer.html">const</a> rclcpp::Node::SharedPtr &amp;<a class="el" href="classfkie__message__filters_1_1Buffer.html">node</a>, <a class="el" href="classfkie__message__filters_1_1Buffer.html">const</a> std::string &amp;<a class="el" href="classfkie__message__filters_1_1Buffer.html">base_topic</a>, <a class="el" href="classfkie__message__filters_1_1Buffer.html">const</a> rclcpp::QoS &amp;<a class="el" href="classfkie__message__filters_1_1Buffer.html">qos</a>=rclcpp::QoS(rclcpp::KeepLast(10), <a class="el" href="classfkie__message__filters_1_1Buffer.html">rmw_qos_profile_default</a>), <a class="el" href="classfkie__message__filters_1_1Buffer.html">const</a> std::optional&lt; image_transport::TransportHints &gt; &amp;<a class="el" href="classfkie__message__filters_1_1Buffer.html">transport_hints</a>=std::nullopt, <a class="el" href="classfkie__message__filters_1_1Buffer.html">const</a> rclcpp::SubscriptionOptions &amp;<a class="el" href="classfkie__message__filters_1_1Buffer.html">options</a>=rclcpp::SubscriptionOptions()) <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a></td></tr>
+<tr class="memdesc:acd8b319015a6a867ee47d4dc66bb347c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that subscribes to the given ROS camera base topic.  <br /></td></tr>
+<tr class="separator:acd8b319015a6a867ee47d4dc66bb347c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fe2a1caab76c11260a357b89eb66320" id="r_a6fe2a1caab76c11260a357b89eb66320"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacefkie__message__filters.html#a9dd9a4e49ee46628b6edf6411641825d">Connection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Source.html#a6fe2a1caab76c11260a357b89eb66320">connect_to_sink</a> (<a class="el" href="classfkie__message__filters_1_1Sink.html">Sink</a>&lt; Outputs... &gt; &amp;<a class="el" href="classfkie__message__filters_1_1Buffer.html">dst</a>) <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a></td></tr>
+<tr class="memdesc:a6fe2a1caab76c11260a357b89eb66320"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect this source to a sink.  <br /></td></tr>
+<tr class="separator:a6fe2a1caab76c11260a357b89eb66320"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31ddcb76d4df352f956cfc81a3208ad5" id="r_a31ddcb76d4df352f956cfc81a3208ad5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Source.html#a31ddcb76d4df352f956cfc81a3208ad5">disconnect</a> () <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">override</a></td></tr>
+<tr class="memdesc:a31ddcb76d4df352f956cfc81a3208ad5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect from all connected sinks.  <br /></td></tr>
+<tr class="separator:a31ddcb76d4df352f956cfc81a3208ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add3cbfc888cca3b41a7236f5c314fc43" id="r_add3cbfc888cca3b41a7236f5c314fc43"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Source.html#add3cbfc888cca3b41a7236f5c314fc43">disconnect_from_all_sinks</a> () <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a></td></tr>
 <tr class="memdesc:add3cbfc888cca3b41a7236f5c314fc43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect from all connected sinks.  <br /></td></tr>
 <tr class="separator:add3cbfc888cca3b41a7236f5c314fc43"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -155,9 +155,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aac1a0b28d5c2fa410cd95375fb83c049" id="r_aac1a0b28d5c2fa410cd95375fb83c049"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#aac1a0b28d5c2fa410cd95375fb83c049">subscribe_on_demand</a> (<a class="el" href="classfkie__message__filters_1_1PublisherBase.html">PublisherBase</a> &amp;<a class="el" href="classfkie__message__filters_1_1Buffer.html">pub</a>)</td></tr>
 <tr class="memdesc:aac1a0b28d5c2fa410cd95375fb83c049"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subscribe to the configured ROS topic whenever the given publisher is active.  <br /></td></tr>
 <tr class="separator:aac1a0b28d5c2fa410cd95375fb83c049"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa79cda43fbc1f5d56667499e3145ff7" id="r_afa79cda43fbc1f5d56667499e3145ff7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#afa79cda43fbc1f5d56667499e3145ff7">topic</a> () <a class="el" href="classfkie__message__filters_1_1Buffer.html">const</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">override</a></td></tr>
-<tr class="memdesc:afa79cda43fbc1f5d56667499e3145ff7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the configured ROS topic.  <br /></td></tr>
-<tr class="separator:afa79cda43fbc1f5d56667499e3145ff7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d26366a71cdf9aab3c79678710c7c99" id="r_a2d26366a71cdf9aab3c79678710c7c99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a2d26366a71cdf9aab3c79678710c7c99">topic</a> () <a class="el" href="classfkie__message__filters_1_1Buffer.html">const</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">override</a></td></tr>
+<tr class="memdesc:a2d26366a71cdf9aab3c79678710c7c99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the configured ROS topic.  <br /></td></tr>
+<tr class="separator:a2d26366a71cdf9aab3c79678710c7c99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a31ed43d01d97533d56f241cc3ae831ef" id="r_a31ed43d01d97533d56f241cc3ae831ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a31ed43d01d97533d56f241cc3ae831ef">unsubscribe</a> ()</td></tr>
 <tr class="memdesc:a31ed43d01d97533d56f241cc3ae831ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unsubscribe from the configured ROS topic.  <br /></td></tr>
 <tr class="separator:a31ed43d01d97533d56f241cc3ae831ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -171,24 +171,24 @@ Static Public Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ac4bad8467cf82dea6c8772b23977c825" id="r_ac4bad8467cf82dea6c8772b23977c825"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#ac4bad8467cf82dea6c8772b23977c825">is_configured</a> () <a class="el" href="classfkie__message__filters_1_1Buffer.html">const</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">override</a></td></tr>
-<tr class="memdesc:ac4bad8467cf82dea6c8772b23977c825"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the ROS subscriber is properly configured.  <br /></td></tr>
-<tr class="separator:ac4bad8467cf82dea6c8772b23977c825"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac040819b7a17e1aac0492b83ac4ab948" id="r_ac040819b7a17e1aac0492b83ac4ab948"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#ac040819b7a17e1aac0492b83ac4ab948">is_configured</a> () <a class="el" href="classfkie__message__filters_1_1Buffer.html">const</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">override</a></td></tr>
+<tr class="memdesc:ac040819b7a17e1aac0492b83ac4ab948"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the ROS subscriber is properly configured.  <br /></td></tr>
+<tr class="separator:ac040819b7a17e1aac0492b83ac4ab948"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c3b206c7ae2bdd981c1e8b8c06c6173" id="r_a6c3b206c7ae2bdd981c1e8b8c06c6173"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1SubscriberBase.html#a6c3b206c7ae2bdd981c1e8b8c06c6173">link_with_publisher</a> (<a class="el" href="classfkie__message__filters_1_1PublisherBase.html">PublisherBase</a> &amp;<a class="el" href="classfkie__message__filters_1_1Buffer.html">pub</a>)</td></tr>
 <tr class="memdesc:a6c3b206c7ae2bdd981c1e8b8c06c6173"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add self to the list of subscribers which are controlled by a publisher.  <br /></td></tr>
 <tr class="separator:a6c3b206c7ae2bdd981c1e8b8c06c6173"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a195d9d234472fb4f2d1e6e2d1381c31f" id="r_a195d9d234472fb4f2d1e6e2d1381c31f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1Source.html#a195d9d234472fb4f2d1e6e2d1381c31f">send</a> (helpers::argument_t&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Outputs</a> &gt;... <a class="el" href="classfkie__message__filters_1_1Buffer.html">out</a>)</td></tr>
 <tr class="memdesc:a195d9d234472fb4f2d1e6e2d1381c31f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pass data to all connected sinks.  <br /></td></tr>
 <tr class="separator:a195d9d234472fb4f2d1e6e2d1381c31f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6603757668edcaf3759468bd0432d75b" id="r_a6603757668edcaf3759468bd0432d75b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a6603757668edcaf3759468bd0432d75b">subscribe_impl</a> () <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">override</a></td></tr>
-<tr class="memdesc:a6603757668edcaf3759468bd0432d75b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a ROS subscriber.  <br /></td></tr>
-<tr class="separator:a6603757668edcaf3759468bd0432d75b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49b156db23b6a7419b71788dccc03078" id="r_a49b156db23b6a7419b71788dccc03078"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a49b156db23b6a7419b71788dccc03078">subscribe_impl</a> () <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">override</a></td></tr>
+<tr class="memdesc:a49b156db23b6a7419b71788dccc03078"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a ROS subscriber.  <br /></td></tr>
+<tr class="separator:a49b156db23b6a7419b71788dccc03078"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae4f69c1bfa73ef2451c8ffa2961eb389" id="r_ae4f69c1bfa73ef2451c8ffa2961eb389"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1SubscriberBase.html#ae4f69c1bfa73ef2451c8ffa2961eb389">unlink_from_publisher</a> ()</td></tr>
 <tr class="memdesc:ae4f69c1bfa73ef2451c8ffa2961eb389"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove self from the list of subscribers which are controlled by a publisher.  <br /></td></tr>
 <tr class="separator:ae4f69c1bfa73ef2451c8ffa2961eb389"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a6a768b9fd3bfec396eb76d55b8f137" id="r_a9a6a768b9fd3bfec396eb76d55b8f137"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a9a6a768b9fd3bfec396eb76d55b8f137">unsubscribe_impl</a> () <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">override</a></td></tr>
-<tr class="memdesc:a9a6a768b9fd3bfec396eb76d55b8f137"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shut the ROS subscriber down.  <br /></td></tr>
-<tr class="separator:a9a6a768b9fd3bfec396eb76d55b8f137"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a200af0d6a704cac8710b2c4e1eeea760" id="r_a200af0d6a704cac8710b2c4e1eeea760"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a200af0d6a704cac8710b2c4e1eeea760">unsubscribe_impl</a> () <a class="el" href="classfkie__message__filters_1_1Buffer.html">noexcept</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">override</a></td></tr>
+<tr class="memdesc:a200af0d6a704cac8710b2c4e1eeea760"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shut the ROS subscriber down.  <br /></td></tr>
+<tr class="separator:a200af0d6a704cac8710b2c4e1eeea760"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">template</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">typename</a> &gt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">class</a> Translate = RosMessageSharedPtr&gt;<br />
@@ -259,19 +259,19 @@ template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">temp
 
 </div>
 </div>
-<a id="a40cb5b335cffda213b398ed3b11d5a26" name="a40cb5b335cffda213b398ed3b11d5a26"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a40cb5b335cffda213b398ed3b11d5a26">&#9670;&#160;</a></span>CameraSubscriber() <span class="overload">[2/2]</span></h2>
+<a id="acd8b319015a6a867ee47d4dc66bb347c" name="acd8b319015a6a867ee47d4dc66bb347c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd8b319015a6a867ee47d4dc66bb347c">&#9670;&#160;</a></span>CameraSubscriber() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">template</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">typename</a> &gt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">class</a> Translate = RosMessageSharedPtr&gt; </div>
+template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">template</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">typename</a> &gt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">class</a> Translate&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html">fkie_message_filters::CameraSubscriber</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Translate</a> &gt;::CameraSubscriber </td>
+          <td class="memname"><a class="el" href="classfkie__message__filters_1_1Buffer.html">FKIE_ML_BEGIN_ABI_NAMESPACE</a> <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html">fkie_message_filters::CameraSubscriber</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Translate</a> &gt;::CameraSubscriber </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classfkie__message__filters_1_1Buffer.html">const</a> rclcpp::Node::SharedPtr &amp;&#160;</td>
           <td class="paramname"><em>node</em>, </td>
@@ -327,8 +327,8 @@ template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">temp
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1a831b68e0dfab4aa7164f2281ae566b" name="a1a831b68e0dfab4aa7164f2281ae566b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a831b68e0dfab4aa7164f2281ae566b">&#9670;&#160;</a></span>connect_to_sink()</h2>
+<a id="a6fe2a1caab76c11260a357b89eb66320" name="a6fe2a1caab76c11260a357b89eb66320"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fe2a1caab76c11260a357b89eb66320">&#9670;&#160;</a></span>connect_to_sink()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -339,7 +339,7 @@ template&lt;typename... Outputs&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacefkie__message__filters.html#a9dd9a4e49ee46628b6edf6411641825d">Connection</a> <a class="el" href="classfkie__message__filters_1_1Source.html">fkie_message_filters::Source</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Outputs</a> &gt;::connect_to_sink </td>
+          <td class="memname"><a class="el" href="classfkie__message__filters_1_1Buffer.html">FKIE_ML_BEGIN_ABI_NAMESPACE</a> <a class="el" href="namespacefkie__message__filters.html#a9dd9a4e49ee46628b6edf6411641825d">Connection</a> <a class="el" href="classfkie__message__filters_1_1Source.html">fkie_message_filters::Source</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Outputs</a> &gt;::connect_to_sink </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classfkie__message__filters_1_1Sink.html">Sink</a>&lt; Outputs... &gt; &amp;&#160;</td>
           <td class="paramname"><em>dst</em></td><td>)</td>
@@ -363,8 +363,8 @@ template&lt;typename... Outputs&gt; </div>
 
 </div>
 </div>
-<a id="a4ad0f05e67a918975075f64401ba9d0e" name="a4ad0f05e67a918975075f64401ba9d0e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ad0f05e67a918975075f64401ba9d0e">&#9670;&#160;</a></span>disconnect()</h2>
+<a id="a31ddcb76d4df352f956cfc81a3208ad5" name="a31ddcb76d4df352f956cfc81a3208ad5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31ddcb76d4df352f956cfc81a3208ad5">&#9670;&#160;</a></span>disconnect()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -375,7 +375,7 @@ template&lt;typename... Outputs&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a> <a class="el" href="classfkie__message__filters_1_1Source.html">fkie_message_filters::Source</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Outputs</a> &gt;::disconnect </td>
+          <td class="memname"><a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a> <a class="el" href="classfkie__message__filters_1_1Source.html">fkie_message_filters::Source</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Outputs</a> &gt;::disconnect </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -394,7 +394,7 @@ template&lt;typename... Outputs&gt; </div>
 
 <p>Implements <a class="el" href="classfkie__message__filters_1_1FilterBase.html#a99211f486f3569fa2138dde3172059b9">fkie_message_filters::FilterBase</a>.</p>
 
-<p>Reimplemented in <a class="el" href="classfkie__message__filters_1_1Combiner.html#a5b087391f3b038b8caf4e5801c8ad4ae">fkie_message_filters::Combiner&lt; PolicyTmpl, IOs &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classfkie__message__filters_1_1Combiner.html#a5b087391f3b038b8caf4e5801c8ad4ae">fkie_message_filters::Combiner&lt; PolicyTmpl, IOs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Filter.html#abedadd63a1d28286856069bcad86d798">fkie_message_filters::Filter&lt; In, Out &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Filter.html#abedadd63a1d28286856069bcad86d798">fkie_message_filters::Filter&lt; IO&lt; Inputs... &gt;, IO&lt; Inputs... &gt; &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Filter.html#abedadd63a1d28286856069bcad86d798">fkie_message_filters::Filter&lt; IO&lt; Inputs... &gt;, IO&lt; Inputs... &gt;::template Select&lt; Is... &gt; &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1Filter.html#abedadd63a1d28286856069bcad86d798">fkie_message_filters::Filter&lt; IO&lt; Inputs... &gt;, IO&lt; Outputs... &gt; &gt;</a>.</p>
 
 </div>
 </div>
@@ -429,19 +429,19 @@ template&lt;typename... Outputs&gt; </div>
 
 </div>
 </div>
-<a id="ac4bad8467cf82dea6c8772b23977c825" name="ac4bad8467cf82dea6c8772b23977c825"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4bad8467cf82dea6c8772b23977c825">&#9670;&#160;</a></span>is_configured()</h2>
+<a id="ac040819b7a17e1aac0492b83ac4ab948" name="ac040819b7a17e1aac0492b83ac4ab948"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac040819b7a17e1aac0492b83ac4ab948">&#9670;&#160;</a></span>is_configured()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">template</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">typename</a> &gt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">class</a> Translate = RosMessageSharedPtr&gt; </div>
+template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">template</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">typename</a> &gt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">class</a> Translate&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">bool</a> <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html">fkie_message_filters::CameraSubscriber</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Translate</a> &gt;::is_configured </td>
+          <td class="memname"><a class="el" href="classfkie__message__filters_1_1Buffer.html">bool</a> <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html">fkie_message_filters::CameraSubscriber</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Translate</a> &gt;::is_configured </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -523,7 +523,7 @@ template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">temp
 <p>The default implementation does nothing.</p>
 <dl class="section user"><dt><b>Exceptions</b></dt><dd>Does not throw any exceptions. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classfkie__message__filters_1_1Buffer.html#a55b6e088784aa02b6efec16ad1348955">fkie_message_filters::Buffer&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Buffer.html#a55b6e088784aa02b6efec16ad1348955">fkie_message_filters::Buffer&lt; Inputs... &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Combiner.html#a66c120a55ffe1030b05d8782c02a9bb3">fkie_message_filters::Combiner&lt; PolicyTmpl, IOs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Sequencer.html#a9567daf21eb7e5cfea514ec80a60ee55">fkie_message_filters::Sequencer&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Sequencer.html#a9567daf21eb7e5cfea514ec80a60ee55">fkie_message_filters::Sequencer&lt; Inputs... &gt;</a>, <a class="el" href="classfkie__message__filters_1_1TfFilter.html#a4f16258958004a3c1d4ef6d9e22b7898">fkie_message_filters::TfFilter&lt; Inputs &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1TfFilter.html#a4f16258958004a3c1d4ef6d9e22b7898">fkie_message_filters::TfFilter&lt; Inputs... &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classfkie__message__filters_1_1Buffer.html#a55b6e088784aa02b6efec16ad1348955">fkie_message_filters::Buffer&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Combiner.html#a66c120a55ffe1030b05d8782c02a9bb3">fkie_message_filters::Combiner&lt; PolicyTmpl, IOs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Sequencer.html#a9567daf21eb7e5cfea514ec80a60ee55">fkie_message_filters::Sequencer&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1TfFilter.html#a4f16258958004a3c1d4ef6d9e22b7898">fkie_message_filters::TfFilter&lt; Inputs &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1TfFilter.html#a4f16258958004a3c1d4ef6d9e22b7898">fkie_message_filters::TfFilter&lt; Inputs... &gt;</a>.</p>
 
 </div>
 </div>
@@ -567,7 +567,7 @@ template&lt;typename... Outputs&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">template</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">typename</a> &gt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">class</a> Translate = RosMessageSharedPtr&gt; </div>
+template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">template</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">typename</a> &gt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">class</a> Translate&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -667,7 +667,7 @@ template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">temp
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">template</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">typename</a> &gt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">class</a> Translate = RosMessageSharedPtr&gt; </div>
+template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">template</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">typename</a> &gt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">class</a> Translate&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -728,19 +728,19 @@ template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">temp
 
 </div>
 </div>
-<a id="a6603757668edcaf3759468bd0432d75b" name="a6603757668edcaf3759468bd0432d75b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6603757668edcaf3759468bd0432d75b">&#9670;&#160;</a></span>subscribe_impl()</h2>
+<a id="a49b156db23b6a7419b71788dccc03078" name="a49b156db23b6a7419b71788dccc03078"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49b156db23b6a7419b71788dccc03078">&#9670;&#160;</a></span>subscribe_impl()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">template</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">typename</a> &gt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">class</a> Translate = RosMessageSharedPtr&gt; </div>
+template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">template</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">typename</a> &gt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">class</a> Translate&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a> <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html">fkie_message_filters::CameraSubscriber</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Translate</a> &gt;::subscribe_impl </td>
+          <td class="memname"><a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a> <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html">fkie_message_filters::CameraSubscriber</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Translate</a> &gt;::subscribe_impl </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -797,19 +797,19 @@ template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">temp
 
 </div>
 </div>
-<a id="afa79cda43fbc1f5d56667499e3145ff7" name="afa79cda43fbc1f5d56667499e3145ff7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa79cda43fbc1f5d56667499e3145ff7">&#9670;&#160;</a></span>topic()</h2>
+<a id="a2d26366a71cdf9aab3c79678710c7c99" name="a2d26366a71cdf9aab3c79678710c7c99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d26366a71cdf9aab3c79678710c7c99">&#9670;&#160;</a></span>topic()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">template</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">typename</a> &gt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">class</a> Translate = RosMessageSharedPtr&gt; </div>
+template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">template</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">typename</a> &gt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">class</a> Translate&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> std::string <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html">fkie_message_filters::CameraSubscriber</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Translate</a> &gt;::topic </td>
+          <td class="memname">std::string <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html">fkie_message_filters::CameraSubscriber</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Translate</a> &gt;::topic </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -891,19 +891,19 @@ template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">temp
 
 </div>
 </div>
-<a id="a9a6a768b9fd3bfec396eb76d55b8f137" name="a9a6a768b9fd3bfec396eb76d55b8f137"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9a6a768b9fd3bfec396eb76d55b8f137">&#9670;&#160;</a></span>unsubscribe_impl()</h2>
+<a id="a200af0d6a704cac8710b2c4e1eeea760" name="a200af0d6a704cac8710b2c4e1eeea760"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a200af0d6a704cac8710b2c4e1eeea760">&#9670;&#160;</a></span>unsubscribe_impl()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">template</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">typename</a> &gt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">class</a> Translate = RosMessageSharedPtr&gt; </div>
+template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">template</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">typename</a> &gt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">class</a> Translate&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classfkie__message__filters_1_1Buffer.html">virtual</a> <a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a> <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html">fkie_message_filters::CameraSubscriber</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Translate</a> &gt;::unsubscribe_impl </td>
+          <td class="memname"><a class="el" href="classfkie__message__filters_1_1Buffer.html">void</a> <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html">fkie_message_filters::CameraSubscriber</a>&lt; <a class="el" href="classfkie__message__filters_1_1Buffer.html">Translate</a> &gt;::unsubscribe_impl </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -923,8 +923,9 @@ template&lt;<a class="el" href="classfkie__message__filters_1_1Buffer.html">temp
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>include/fkie_message_filters/<b>camera_subscriber.h</b></li>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>include/fkie_message_filters/<b>camera_subscriber.hpp</b></li>
+<li>include/fkie_message_filters/<b>camera_subscriber_impl.hpp</b></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
