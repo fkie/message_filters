@@ -28,6 +28,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 /** \brief Split an N-ary source into N unary ones.
  *
  * The divider splits an N-ary source into its constituent elements, so they can be processed independently. It is
@@ -113,6 +116,7 @@ class Divider<IO<Inputs...>> : public Divider<Inputs...>
 };
 #endif
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "divider_impl.hpp"  // IWYU pragma: keep

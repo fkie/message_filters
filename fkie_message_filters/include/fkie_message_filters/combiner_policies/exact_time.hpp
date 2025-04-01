@@ -31,6 +31,10 @@
 
 namespace fkie_message_filters
 {
+
+inline namespace abi2
+{
+
 namespace combiner_policies
 {
 
@@ -105,6 +109,7 @@ private:
 };
 
 }  // namespace combiner_policies
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "exact_time_impl.hpp"  // IWYU pragma: keep

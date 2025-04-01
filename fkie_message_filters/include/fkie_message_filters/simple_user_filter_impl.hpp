@@ -28,6 +28,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 template<typename... Inputs>
 void SimpleUserFilter<Inputs...>::set_processing_function(const ProcessingFunction& f) noexcept
 {
@@ -43,6 +46,7 @@ void SimpleUserFilter<Inputs...>::receive(helpers::argument_t<Inputs>... in)
     }
 }
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SIMPLE_USER_FILTER_IMPL_HPP_ */

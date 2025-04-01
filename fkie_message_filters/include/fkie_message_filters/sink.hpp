@@ -33,6 +33,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 template<typename...>
 class Source;
 
@@ -112,6 +115,7 @@ class Sink<IO<Inputs...>> : public Sink<Inputs...>
 };
 #endif
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "sink_impl.hpp"  // IWYU pragma: keep

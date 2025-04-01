@@ -28,6 +28,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 /** \brief Simplified filter with user-defined callback function.
  *
  * This is a simplified version of the UserFilter where inputs and outputs are identical. A user-defined
@@ -72,6 +75,7 @@ class SimpleUserFilter<IO<Inputs...>> : public SimpleUserFilter<Inputs...>
 };
 #endif
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "simple_user_filter_impl.hpp"  // IWYU pragma: keep

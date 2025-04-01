@@ -32,6 +32,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 /** \brief Subscribe to ROS camera topics as data provider.
  *
  * This is a specialized subscriber that uses image_transport to subscribe to ROS camera topics. All messages which are
@@ -148,6 +151,7 @@ private:
     image_transport::CameraSubscriber sub_;
 };
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "camera_subscriber_impl.hpp"  // IWYU pragma: keep

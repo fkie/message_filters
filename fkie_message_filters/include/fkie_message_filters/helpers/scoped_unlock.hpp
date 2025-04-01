@@ -23,6 +23,10 @@
 
 namespace fkie_message_filters
 {
+
+inline namespace abi2
+{
+
 namespace helpers
 {
 
@@ -62,6 +66,7 @@ ScopedUnlock<BasicLockable> with_scoped_unlock(BasicLockable& lockable)
 }
 
 }  // namespace helpers
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_SCOPED_UNLOCK_HPP_ */

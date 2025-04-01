@@ -32,6 +32,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 /** \brief Configure ROS logging.
  *
  * \arg \c name the name that is to be used for logging
@@ -46,6 +49,7 @@ void set_logger(const rclcpp::Node::SharedPtr& node, const std::string& name = s
 /** \brief Return the currently configured ROS logger. */
 const rclcpp::Logger& get_logger() noexcept;
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif

@@ -27,6 +27,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 /** \brief Typed base class for filters.
  *
  * All filters process some input and generate some output, possibly with different data types. This class provides the
@@ -51,6 +54,7 @@ class Filter : public Sink<In>, public Source<Out>
 template<typename Filter1, typename Filter2, typename... MoreFilters>
 void chain(Filter1& flt1, Filter2& flt2, MoreFilters&... filters) noexcept;
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "filter_impl.hpp"  // IWYU pragma: keep

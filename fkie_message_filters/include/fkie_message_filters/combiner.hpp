@@ -28,6 +28,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 /** \brief Combiner policies.
  *
  * This namespace contains combiner policy classes.
@@ -158,6 +161,7 @@ private:
     void connect_to_sources_impl(Connections& conn, ThisSource& src, OtherSources&... sources) noexcept;
 };
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "combiner_impl.hpp"  // IWYU pragma: keep

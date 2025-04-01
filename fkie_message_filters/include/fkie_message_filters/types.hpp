@@ -29,6 +29,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 /** \brief Tracks connections from sources to sinks. */
 using Connection = helpers::Connection;
 
@@ -64,6 +67,7 @@ public:
     using Rewrap = Outer<helpers::io_unwrap_t<Types>...>;
 };
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_TYPES_HPP_ */

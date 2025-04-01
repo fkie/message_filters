@@ -28,6 +28,10 @@
 
 namespace fkie_message_filters
 {
+
+inline namespace abi2
+{
+
 namespace helpers
 {
 template<class... Types>
@@ -79,6 +83,7 @@ public:
     virtual void reset() noexcept {};
 };
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_FILTER_BASE_HPP_ */

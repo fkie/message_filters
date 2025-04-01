@@ -28,12 +28,16 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 template<typename... Outputs>
 void UserSource<Outputs...>::operator()(helpers::argument_t<Outputs>... out)
 {
     this->send(helpers::maybe_move(out)...);
 }
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_USER_SOURCE_IMPL_HPP_ */

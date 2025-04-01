@@ -31,6 +31,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 /** \brief Enforce correct temporal order.
  *
  * This filter sorts incoming messages according to their header timestamp, and forwards them in order. It needs the
@@ -97,6 +100,7 @@ public:
 };
 #endif
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "sequencer_impl.hpp"  // IWYU pragma: keep

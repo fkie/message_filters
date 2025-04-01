@@ -30,6 +30,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 /** \brief Publish consumed data to a ROS image topic
  *
  * This is a specialized publisher that uses image_transport to publish to a ROS image topic. All messages which are
@@ -108,6 +111,7 @@ private:
     image_transport::Publisher pub_;
 };
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "image_publisher_impl.hpp"  // IWYU pragma: keep

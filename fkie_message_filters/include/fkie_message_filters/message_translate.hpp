@@ -29,6 +29,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 template<class M>
 struct RosMessage
 {
@@ -111,6 +114,7 @@ struct RosMessageSharedPtr
     }
 };
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_MESSAGE_TRANSLATE_HPP_ */

@@ -30,6 +30,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 /** \brief Subscribe to a ROS topic as data provider.
  *
  * This class together with the Publisher class is the generic interface between ROS and this library. All messages
@@ -137,6 +140,7 @@ private:
     typename Subscription::SharedPtr sub_;
 };
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "subscriber_impl.hpp"  // IWYU pragma: keep

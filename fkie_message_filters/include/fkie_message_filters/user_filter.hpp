@@ -28,6 +28,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 #ifndef DOXYGEN
 template<class In, class Out>
 class UserFilter;
@@ -111,6 +114,7 @@ private:
     ProcessingFunction f_;
 };
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "user_filter_impl.hpp"  // IWYU pragma: keep

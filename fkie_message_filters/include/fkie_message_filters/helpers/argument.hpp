@@ -27,6 +27,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 namespace helpers
 {
 
@@ -61,6 +64,7 @@ constexpr T&& maybe_move(T& arg) noexcept
 }
 
 }  // namespace helpers
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif

@@ -33,6 +33,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 template<class... Inputs>
 struct TfFilter<Inputs...>::Impl
 {
@@ -314,6 +317,7 @@ void TfFilter<Inputs...>::send_message(std::unique_lock<std::mutex>& lock, Messa
                                             { this->send(helpers::maybe_move(std::get<Is>(msg))...); });
 }
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_TF_FILTER_IMPL_HPP_ */

@@ -26,6 +26,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 class PublisherBase;
 
 /** \brief Base class for ROS subscribers in a filter pipeline.
@@ -125,6 +128,7 @@ private:
     Connection conn1_, conn2_;
 };
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SUBSCRIBER_BASE_HPP_ */

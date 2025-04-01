@@ -28,6 +28,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 template<template<typename...> class, class...>
 class Combiner;
 
@@ -77,6 +80,7 @@ private:
 };
 
 }  // namespace combiner_policies
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "policy_base_impl.hpp"  // IWYU pragma: keep

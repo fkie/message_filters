@@ -29,6 +29,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 template<typename... Inputs>
 class Sink<Inputs...>::ReentryProtector
 {
@@ -84,6 +87,7 @@ void Sink<Inputs...>::receive_cb(Inputs&&... in)
     receive(helpers::maybe_move(in)...);
 }
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SINK_IMPL_HPP_ */

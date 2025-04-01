@@ -26,6 +26,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 #ifndef DOXYGEN
 template<class IO, std::size_t... Is>
 class Selector;
@@ -63,6 +66,7 @@ protected:
     void receive(helpers::argument_t<Inputs>... in) override;
 };
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "selector_impl.hpp"  // IWYU pragma: keep

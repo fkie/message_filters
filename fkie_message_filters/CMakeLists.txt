@@ -20,6 +20,7 @@
 
 cmake_minimum_required(VERSION 3.13...3.28)
 project(fkie_message_filters VERSION 2.1.0)
+set(FKIE_MF_ABI_VERSION 2)
 
 # Options
 option(FKIE_MF_TEST_SANITIZE "Enable sanitizer plugins for tests" OFF)
@@ -48,6 +49,9 @@ target_link_libraries(
     ${PROJECT_NAME}
     PUBLIC sensor_msgs::sensor_msgs_library image_transport::image_transport
            tf2_ros::tf2_ros rclcpp::rclcpp
+)
+set_target_properties(
+    ${PROJECT_NAME} PROPERTIES SOVERSION ${FKIE_MF_ABI_VERSION}
 )
 
 add_executable(hello_example example/hello.cpp)

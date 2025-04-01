@@ -28,6 +28,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 template<template<typename...> class PolicyTmpl, class... IOs>
 Combiner<PolicyTmpl, IOs...>::Combiner(const Policy& policy) noexcept : policy_(policy)
 {
@@ -150,6 +153,7 @@ void Combiner<PolicyTmpl, IOs...>::CombinerSink<Inputs...>::receive(helpers::arg
     }
 }
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_IMPL_HPP_ */

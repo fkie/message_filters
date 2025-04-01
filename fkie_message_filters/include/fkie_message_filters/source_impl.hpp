@@ -30,6 +30,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 template<typename... Outputs>
 Connection Source<Outputs...>::connect_to_sink(Sink<Outputs...>& dst) noexcept
 {
@@ -57,6 +60,7 @@ void Source<Outputs...>::send(helpers::argument_t<Outputs>... out)
     signal_(helpers::maybe_move(out)...);
 }
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SOURCE_IMPL_HPP_ */

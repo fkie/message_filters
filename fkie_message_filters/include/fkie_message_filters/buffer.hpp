@@ -32,6 +32,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 /** \brief %Buffer policy.
  *
  * An enumeration of the possible policies which can be enacted by a Buffer.
@@ -254,6 +257,7 @@ class Buffer<IO<Inputs...>> : public Buffer<Inputs...>
 };
 #endif
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "buffer_impl.hpp"  // IWYU pragma: keep

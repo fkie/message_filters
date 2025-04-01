@@ -29,6 +29,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 template<typename...>
 class Sink;
 
@@ -107,6 +110,7 @@ class Source<IO<Outputs...>> : public Source<Outputs...>
 };
 #endif
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "sink.hpp"

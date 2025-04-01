@@ -30,6 +30,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 /** \brief Publish consumed data to ROS camera topics
  *
  * This is a specialized publisher that uses image_transport to publish ROS camera topics. All messages which are
@@ -108,6 +111,7 @@ private:
     image_transport::CameraPublisher pub_;
 };
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "camera_publisher_impl.hpp"  // IWYU pragma: keep

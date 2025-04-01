@@ -29,6 +29,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 template<template<typename> class Translate>
 ImagePublisher<Translate>::ImagePublisher(rclcpp::Node::SharedPtr& node, const std::string& base_topic,
                                           const rclcpp::QoS& qos, const rclcpp::PublisherOptions& options) noexcept
@@ -74,6 +77,7 @@ void ImagePublisher<Translate>::receive(
     Translate<sensor_msgs::msg::Image>::publish(pub_, img);
 }
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif

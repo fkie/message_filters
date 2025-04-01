@@ -34,6 +34,10 @@
 
 namespace fkie_message_filters
 {
+
+inline namespace abi2
+{
+
 namespace helpers
 {
 
@@ -104,6 +108,7 @@ rclcpp::Time access_ros_header_stamp(const M& m) noexcept
 }
 
 }  // namespace helpers
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_ACCESS_ROS_HEADER_HPP_ */

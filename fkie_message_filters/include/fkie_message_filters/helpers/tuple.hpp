@@ -26,6 +26,10 @@
 
 namespace fkie_message_filters
 {
+
+inline namespace abi2
+{
+
 namespace helpers
 {
 
@@ -80,6 +84,7 @@ bool all_true(Predicate p)
 }
 
 }  // namespace helpers
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_TUPLE_HPP_ */

@@ -29,6 +29,10 @@
 
 namespace fkie_message_filters
 {
+
+inline namespace abi2
+{
+
 namespace combiner_policies
 {
 
@@ -94,6 +98,7 @@ void Fifo<IOs...>::reset() noexcept
 }
 
 }  // namespace combiner_policies
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_FIFO_IMPL_HPP_ */

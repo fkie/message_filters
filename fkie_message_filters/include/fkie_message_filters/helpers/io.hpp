@@ -24,6 +24,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 template<typename...>
 class IO;
 
@@ -112,6 +115,7 @@ template<typename IO>
 using io_tuple_t = typename io_tuple<IO>::type;
 
 }  // namespace helpers
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_IO_HPP_ */

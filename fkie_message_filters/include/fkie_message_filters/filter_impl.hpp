@@ -28,6 +28,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 template<class In, class Out>
 void Filter<In, Out>::disconnect() noexcept
 {
@@ -54,6 +57,7 @@ void chain(Filter1& flt1, Filter2& flt2, MoreFilters&... filters) noexcept
     helpers::chain_impl(flt1, flt2, filters...);
 }
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_FILTER_IMPL_HPP_ */

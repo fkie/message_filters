@@ -28,6 +28,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 template<template<typename> class Translate>
 CameraSubscriber<Translate>::CameraSubscriber(const rclcpp::Node::SharedPtr& node, const std::string& base_topic,
                                               const rclcpp::QoS& qos,
@@ -98,6 +101,7 @@ void CameraSubscriber<Translate>::unsubscribe_impl() noexcept
         sub_.shutdown();
 }
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif

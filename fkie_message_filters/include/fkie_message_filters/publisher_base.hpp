@@ -31,6 +31,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 class SubscriberBase;
 
 /** \brief Base class for ROS publishers in a filter pipeline.
@@ -96,6 +99,7 @@ private:
     std::shared_ptr<Monitor> monitor_;
 };
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_PUBLISHER_BASE_HPP_ */

@@ -33,6 +33,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 template<class... Inputs>
 Sequencer<Inputs...>::Sequencer(const rclcpp::Duration& max_delay) noexcept
     : max_delay_(max_delay), cutoff_(0, 0, RCL_ROS_TIME)
@@ -92,6 +95,7 @@ void Sequencer<Inputs...>::reset() noexcept
     cutoff_ = rclcpp::Time(0, 0, RCL_ROS_TIME);
 }
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SEQUENCER_IMPL_HPP_ */

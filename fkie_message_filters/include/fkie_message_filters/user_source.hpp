@@ -26,6 +26,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 /** \brief Manually operated data source.
  *
  * This data source behaves like a function object and can be called to pass data to its sinks. It is mostly useful to
@@ -52,6 +55,7 @@ class UserSource<IO<Outputs...>> : public UserSource<Outputs...>
 };
 #endif
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "user_source_impl.hpp"  // IWYU pragma: keep

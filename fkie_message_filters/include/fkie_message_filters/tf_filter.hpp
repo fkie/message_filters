@@ -31,6 +31,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 /** \brief TF transformation results.
  *
  * These results are used to indiciate specific failure modes in the TfFilter failure callback.
@@ -169,6 +172,7 @@ class TfFilter<IO<Inputs...>> : public TfFilter<Inputs...>
 };
 #endif
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #include "tf_filter_impl.hpp"  // IWYU pragma: keep

@@ -31,6 +31,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 namespace helpers
 {
 
@@ -205,7 +208,7 @@ private:
 };
 
 }  // namespace helpers
-
+}  // namespace abi2
 }  // namespace fkie_message_filters
 
 #endif

@@ -28,6 +28,9 @@
 namespace fkie_message_filters
 {
 
+inline namespace abi2
+{
+
 #ifndef DOXYGEN
 class PublisherBase::Monitor
 {
@@ -177,4 +180,5 @@ void SubscriberBase::link_with_publisher(PublisherBase& pub)
     std::tie(conn1_, conn2_) = pub.link_with_subscriber(*this);
 }
 
+}  // namespace abi2
 }  // namespace fkie_message_filters
