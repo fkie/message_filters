@@ -21,6 +21,9 @@
 cmake_minimum_required(VERSION 3.13...3.28)
 project(fkie_message_filters VERSION 2.1.0)
 
+# Options
+option(FKIE_MF_TEST_SANITIZE "Enable sanitizer plugins for tests" OFF)
+
 # Dependencies
 find_package(ament_cmake REQUIRED)
 find_package(Boost QUIET)
@@ -39,15 +42,12 @@ target_include_directories(
     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
            $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
            $<INSTALL_INTERFACE:include>
-           ${sensor_msgs_INCLUDE_DIR}
-           ${std_msgs_INCLUDE_DIR}
 )
 target_link_libraries(
-    ${PROJECT_NAME} PUBLIC image_transport::image_transport tf2_ros::tf2_ros
-                           rclcpp::rclcpp
+    ${PROJECT_NAME}
+    PUBLIC sensor_msgs::sensor_msgs_library image_transport::image_transport
+           tf2_ros::tf2_ros rclcpp::rclcpp
 )
-add_executable(tf2_bug test/tf2_bug.cpp)
-target_link_libraries(tf2_bug PUBLIC tf2_ros::tf2_ros)
 
 add_executable(hello_example example/hello.cpp)
 target_link_libraries(hello_example PRIVATE ${PROJECT_NAME})
@@ -97,6 +97,15 @@ if(BUILD_TESTING)
         test/test_tf_filter.cpp
         test/test_user_filter.cpp
     )
+    target_include_directories(filtertests PRIVATE ${std_msgs_INCLUDE_DIRS})
+    if(FKIE_MF_TEST_SANITIZE)
+        target_compile_options(
+            filtertests PRIVATE -Og -g -fsanitize=address,undefined
+        )
+        target_link_options(
+            filtertests PRIVATE -Og -g -fsanitize=address,undefined
+        )
+    endif()
     target_link_libraries(filtertests ${PROJECT_NAME})
     if(TARGET Boost::boost)
         target_link_libraries(filtertests Boost::boost)
