@@ -23,6 +23,7 @@ project(fkie_message_filters VERSION 2.1.0)
 
 # Options
 option(FKIE_MF_TEST_SANITIZE "Enable sanitizer plugins for tests" OFF)
+option(FKIE_MF_TEST_COVERAGE "Enable test coverage" ON)
 
 # Dependencies
 find_package(ament_cmake REQUIRED)
@@ -105,6 +106,16 @@ if(BUILD_TESTING)
         target_link_options(
             filtertests PRIVATE -Og -g -fsanitize=address,undefined
         )
+    endif()
+    if(FKIE_MF_TEST_COVERAGE)
+        find_program(GCOV gcov)
+        if(GCOV)
+            set(CTEST_COVERAGE_COMMAND ${GCOV})
+            target_compile_options(filtertests PRIVATE --coverage)
+            target_link_options(filtertests PRIVATE --coverage)
+        else()
+            message(FATAL_ERROR "Cannot enable test coverage: gcov not found")
+        endif()
     endif()
     target_link_libraries(filtertests ${PROJECT_NAME})
     if(TARGET Boost::boost)
