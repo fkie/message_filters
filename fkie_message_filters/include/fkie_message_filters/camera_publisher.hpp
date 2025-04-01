@@ -21,6 +21,7 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_CAMERA_PUBLISHER_HPP_
 #pragma once
 
+#include "helpers/abi_namespace.hpp"
 #include "message_translate.hpp"
 #include "publisher_base.hpp"
 #include "sink.hpp"
@@ -30,8 +31,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 /** \brief Publish consumed data to ROS camera topics
  *
@@ -111,7 +111,7 @@ private:
     image_transport::CameraPublisher pub_;
 };
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "camera_publisher_impl.hpp"  // IWYU pragma: keep

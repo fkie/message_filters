@@ -28,8 +28,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 template<class... Inputs, class... Outputs>
 void UserFilter<IO<Inputs...>, IO<Outputs...>>::set_processing_function(const ProcessingFunction& f) noexcept
@@ -44,7 +43,7 @@ void UserFilter<IO<Inputs...>, IO<Outputs...>>::receive(helpers::argument_t<Inpu
        [this](helpers::argument_t<Outputs>... out) { this->send(helpers::maybe_move(out)...); });
 }
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_USER_FILTER_IMPL_HPP_ */

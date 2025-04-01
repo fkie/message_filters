@@ -22,6 +22,7 @@
 #pragma once
 
 #include "filter_base.hpp"
+#include "helpers/abi_namespace.hpp"
 #include "helpers/argument.hpp"
 #include "helpers/signaling.hpp"
 #include "types.hpp"
@@ -29,8 +30,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 template<typename...>
 class Sink;
@@ -110,7 +110,7 @@ class Source<IO<Outputs...>> : public Source<Outputs...>
 };
 #endif
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "sink.hpp"

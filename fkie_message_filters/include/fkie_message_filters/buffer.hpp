@@ -22,6 +22,7 @@
 #pragma once
 
 #include "filter.hpp"
+#include "helpers/abi_namespace.hpp"
 
 #include <rclcpp/node.hpp>
 
@@ -32,8 +33,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 /** \brief %Buffer policy.
  *
@@ -257,7 +257,7 @@ class Buffer<IO<Inputs...>> : public Buffer<Inputs...>
 };
 #endif
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "buffer_impl.hpp"  // IWYU pragma: keep

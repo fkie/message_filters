@@ -28,8 +28,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 template<template<typename> class Translate>
 ImageSubscriber<Translate>::ImageSubscriber(const rclcpp::Node::SharedPtr& node, const std::string& base_topic,
@@ -96,7 +95,7 @@ void ImageSubscriber<Translate>::unsubscribe_impl() noexcept
         sub_.shutdown();
 }
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif

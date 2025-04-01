@@ -21,6 +21,7 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_HPP_
 #pragma once
 
+#include "helpers/abi_namespace.hpp"
 #include "helpers/tuple.hpp"
 #include "sink.hpp"
 #include "source.hpp"
@@ -28,8 +29,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 /** \brief Combiner policies.
  *
@@ -161,7 +161,7 @@ private:
     void connect_to_sources_impl(Connections& conn, ThisSource& src, OtherSources&... sources) noexcept;
 };
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "combiner_impl.hpp"  // IWYU pragma: keep

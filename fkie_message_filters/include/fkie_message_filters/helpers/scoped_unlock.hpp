@@ -21,11 +21,12 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_SCOPED_UNLOCK_HPP_
 #pragma once
 
+#include "abi_namespace.hpp"
+
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 namespace helpers
 {
@@ -66,7 +67,7 @@ ScopedUnlock<BasicLockable> with_scoped_unlock(BasicLockable& lockable)
 }
 
 }  // namespace helpers
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_SCOPED_UNLOCK_HPP_ */

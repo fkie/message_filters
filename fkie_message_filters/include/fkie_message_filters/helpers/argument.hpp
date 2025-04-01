@@ -21,14 +21,15 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_ARGUMENT_HPP_
 #pragma once
 
+#include "abi_namespace.hpp"
+
 #include <type_traits>
 #include <utility>
 
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 namespace helpers
 {
@@ -64,7 +65,7 @@ constexpr T&& maybe_move(T& arg) noexcept
 }
 
 }  // namespace helpers
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif

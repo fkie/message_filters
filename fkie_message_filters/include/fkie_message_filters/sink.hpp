@@ -22,6 +22,7 @@
 #pragma once
 
 #include "filter_base.hpp"
+#include "helpers/abi_namespace.hpp"
 #include "helpers/argument.hpp"
 #include "types.hpp"
 
@@ -33,8 +34,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 template<typename...>
 class Source;
@@ -115,7 +115,7 @@ class Sink<IO<Inputs...>> : public Sink<Inputs...>
 };
 #endif
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "sink_impl.hpp"  // IWYU pragma: keep

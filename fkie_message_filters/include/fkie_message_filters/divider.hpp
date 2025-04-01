@@ -21,6 +21,7 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_DIVIDER_HPP_
 #pragma once
 
+#include "helpers/abi_namespace.hpp"
 #include "helpers/tuple.hpp"
 #include "sink.hpp"
 #include "source.hpp"
@@ -28,8 +29,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 /** \brief Split an N-ary source into N unary ones.
  *
@@ -116,7 +116,7 @@ class Divider<IO<Inputs...>> : public Divider<Inputs...>
 };
 #endif
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "divider_impl.hpp"  // IWYU pragma: keep

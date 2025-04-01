@@ -22,6 +22,7 @@
 #pragma once
 
 #include "filter.hpp"
+#include "helpers/abi_namespace.hpp"
 
 #include <tf2/buffer_core.hpp>
 
@@ -31,8 +32,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 /** \brief TF transformation results.
  *
@@ -172,7 +172,7 @@ class TfFilter<IO<Inputs...>> : public TfFilter<Inputs...>
 };
 #endif
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "tf_filter_impl.hpp"  // IWYU pragma: keep

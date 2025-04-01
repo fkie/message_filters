@@ -21,6 +21,7 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_EXACT_TIME_HPP_
 #pragma once
 
+#include "../helpers/abi_namespace.hpp"
 #include "policy_base.hpp"
 
 #include <rclcpp/duration.hpp>
@@ -32,8 +33,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 namespace combiner_policies
 {
@@ -109,7 +109,7 @@ private:
 };
 
 }  // namespace combiner_policies
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "exact_time_impl.hpp"  // IWYU pragma: keep

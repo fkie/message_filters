@@ -21,6 +21,7 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_SUBSCRIBER_HPP_
 #pragma once
 
+#include "helpers/abi_namespace.hpp"
 #include "message_translate.hpp"
 #include "source.hpp"
 #include "subscriber_base.hpp"
@@ -30,8 +31,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 /** \brief Subscribe to a ROS topic as data provider.
  *
@@ -140,7 +140,7 @@ private:
     typename Subscription::SharedPtr sub_;
 };
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "subscriber_impl.hpp"  // IWYU pragma: keep

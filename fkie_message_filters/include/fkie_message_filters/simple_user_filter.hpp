@@ -22,14 +22,14 @@
 #pragma once
 
 #include "filter.hpp"
+#include "helpers/abi_namespace.hpp"
 
 #include <functional>
 
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 /** \brief Simplified filter with user-defined callback function.
  *
@@ -75,7 +75,7 @@ class SimpleUserFilter<IO<Inputs...>> : public SimpleUserFilter<Inputs...>
 };
 #endif
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "simple_user_filter_impl.hpp"  // IWYU pragma: keep

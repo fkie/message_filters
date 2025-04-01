@@ -21,22 +21,23 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_ACCESS_ROS_HEADER_HPP_
 #pragma once
 
+#include "abi_namespace.hpp"
+
 #if __has_include(<boost/shared_ptr.hpp>)
 #    include <boost/shared_ptr.hpp>
 #    define FKIE_MF_HAS_BOOST 1
 #else
 #    define FKIE_MF_HAS_BOOST 0
 #endif
+
 #include <rclcpp/time.hpp>
 
 #include <memory>
 #include <string>
-
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 namespace helpers
 {
@@ -108,7 +109,7 @@ rclcpp::Time access_ros_header_stamp(const M& m) noexcept
 }
 
 }  // namespace helpers
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_ACCESS_ROS_HEADER_HPP_ */

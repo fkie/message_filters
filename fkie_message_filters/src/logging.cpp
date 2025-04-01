@@ -23,8 +23,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 #ifndef DOXYGEN
 rclcpp::Logger logger_ = rclcpp::get_logger("fkie_message_filters");
@@ -48,5 +47,5 @@ const rclcpp::Logger& get_logger() noexcept
     return logger_;
 }
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters

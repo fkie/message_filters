@@ -21,6 +21,7 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_FILTER_BASE_HPP_
 #pragma once
 
+#include "helpers/abi_namespace.hpp"
 #include "helpers/argument.hpp"
 #include "types.hpp"
 
@@ -29,8 +30,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 namespace helpers
 {
@@ -83,7 +83,7 @@ public:
     virtual void reset() noexcept {};
 };
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_FILTER_BASE_HPP_ */

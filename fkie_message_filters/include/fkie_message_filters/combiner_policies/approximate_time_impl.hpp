@@ -32,8 +32,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 namespace combiner_policies
 {
@@ -383,7 +382,7 @@ bool ApproximateTime<IOs...>::determine_pivot() noexcept
 }
 
 }  // namespace combiner_policies
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_APPROXIMATE_TIME_IMPL_HPP_ */

@@ -22,14 +22,14 @@
 #pragma once
 
 #include "filter.hpp"
+#include "helpers/abi_namespace.hpp"
 
 #include <functional>
 
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 #ifndef DOXYGEN
 template<class In, class Out>
@@ -114,7 +114,7 @@ private:
     ProcessingFunction f_;
 };
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "user_filter_impl.hpp"  // IWYU pragma: keep

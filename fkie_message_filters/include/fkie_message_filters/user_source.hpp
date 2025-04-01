@@ -21,13 +21,13 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_USER_SOURCE_HPP_
 #pragma once
 
+#include "helpers/abi_namespace.hpp"
 #include "source.hpp"
 
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 /** \brief Manually operated data source.
  *
@@ -55,7 +55,7 @@ class UserSource<IO<Outputs...>> : public UserSource<Outputs...>
 };
 #endif
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "user_source_impl.hpp"  // IWYU pragma: keep

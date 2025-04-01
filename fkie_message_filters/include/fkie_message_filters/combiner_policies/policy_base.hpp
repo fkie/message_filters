@@ -21,6 +21,7 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_POLICY_BASE_HPP_
 #pragma once
 
+#include "../helpers/abi_namespace.hpp"
 #include "../types.hpp"  // IWYU pragma: export
 
 #include <optional>
@@ -28,8 +29,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 template<template<typename...> class, class...>
 class Combiner;
@@ -80,7 +80,7 @@ private:
 };
 
 }  // namespace combiner_policies
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "policy_base_impl.hpp"  // IWYU pragma: keep

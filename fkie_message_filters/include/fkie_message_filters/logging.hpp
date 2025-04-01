@@ -21,6 +21,8 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_IMAGE_LOGGING_HPP_
 #pragma once
 
+#include "helpers/abi_namespace.hpp"
+
 #include <rclcpp/logger.hpp>
 #include <rclcpp/logging.hpp>
 #include <rclcpp/node.hpp>
@@ -32,8 +34,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 /** \brief Configure ROS logging.
  *
@@ -49,7 +50,7 @@ void set_logger(const rclcpp::Node::SharedPtr& node, const std::string& name = s
 /** \brief Return the currently configured ROS logger. */
 const rclcpp::Logger& get_logger() noexcept;
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif

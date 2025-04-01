@@ -28,8 +28,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 template<class... Inputs, std::size_t... Is>
 void Selector<IO<Inputs...>, Is...>::receive(helpers::argument_t<Inputs>... in)
@@ -37,7 +36,7 @@ void Selector<IO<Inputs...>, Is...>::receive(helpers::argument_t<Inputs>... in)
     this->send(std::get<Is>(std::forward_as_tuple(helpers::maybe_move(in)...))...);
 }
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SELECTOR_IMPL_HPP_ */

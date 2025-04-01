@@ -21,14 +21,14 @@
 #define INCLUDE_FKIE_MESSAGE_FILTERS_FILTER_HPP_
 #pragma once
 
+#include "helpers/abi_namespace.hpp"
 #include "sink.hpp"
 #include "source.hpp"
 
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 /** \brief Typed base class for filters.
  *
@@ -55,7 +55,7 @@ public:
 template<typename Filter1, typename Filter2, typename... MoreFilters>
 void chain(Filter1& flt1, Filter2& flt2, MoreFilters&... filters) noexcept;
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "filter_impl.hpp"  // IWYU pragma: keep

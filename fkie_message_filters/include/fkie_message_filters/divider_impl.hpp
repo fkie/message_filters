@@ -29,8 +29,7 @@
 namespace fkie_message_filters
 {
 
-inline namespace abi2
-{
+FKIE_ML_BEGIN_ABI_NAMESPACE
 
 template<class... Inputs>
 template<std::size_t N>
@@ -102,7 +101,7 @@ void Divider<Inputs...>::connect_to_sinks_impl(Connections& conn, ThisSink& sink
         connect_to_sinks_impl<N + 1>(conn, sinks...);
 }
 
-}  // namespace abi2
+FKIE_ML_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_DIVIDER_IMPL_HPP_ */

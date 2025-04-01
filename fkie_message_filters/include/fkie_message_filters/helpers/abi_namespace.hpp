@@ -17,35 +17,11 @@
  * limitations under the License.
  *
  ****************************************************************************/
-#ifndef INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_POLICY_BASE_IMPL_HPP_
-#define INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_POLICY_BASE_IMPL_HPP_
-#pragma once
-
-#include "policy_base.hpp"
-
-namespace fkie_message_filters
-{
-
-FKIE_ML_BEGIN_ABI_NAMESPACE
-
-namespace combiner_policies
-{
-
-template<class... IOs>
-void PolicyBase<IOs...>::set_emitter_callback(const EmitterCB& cb) noexcept
-{
-    emit_ = cb;
-}
-
-template<class... IOs>
-void PolicyBase<IOs...>::emit(OutgoingTuple& out)
-{
-    if (emit_)
-        emit_(out);
-}
-
-}  // namespace combiner_policies
-FKIE_ML_END_ABI_NAMESPACE
-}  // namespace fkie_message_filters
-
-#endif /* INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_POLICY_BASE_IMPL_HPP_ */
+#ifndef FKIE_ML_BEGIN_ABI_NAMESPACE
+#define FKIE_ML_BEGIN_ABI_NAMESPACE \
+    inline namespace abi2           \
+    {
+#endif
+#ifndef FKIE_ML_END_ABI_NAMESPACE
+#define FKIE_ML_END_ABI_NAMESPACE }
+#endif
