@@ -2,6 +2,19 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Improve test coverage
+* Add explicit ABI version
+* Add support for test coverage
+* Support sanitizer plugings for tests
+* Add quality declaration
+* Make Signals class movable
+* Rename headers from *.h to *.hpp
+* Use #pragma once to help clangd not choke on _impl headers
+* Add rosdoc2 configuration
+* Contributors: Timo Röhling
+
 2.1.0 (2025-03-31)
 ------------------
 * Clean up includes
