@@ -33,7 +33,7 @@
 namespace fkie_message_filters
 {
 
-FKIE_ML_BEGIN_ABI_NAMESPACE
+FKIE_MF_BEGIN_ABI_NAMESPACE
 
 template<class... Inputs>
 Sequencer<Inputs...>::Sequencer(const rclcpp::Duration& max_delay) noexcept
@@ -94,7 +94,7 @@ void Sequencer<Inputs...>::reset() noexcept
     cutoff_ = rclcpp::Time(0, 0, RCL_ROS_TIME);
 }
 
-FKIE_ML_END_ABI_NAMESPACE
+FKIE_MF_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SEQUENCER_IMPL_HPP_ */

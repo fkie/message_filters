@@ -29,7 +29,7 @@
 namespace fkie_message_filters
 {
 
-FKIE_ML_BEGIN_ABI_NAMESPACE
+FKIE_MF_BEGIN_ABI_NAMESPACE
 
 template<template<typename> class Translate>
 CameraPublisher<Translate>::CameraPublisher(rclcpp::Node::SharedPtr& node, const std::string& base_topic,
@@ -77,7 +77,7 @@ void CameraPublisher<Translate>::receive(
     Translate<sensor_msgs::msg::Image>::publish(pub_, img, info);
 }
 
-FKIE_ML_END_ABI_NAMESPACE
+FKIE_MF_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif

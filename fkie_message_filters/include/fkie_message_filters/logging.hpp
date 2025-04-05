@@ -34,7 +34,7 @@
 namespace fkie_message_filters
 {
 
-FKIE_ML_BEGIN_ABI_NAMESPACE
+FKIE_MF_BEGIN_ABI_NAMESPACE
 
 /** \brief Configure ROS logging.
  *
@@ -50,7 +50,7 @@ void set_logger(const rclcpp::Node::SharedPtr& node, const std::string& name = s
 /** \brief Return the currently configured ROS logger. */
 const rclcpp::Logger& get_logger() noexcept;
 
-FKIE_ML_END_ABI_NAMESPACE
+FKIE_MF_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif

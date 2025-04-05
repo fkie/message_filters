@@ -30,7 +30,7 @@
 namespace fkie_message_filters
 {
 
-FKIE_ML_BEGIN_ABI_NAMESPACE
+FKIE_MF_BEGIN_ABI_NAMESPACE
 
 namespace combiner_policies
 {
@@ -82,7 +82,7 @@ private:
 };
 
 }  // namespace combiner_policies
-FKIE_ML_END_ABI_NAMESPACE
+FKIE_MF_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "fifo_impl.hpp"  // IWYU pragma: keep

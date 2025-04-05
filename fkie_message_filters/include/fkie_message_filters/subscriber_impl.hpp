@@ -28,7 +28,7 @@
 namespace fkie_message_filters
 {
 
-FKIE_ML_BEGIN_ABI_NAMESPACE
+FKIE_MF_BEGIN_ABI_NAMESPACE
 
 template<class M, template<typename> class Translate>
 Subscriber<M, Translate>::Subscriber() noexcept
@@ -91,7 +91,7 @@ void Subscriber<M, Translate>::unsubscribe_impl() noexcept
     sub_.reset();
 }
 
-FKIE_ML_END_ABI_NAMESPACE
+FKIE_MF_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SUBSCRIBER_IMPL_HPP_ */

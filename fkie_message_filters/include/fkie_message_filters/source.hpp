@@ -30,7 +30,7 @@
 namespace fkie_message_filters
 {
 
-FKIE_ML_BEGIN_ABI_NAMESPACE
+FKIE_MF_BEGIN_ABI_NAMESPACE
 
 template<typename...>
 class Sink;
@@ -110,7 +110,7 @@ class Source<IO<Outputs...>> : public Source<Outputs...>
 };
 #endif
 
-FKIE_ML_END_ABI_NAMESPACE
+FKIE_MF_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "sink.hpp"

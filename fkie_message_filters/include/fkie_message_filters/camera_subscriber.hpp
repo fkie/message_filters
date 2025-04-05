@@ -33,7 +33,7 @@
 namespace fkie_message_filters
 {
 
-FKIE_ML_BEGIN_ABI_NAMESPACE
+FKIE_MF_BEGIN_ABI_NAMESPACE
 
 /** \brief Subscribe to ROS camera topics as data provider.
  *
@@ -151,7 +151,7 @@ private:
     image_transport::CameraSubscriber sub_;
 };
 
-FKIE_ML_END_ABI_NAMESPACE
+FKIE_MF_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "camera_subscriber_impl.hpp"  // IWYU pragma: keep

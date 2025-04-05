@@ -26,7 +26,7 @@
 namespace fkie_message_filters
 {
 
-FKIE_ML_BEGIN_ABI_NAMESPACE
+FKIE_MF_BEGIN_ABI_NAMESPACE
 
 template<typename...>
 class IO;
@@ -116,7 +116,7 @@ template<typename IO>
 using io_tuple_t = typename io_tuple<IO>::type;
 
 }  // namespace helpers
-FKIE_ML_END_ABI_NAMESPACE
+FKIE_MF_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_HELPERS_IO_HPP_ */

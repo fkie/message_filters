@@ -30,7 +30,7 @@
 namespace fkie_message_filters
 {
 
-FKIE_ML_BEGIN_ABI_NAMESPACE
+FKIE_MF_BEGIN_ABI_NAMESPACE
 
 template<typename... Outputs>
 Connection Source<Outputs...>::connect_to_sink(Sink<Outputs...>& dst) noexcept
@@ -59,7 +59,7 @@ void Source<Outputs...>::send(helpers::argument_t<Outputs>... out)
     signal_(helpers::maybe_move(out)...);
 }
 
-FKIE_ML_END_ABI_NAMESPACE
+FKIE_MF_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_SOURCE_IMPL_HPP_ */

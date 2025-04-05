@@ -33,7 +33,7 @@
 namespace fkie_message_filters
 {
 
-FKIE_ML_BEGIN_ABI_NAMESPACE
+FKIE_MF_BEGIN_ABI_NAMESPACE
 
 template<class... Inputs>
 struct TfFilter<Inputs...>::Impl
@@ -316,7 +316,7 @@ void TfFilter<Inputs...>::send_message(std::unique_lock<std::mutex>& lock, Messa
                                             { this->send(helpers::maybe_move(std::get<Is>(msg))...); });
 }
 
-FKIE_ML_END_ABI_NAMESPACE
+FKIE_MF_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_TF_FILTER_IMPL_HPP_ */

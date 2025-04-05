@@ -17,11 +17,11 @@
  * limitations under the License.
  *
  ****************************************************************************/
-#ifndef FKIE_ML_BEGIN_ABI_NAMESPACE
-#define FKIE_ML_BEGIN_ABI_NAMESPACE \
+#ifndef FKIE_MF_BEGIN_ABI_NAMESPACE
+#define FKIE_MF_BEGIN_ABI_NAMESPACE \
     inline namespace abi2           \
     {
 #endif
-#ifndef FKIE_ML_END_ABI_NAMESPACE
-#define FKIE_ML_END_ABI_NAMESPACE }
+#ifndef FKIE_MF_END_ABI_NAMESPACE
+#define FKIE_MF_END_ABI_NAMESPACE }
 #endif

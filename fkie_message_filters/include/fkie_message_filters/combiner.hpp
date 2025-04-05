@@ -29,7 +29,7 @@
 namespace fkie_message_filters
 {
 
-FKIE_ML_BEGIN_ABI_NAMESPACE
+FKIE_MF_BEGIN_ABI_NAMESPACE
 
 /** \brief Combiner policies.
  *
@@ -161,7 +161,7 @@ private:
     void connect_to_sources_impl(Connections& conn, ThisSource& src, OtherSources&... sources) noexcept;
 };
 
-FKIE_ML_END_ABI_NAMESPACE
+FKIE_MF_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "combiner_impl.hpp"  // IWYU pragma: keep

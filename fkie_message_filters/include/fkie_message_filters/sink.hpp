@@ -34,7 +34,7 @@
 namespace fkie_message_filters
 {
 
-FKIE_ML_BEGIN_ABI_NAMESPACE
+FKIE_MF_BEGIN_ABI_NAMESPACE
 
 template<typename...>
 class Source;
@@ -115,7 +115,7 @@ class Sink<IO<Inputs...>> : public Sink<Inputs...>
 };
 #endif
 
-FKIE_ML_END_ABI_NAMESPACE
+FKIE_MF_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "sink_impl.hpp"  // IWYU pragma: keep

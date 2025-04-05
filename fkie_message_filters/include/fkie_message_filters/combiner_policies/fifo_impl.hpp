@@ -30,7 +30,7 @@
 namespace fkie_message_filters
 {
 
-FKIE_ML_BEGIN_ABI_NAMESPACE
+FKIE_MF_BEGIN_ABI_NAMESPACE
 
 namespace combiner_policies
 {
@@ -97,7 +97,7 @@ void Fifo<IOs...>::reset() noexcept
 }
 
 }  // namespace combiner_policies
-FKIE_ML_END_ABI_NAMESPACE
+FKIE_MF_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_COMBINER_POLICIES_FIFO_IMPL_HPP_ */

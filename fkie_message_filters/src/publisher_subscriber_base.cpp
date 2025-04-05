@@ -28,7 +28,7 @@
 namespace fkie_message_filters
 {
 
-FKIE_ML_BEGIN_ABI_NAMESPACE
+FKIE_MF_BEGIN_ABI_NAMESPACE
 
 #ifndef DOXYGEN
 class PublisherBase::Monitor
@@ -179,5 +179,5 @@ void SubscriberBase::link_with_publisher(PublisherBase& pub)
     std::tie(conn1_, conn2_) = pub.link_with_subscriber(*this);
 }
 
-FKIE_ML_END_ABI_NAMESPACE
+FKIE_MF_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters

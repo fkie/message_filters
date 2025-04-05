@@ -29,7 +29,7 @@
 namespace fkie_message_filters
 {
 
-FKIE_ML_BEGIN_ABI_NAMESPACE
+FKIE_MF_BEGIN_ABI_NAMESPACE
 
 /** \brief Simplified filter with user-defined callback function.
  *
@@ -75,7 +75,7 @@ class SimpleUserFilter<IO<Inputs...>> : public SimpleUserFilter<Inputs...>
 };
 #endif
 
-FKIE_ML_END_ABI_NAMESPACE
+FKIE_MF_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
 
 #include "simple_user_filter_impl.hpp"  // IWYU pragma: keep
