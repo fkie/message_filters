@@ -23,6 +23,7 @@ project(fkie_message_filters VERSION 3.0.0)
 set(FKIE_MF_ABI_VERSION 2)
 
 # Options
+option(BUILD_SHARED_LIBS "Build shared library" ON)
 option(FKIE_MF_TEST_SANITIZE "Enable sanitizer plugins for tests" OFF)
 option(FKIE_MF_TEST_COVERAGE "Enable test coverage" ON)
 
