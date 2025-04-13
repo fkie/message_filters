@@ -154,7 +154,7 @@ public:
         if constexpr (!is_copyable_v<Args...>)
         {
             if (!slots_.empty())
-                throw std::logic_error("Noncopyable types only work with 1:1 connections");
+                throw std::logic_error("sources with noncopyable types can only connect to a single sink");
         }
         Connection conn{this};
         slots_.push_back({callback, conn.priv_});
