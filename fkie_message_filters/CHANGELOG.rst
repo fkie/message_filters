@@ -2,6 +2,14 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Recheck image_transport version when library is used
+* Improve exception message for noncopyable types
+* Enable BUILD_SHARED_LIBS by default
+* Fix prefix for namespace macro
+* Contributors: Timo Röhling
+
 3.0.0 (2025-04-01)
 ------------------
 * Improve test coverage
