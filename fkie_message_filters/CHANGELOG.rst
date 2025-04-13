@@ -2,8 +2,8 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+3.0.1 (2025-04-13)
+------------------
 * Recheck image_transport version when library is used
 * Improve exception message for noncopyable types
 * Enable BUILD_SHARED_LIBS by default
