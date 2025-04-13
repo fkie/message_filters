@@ -61,20 +61,17 @@ target_link_libraries(hello_example PRIVATE ${PROJECT_NAME})
 math(
     EXPR
     computed_fkie_mf_version
-    "0x10000 * ${PROJECT_VERSION_MAJOR} + 0x100 * ${PROJECT_VERSION_MINOR} + ${PROJECT_VERSION_PATCH}"
-    OUTPUT_FORMAT HEXADECIMAL
+    "65536 * ${PROJECT_VERSION_MAJOR} + 256 * ${PROJECT_VERSION_MINOR} + ${PROJECT_VERSION_PATCH}"
 )
 math(
     EXPR
     computed_image_transport_version
-    "0x10000 * ${image_transport_VERSION_MAJOR} + 0x100 * ${image_transport_VERSION_MINOR} + ${image_transport_VERSION_PATCH}"
-    OUTPUT_FORMAT HEXADECIMAL
+    "65536 * ${image_transport_VERSION_MAJOR} + 256 * ${image_transport_VERSION_MINOR} + ${image_transport_VERSION_PATCH}"
 )
 math(
     EXPR
     computed_rclcpp_version
-    "0x10000 * ${rclcpp_VERSION_MAJOR} + 0x100 * ${rclcpp_VERSION_MINOR} + ${rclcpp_VERSION_PATCH}"
-    OUTPUT_FORMAT HEXADECIMAL
+    "65536 * ${rclcpp_VERSION_MAJOR} + 256 * ${rclcpp_VERSION_MINOR} + ${rclcpp_VERSION_PATCH}"
 )
 
 configure_file(
@@ -104,6 +101,9 @@ if(BUILD_TESTING)
         test/test_user_filter.cpp
     )
     target_include_directories(filtertests PRIVATE ${std_msgs_INCLUDE_DIRS})
+    target_compile_definitions(
+        filtertests PRIVATE FKIE_MF_RCLCPP_VERSION=${computed_rclcpp_version}
+    )
     if(FKIE_MF_TEST_SANITIZE)
         target_compile_options(
             filtertests PRIVATE -Og -g -fsanitize=address,undefined
@@ -156,5 +156,6 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/include/version.hpp
 )
 
 # Ament package handling
-ament_export_targets(${PROJECT_NAME})
-ament_package()
+ament_export_dependencies(image_transport rclcpp sensor_msgs tf2_ros)
+ament_export_targets(${PROJECT_NAME} HAS_LIBRARY_TARGET)
+ament_package(CONFIG_EXTRAS_POST cmake/check_dependency_versions.cmake)
