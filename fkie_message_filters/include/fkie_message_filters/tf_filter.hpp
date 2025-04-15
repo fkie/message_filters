@@ -169,6 +169,8 @@ private:
 template<class... Inputs>
 class TfFilter<IO<Inputs...>> : public TfFilter<Inputs...>
 {
+public:
+    using TfFilter<Inputs...>::TfFilter;
 };
 #endif
 

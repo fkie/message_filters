@@ -93,10 +93,7 @@ template<class... Inputs>
 class Sequencer<IO<Inputs...>> : public Sequencer<Inputs...>
 {
 public:
-    explicit Sequencer(const rclcpp::Duration& max_delay = rclcpp::Duration(1, 0)) noexcept
-        : Sequencer<Inputs...>(max_delay)
-    {
-    }
+    using Sequencer<Inputs...>::Sequencer;
 };
 #endif
 

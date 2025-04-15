@@ -254,6 +254,8 @@ private:
 template<class... Inputs>
 class Buffer<IO<Inputs...>> : public Buffer<Inputs...>
 {
+public:
+    using Buffer<Inputs...>::Buffer;
 };
 #endif
 
