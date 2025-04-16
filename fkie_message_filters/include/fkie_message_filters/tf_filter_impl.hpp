@@ -28,6 +28,8 @@
 #include "logging.hpp"
 #include "tf_filter.hpp"
 
+#include <tf2_ros/buffer_interface.h>
+
 #include <mutex>
 
 namespace fkie_message_filters
@@ -115,11 +117,6 @@ std::string strip_slash(const std::string& s) noexcept
     if (n == std::string::npos)
         return std::string();
     return s.substr(n);
-}
-
-tf2::TimePoint to_time_point(const rclcpp::Time& time) noexcept
-{
-    return tf2::TimePoint(std::chrono::nanoseconds(time.nanoseconds()));
 }
 
 }  // namespace
@@ -211,7 +208,7 @@ void TfFilter<Inputs...>::receive(helpers::argument_t<Inputs>... in)
         report_failure(lock, info->message, TfFilterResult::EmptyFrameID);
         return;
     }
-    tf2::TimePoint time = to_time_point(helpers::access_ros_header_stamp(std::get<0>(info->message)));
+    tf2::TimePoint time = tf2_ros::fromRclcpp(helpers::access_ros_header_stamp(std::get<0>(info->message)));
     V_string target_frames = impl_->target_frames_;
     for (const std::string& target_frame : target_frames)
     {
@@ -270,7 +267,7 @@ void TfFilter<Inputs...>::transformable(tf2::TransformableRequestHandle request_
         if (result == tf2::TransformAvailable) /* Everything succeeded */
         {
             std::string source_frame = strip_slash(helpers::access_ros_header_frame_id(std::get<0>(info->message)));
-            tf2::TimePoint time = to_time_point(helpers::access_ros_header_stamp(std::get<0>(info->message)));
+            tf2::TimePoint time = tf2_ros::fromRclcpp(helpers::access_ros_header_stamp(std::get<0>(info->message)));
             for (const std::string& frame : impl_->target_frames_)
             {
                 if (!impl_->bc_.canTransform(frame, source_frame, time))
