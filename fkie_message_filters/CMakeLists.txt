@@ -19,7 +19,7 @@
 ############################################################################
 
 cmake_minimum_required(VERSION 3.13...3.28)
-project(fkie_message_filters VERSION 3.0.0)
+project(fkie_message_filters VERSION 3.0.2)
 set(FKIE_MF_ABI_VERSION 2)
 
 # Options
