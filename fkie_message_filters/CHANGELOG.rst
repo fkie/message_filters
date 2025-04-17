@@ -2,8 +2,8 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+3.1.0 (2025-04-17)
+------------------
 * Support for alternative node implementations via node interfaces
 * Contributors: Timo Röhling
 
