@@ -2,6 +2,11 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Support for alternative node implementations via node interfaces
+* Contributors: Timo Röhling
+
 3.0.2 (2025-04-16)
 ------------------
 * Use tf2_ros native function for timestamp conversions
