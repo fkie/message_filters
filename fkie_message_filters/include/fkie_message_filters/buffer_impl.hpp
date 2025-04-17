@@ -127,12 +127,9 @@ struct Buffer<Inputs...>::Impl
     void adjust_capacity(std::size_t max_queue_size)
     {
         std::lock_guard<std::mutex> lock{mutex_};
-        if (max_queue_size > 0)
-            max_queue_size_ = max_queue_size;
-        while (queue_.size() > max_queue_size_)
+        max_queue_size_ = max_queue_size;
+        while (queue_.size() > max_queue_size)
             queue_.pop_front();
-        if (!queue_.empty())
-            arm_rclcpp_timer(lock);
     }
 
     void insert_queue_element(std::unique_lock<std::mutex>& lock, QueueElement& e)
@@ -217,7 +214,8 @@ void Buffer<Inputs...>::set_policy(BufferPolicy policy, std::size_t max_queue_si
             lock.unlock();
             break;
         case BufferPolicy::Queue:
-            impl_->adjust_capacity(max_queue_size);
+            if (max_queue_size > 0)
+                impl_->adjust_capacity(max_queue_size);
             lock.unlock();
             break;
         case BufferPolicy::Passthru:
