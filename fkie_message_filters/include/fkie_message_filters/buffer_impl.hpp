@@ -35,6 +35,10 @@
 #    include <rclcpp/utilities.hpp>
 #endif
 
+#include <rclcpp/create_timer.hpp>
+#include <rclcpp/node_interfaces/get_node_base_interface.hpp>
+#include <rclcpp/node_interfaces/get_node_timers_interface.hpp>
+
 #include <condition_variable>
 #include <deque>
 #include <mutex>
@@ -112,11 +116,11 @@ struct Buffer<Inputs...>::Impl
     void arm_rclcpp_timer(std::unique_lock<std::mutex>& lock)
     {
         using namespace std::chrono_literals;
-        if (node_ && !timer_)
+        if (node_base_ && node_timers_ && !timer_)
         {
-            timer_ = node_->create_wall_timer(
+            timer_ = rclcpp::create_wall_timer(
                 0ns, static_cast<rclcpp::VoidCallbackType>([this]() { this->rclcpp_timer_callback(); }),
-                callback_group_);
+                callback_group_, node_base_.get(), node_timers_.get());
         }
     }
 
@@ -136,25 +140,37 @@ struct Buffer<Inputs...>::Impl
         arm_rclcpp_timer(lock);
     }
 
-    void set_node(std::unique_lock<std::mutex>& lock, const rclcpp::Node::SharedPtr& node)
+    template<class NodeT>
+    void set_node(std::unique_lock<std::mutex>& lock, NodeT&& node)
     {
-        if (node_ != node)
+        if (node)
         {
-            timer_.reset();
-            callback_group_.reset();
-            node_ = node;
-            if (node_)
+            auto base = rclcpp::node_interfaces::get_node_base_interface(node);
+            auto timers = rclcpp::node_interfaces::get_node_timers_interface(node);
+            if (node_base_ != base || node_timers_ != timers)
             {
-                callback_group_ = node_->create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
+                timer_.reset();
+                callback_group_.reset();
+                node_base_ = base;
+                node_timers_ = timers;
+                callback_group_ = node_base_->create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
                 if (!queue_.empty())
                     arm_rclcpp_timer(lock);
             }
+        }
+        else
+        {
+            timer_.reset();
+            callback_group_.reset();
+            node_base_.reset();
+            node_timers_.reset();
         }
     }
 
     Buffer* parent_;
     BufferPolicy policy_;
-    rclcpp::Node::SharedPtr node_;
+    rclcpp::node_interfaces::NodeBaseInterface::SharedPtr node_base_;
+    rclcpp::node_interfaces::NodeTimersInterface::SharedPtr node_timers_;
     rclcpp::CallbackGroup::SharedPtr callback_group_;
     rclcpp::WallTimer<rclcpp::VoidCallbackType>::SharedPtr timer_;
     std::deque<QueueElement> queue_;
@@ -171,11 +187,12 @@ Buffer<Inputs...>::Buffer(BufferPolicy policy, std::size_t max_queue_size) noexc
 }
 
 template<class... Inputs>
-Buffer<Inputs...>::Buffer(const rclcpp::Node::SharedPtr& node, std::size_t max_queue_size) noexcept
+template<class NodeT>
+Buffer<Inputs...>::Buffer(NodeT&& node, std::size_t max_queue_size) noexcept
     : impl_(std::make_shared<Impl>(this, BufferPolicy::Queue, max_queue_size))
 {
     std::unique_lock<std::mutex> lock{impl_->mutex_};
-    impl_->set_node(lock, node);
+    impl_->template set_node<NodeT>(lock, std::forward<NodeT&&>(node));
 }
 
 template<class... Inputs>
@@ -211,10 +228,11 @@ void Buffer<Inputs...>::set_policy(BufferPolicy policy, std::size_t max_queue_si
 }
 
 template<class... Inputs>
-void Buffer<Inputs...>::set_node(const rclcpp::Node::SharedPtr& node) noexcept
+template<class NodeT>
+void Buffer<Inputs...>::set_node(NodeT&& node) noexcept
 {
     std::unique_lock<std::mutex> lock{impl_->mutex_};
-    impl_->set_node(lock, node);
+    impl_->template set_node<NodeT>(lock, std::forward<NodeT&&>(node));
 }
 
 template<class... Inputs>

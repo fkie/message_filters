@@ -24,8 +24,6 @@
 #include "filter.hpp"
 #include "helpers/abi_namespace.hpp"
 
-#include <rclcpp/node.hpp>
-
 #include <memory>
 #include <mutex>
 #include <tuple>
@@ -108,7 +106,8 @@ public:
      *
      * \nothrow
      */
-    Buffer(const rclcpp::Node::SharedPtr& node, std::size_t max_queue_size) noexcept;
+    template<class NodeT>
+    Buffer(NodeT&& node, std::size_t max_queue_size) noexcept;
     /** \brief Constructor.
      * \arg \c policy the buffer policy
      * \arg \c max_queue_size for the BufferPolicy::Queue policy, the maximum number of queued data items.
@@ -154,7 +153,8 @@ public:
      * rclcpp::spin(node);
      * \endcode
      */
-    void set_node(const rclcpp::Node::SharedPtr& node) noexcept;
+    template<class NodeT>
+    void set_node(NodeT&& node) noexcept;
     /** \brief Check if the buffer has pending data.
      *
      * \retval true if the current policy is BufferPolicy::Queue and a subsequent call to process_one() or spin_once()
