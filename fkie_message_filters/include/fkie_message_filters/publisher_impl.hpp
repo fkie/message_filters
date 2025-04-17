@@ -42,8 +42,8 @@ Publisher<M, Translate>::~Publisher()
 }
 
 template<class M, template<typename> class Translate>
-Publisher<M, Translate>::Publisher(rclcpp::Node::SharedPtr& node, const std::string& topic, const rclcpp::QoS& qos,
-                                   const rclcpp::PublisherOptions& options) noexcept
+Publisher<M, Translate>::Publisher(const rclcpp::Node::SharedPtr& node, const std::string& topic,
+                                   const rclcpp::QoS& qos, const rclcpp::PublisherOptions& options) noexcept
 {
     advertise(node, topic, qos, options);
 }
@@ -61,8 +61,8 @@ std::string Publisher<M, Translate>::topic() const noexcept
 }
 
 template<class M, template<typename> class Translate>
-void Publisher<M, Translate>::advertise(rclcpp::Node::SharedPtr& node, const std::string& topic, const rclcpp::QoS& qos,
-                                        const rclcpp::PublisherOptions& options) noexcept
+void Publisher<M, Translate>::advertise(const rclcpp::Node::SharedPtr& node, const std::string& topic,
+                                        const rclcpp::QoS& qos, const rclcpp::PublisherOptions& options) noexcept
 {
     pub_ = node->create_publisher<MessageType>(topic, qos, options);
     start_monitor(node);

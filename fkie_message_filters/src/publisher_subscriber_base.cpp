@@ -22,6 +22,7 @@
 #include <fkie_message_filters/subscriber_base.hpp>
 #include <rclcpp/event.hpp>
 #include <rclcpp/node.hpp>
+#include <rclcpp/node_interfaces/node_graph_interface.hpp>
 
 #include <set>
 
@@ -43,7 +44,7 @@ public:
         if (publishers_.empty())
         {
             shutdown_flag_.store(true);
-            node_->get_node_graph_interface()->notify_graph_change();
+            node_graph_interface_->notify_graph_change();
         }
     }
 
@@ -53,18 +54,24 @@ public:
         publishers_.insert(publisher);
     }
 
-    static std::shared_ptr<Monitor> instance(const rclcpp::Node::SharedPtr& node)
+    static std::shared_ptr<Monitor>
+    instance(const rclcpp::node_interfaces::NodeGraphInterface::SharedPtr& node_graph_interface)
     {
         std::lock_guard<std::mutex> lock{singleton_mutex_};
         if (!singleton_)
-            singleton_ = std::shared_ptr<Monitor>(new Monitor(node->create_sub_node("_graph_monitor")));
+            singleton_ = std::shared_ptr<Monitor>(new Monitor(node_graph_interface));
         return singleton_;
     }
 
+    static std::shared_ptr<Monitor> instance(rclcpp::Node* node)
+    {
+        return instance(node->get_node_graph_interface());
+    }
+
 private:
-    explicit Monitor(const rclcpp::Node::SharedPtr& node)
-        : node_(node), graph_event_(node_->get_graph_event()), shutdown_flag_(false),
-          thread_(std::bind(&Monitor::run, this))
+    explicit Monitor(const rclcpp::node_interfaces::NodeGraphInterface::SharedPtr& node_graph_interface)
+        : node_graph_interface_(node_graph_interface), graph_event_(node_graph_interface_->get_graph_event()),
+          shutdown_flag_(false), thread_(std::bind(&Monitor::run, this))
     {
         thread_.detach();
     }
@@ -74,7 +81,7 @@ private:
         while (!shutdown_flag_.load())
         {
             using namespace std::chrono_literals;
-            node_->wait_for_graph_change(graph_event_, 1s);
+            node_graph_interface_->wait_for_graph_change(graph_event_, 1s);
             if (!shutdown_flag_.load() && graph_event_->check_and_clear())
             {
                 std::lock_guard<std::mutex> lock{mutex_};
@@ -87,7 +94,7 @@ private:
         singleton_.reset();
     }
 
-    rclcpp::Node::SharedPtr node_;
+    rclcpp::node_interfaces::NodeGraphInterface::SharedPtr node_graph_interface_;
     rclcpp::Event::SharedPtr graph_event_;
     std::mutex mutex_;
     std::set<PublisherBase*> publishers_;
@@ -127,6 +134,11 @@ void PublisherBase::update_subscriber_state()
 }
 
 void PublisherBase::start_monitor(const rclcpp::Node::SharedPtr& node) noexcept
+{
+    start_monitor(node.get());
+}
+
+void PublisherBase::start_monitor(rclcpp::Node* node) noexcept
 {
     monitor_ = Monitor::instance(node);
     monitor_->attach(this);

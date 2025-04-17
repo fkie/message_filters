@@ -87,6 +87,13 @@ protected:
      * \nothrow
      */
     void start_monitor(const rclcpp::Node::SharedPtr& node) noexcept;
+    /** \brief Start monitoring thread for the number of subscribers.
+     *
+     * This is needed in ROS 2 because there is no longer a dedicated callback for created publishers.
+     *
+     * \nothrow
+     */
+    void start_monitor(rclcpp::Node* node) noexcept;
     /** \brief Shutdown monitoring thread for the number of subscribers.
      *
      * This function is called automatically when the publisher object is destroyed.
