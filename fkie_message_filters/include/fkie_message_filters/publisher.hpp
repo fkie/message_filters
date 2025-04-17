@@ -26,8 +26,6 @@
 #include "publisher_base.hpp"
 #include "source.hpp"
 
-#include <rclcpp/node.hpp>
-
 namespace fkie_message_filters
 {
 
@@ -66,7 +64,8 @@ public:
      *
      * \nothrow
      */
-    Publisher(const rclcpp::Node::SharedPtr& node, const std::string& topic,
+    template<class NodeT>
+    Publisher(NodeT&& node, const std::string& topic,
               const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
               const rclcpp::PublisherOptions& options = rclcpp::PublisherOptions()) noexcept;
     /** \brief Destructor. */
@@ -98,7 +97,8 @@ public:
      *
      * \nothrow
      */
-    void advertise(const rclcpp::Node::SharedPtr& node, const std::string& topic,
+    template<class NodeT>
+    void advertise(NodeT&& node, const std::string& topic,
                    const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
                    const rclcpp::PublisherOptions& options = rclcpp::PublisherOptions()) noexcept;
 

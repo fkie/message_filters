@@ -63,11 +63,6 @@ public:
         return singleton_;
     }
 
-    static std::shared_ptr<Monitor> instance(rclcpp::Node* node)
-    {
-        return instance(node->get_node_graph_interface());
-    }
-
 private:
     explicit Monitor(const rclcpp::node_interfaces::NodeGraphInterface::SharedPtr& node_graph_interface)
         : node_graph_interface_(node_graph_interface), graph_event_(node_graph_interface_->get_graph_event()),
@@ -133,14 +128,10 @@ void PublisherBase::update_subscriber_state()
         disable_signal_();
 }
 
-void PublisherBase::start_monitor(const rclcpp::Node::SharedPtr& node) noexcept
+void PublisherBase::start_monitor(
+    const rclcpp::node_interfaces::NodeGraphInterface::SharedPtr& node_graph_interface) noexcept
 {
-    start_monitor(node.get());
-}
-
-void PublisherBase::start_monitor(rclcpp::Node* node) noexcept
-{
-    monitor_ = Monitor::instance(node);
+    monitor_ = Monitor::instance(node_graph_interface);
     monitor_->attach(this);
 }
 

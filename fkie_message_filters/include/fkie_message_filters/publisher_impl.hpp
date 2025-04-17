@@ -25,6 +25,8 @@
 
 #include "publisher.hpp"
 
+#include <rclcpp/create_publisher.hpp>
+
 namespace fkie_message_filters
 {
 
@@ -42,10 +44,11 @@ Publisher<M, Translate>::~Publisher()
 }
 
 template<class M, template<typename> class Translate>
-Publisher<M, Translate>::Publisher(const rclcpp::Node::SharedPtr& node, const std::string& topic,
-                                   const rclcpp::QoS& qos, const rclcpp::PublisherOptions& options) noexcept
+template<class NodeT>
+Publisher<M, Translate>::Publisher(NodeT&& node, const std::string& topic, const rclcpp::QoS& qos,
+                                   const rclcpp::PublisherOptions& options) noexcept
 {
-    advertise(node, topic, qos, options);
+    advertise<NodeT>(std::forward<NodeT&&>(node), topic, qos, options);
 }
 
 template<class M, template<typename> class Translate>
@@ -61,11 +64,13 @@ std::string Publisher<M, Translate>::topic() const noexcept
 }
 
 template<class M, template<typename> class Translate>
-void Publisher<M, Translate>::advertise(const rclcpp::Node::SharedPtr& node, const std::string& topic,
-                                        const rclcpp::QoS& qos, const rclcpp::PublisherOptions& options) noexcept
+template<class NodeT>
+void Publisher<M, Translate>::advertise(NodeT&& node, const std::string& topic, const rclcpp::QoS& qos,
+                                        const rclcpp::PublisherOptions& options) noexcept
 {
-    pub_ = node->create_publisher<MessageType>(topic, qos, options);
-    start_monitor(node);
+    pub_ = rclcpp::create_publisher<MessageType, std::allocator<void>, PublisherROS, NodeT>(std::forward<NodeT&&>(node),
+                                                                                            topic, qos, options);
+    start_monitor<NodeT>(std::forward<NodeT&&>(node));
     update_subscriber_state();
 }
 

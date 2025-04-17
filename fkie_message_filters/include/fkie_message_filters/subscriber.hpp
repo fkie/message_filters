@@ -26,7 +26,8 @@
 #include "source.hpp"
 #include "subscriber_base.hpp"
 
-#include <rclcpp/node.hpp>
+#include <rclcpp/node_interfaces/node_parameters_interface.hpp>
+#include <rclcpp/node_interfaces/node_topics_interface.hpp>
 
 namespace fkie_message_filters
 {
@@ -73,7 +74,8 @@ public:
      *
      * \nothrow
      */
-    Subscriber(const rclcpp::Node::SharedPtr& node, const std::string& topic,
+    template<class NodeT>
+    Subscriber(NodeT&& node, const std::string& topic,
                const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
                const rclcpp::SubscriptionOptions& options = rclcpp::SubscriptionOptions()) noexcept;
     /** \brief Configure ROS topic that is to be subscribed.
@@ -88,7 +90,8 @@ public:
      *
      * \nothrow
      */
-    void set_subscribe_options(const rclcpp::Node::SharedPtr& node, const std::string& topic,
+    template<class NodeT>
+    void set_subscribe_options(NodeT&& node, const std::string& topic,
                                const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
                                const rclcpp::SubscriptionOptions& options = rclcpp::SubscriptionOptions()) noexcept;
     /** \brief Convenience function to subscribe to a ROS topic.
@@ -102,7 +105,8 @@ public:
      *
      * \nothrow
      */
-    void subscribe(const rclcpp::Node::SharedPtr& node, const std::string& topic,
+    template<class NodeT>
+    void subscribe(NodeT&& node, const std::string& topic,
                    const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
                    const rclcpp::SubscriptionOptions& options = rclcpp::SubscriptionOptions()) noexcept;
     using SubscriberBase::subscribe;
@@ -133,7 +137,8 @@ private:
     using SubscriptionType = typename M::UniquePtr;
     using SubscriptionCB = std::function<void(SubscriptionType)>;
     using Subscription = rclcpp::Subscription<MessageType>;
-    rclcpp::Node::SharedPtr node_;
+    rclcpp::node_interfaces::NodeParametersInterface::SharedPtr node_parameters_;
+    rclcpp::node_interfaces::NodeTopicsInterface::SharedPtr node_topics_;
     std::string topic_;
     rclcpp::QoS qos_{rclcpp::KeepLast(10), rmw_qos_profile_default};
     rclcpp::SubscriptionOptions options_;

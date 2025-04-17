@@ -25,9 +25,10 @@
 #include "helpers/signaling.hpp"
 #include "types.hpp"
 
-#include <rclcpp/node.hpp>
+#include <rclcpp/node_interfaces/node_graph_interface.hpp>
 
 #include <tuple>
+#include <type_traits>
 
 namespace fkie_message_filters
 {
@@ -83,17 +84,18 @@ protected:
     /** \brief Start monitoring thread for the number of subscribers.
      *
      * This is needed in ROS 2 because there is no longer a dedicated callback for created publishers.
-     *
-     * \nothrow
      */
-    void start_monitor(const rclcpp::Node::SharedPtr& node) noexcept;
+    template<class NodeT,
+             typename std::enable_if_t<
+                 !std::is_convertible_v<NodeT, rclcpp::node_interfaces::NodeGraphInterface::SharedPtr>, bool> = true>
+    void start_monitor(NodeT&& node) noexcept;
     /** \brief Start monitoring thread for the number of subscribers.
      *
      * This is needed in ROS 2 because there is no longer a dedicated callback for created publishers.
      *
      * \nothrow
      */
-    void start_monitor(rclcpp::Node* node) noexcept;
+    void start_monitor(const rclcpp::node_interfaces::NodeGraphInterface::SharedPtr& node_graph_interface) noexcept;
     /** \brief Shutdown monitoring thread for the number of subscribers.
      *
      * This function is called automatically when the publisher object is destroyed.
@@ -108,5 +110,7 @@ private:
 
 FKIE_MF_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
+
+#include "publisher_base_impl.hpp"  // IWYU pragma: keep
 
 #endif /* INCLUDE_FKIE_MESSAGE_FILTERS_PUBLISHER_BASE_HPP_ */
