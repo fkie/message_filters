@@ -1,0 +1,7 @@
+version = 1
+
+[[annotations]]
+path = ["**"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2018-2025, Fraunhofer FKIE"
+SPDX-License-Identifier = "Apache-2.0"
