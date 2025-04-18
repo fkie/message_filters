@@ -2,8 +2,8 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+3.1.1 (2025-04-18)
+------------------
 * Properly bump the abi namespace (and automate it)
 * Contributors: Timo Röhling
 
