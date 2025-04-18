@@ -87,6 +87,7 @@ configure_file(
 if(BUILD_TESTING)
     find_package(ament_cmake_gtest REQUIRED)
     find_package(ament_cmake_ros REQUIRED)
+    find_package(rclcpp_lifecycle REQUIRED)
     find_package(std_msgs REQUIRED)
     ament_add_ros_isolated_gtest(
         filtertests
@@ -127,7 +128,9 @@ if(BUILD_TESTING)
             message(FATAL_ERROR "Cannot enable test coverage: gcov not found")
         endif()
     endif()
-    target_link_libraries(filtertests ${PROJECT_NAME})
+    target_link_libraries(
+        filtertests ${PROJECT_NAME} rclcpp_lifecycle::rclcpp_lifecycle
+    )
     if(TARGET Boost::boost)
         target_link_libraries(filtertests Boost::boost)
     endif()

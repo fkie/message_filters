@@ -30,24 +30,25 @@
 #include <fkie_message_filters/user_source.hpp>
 #include <rclcpp/executors.hpp>
 #include <rclcpp/node.hpp>
+#include <rclcpp/node_interfaces/get_node_base_interface.hpp>
+#include <rclcpp_lifecycle/lifecycle_node.hpp>
 #include <std_msgs/msg/empty.hpp>
 
 namespace mf = fkie_message_filters;
 
 namespace
 {
-void process_pending_events(const rclcpp::Node::SharedPtr& node)
+
+template<class NodeT>
+void process_pending_events(NodeT&& node)
 {
-    //    using namespace std::chrono_literals;
-    //    std::this_thread::sleep_for(50ms);  // Apparently, we need to allow for some time to complete the message
-    //    round trip
-    rclcpp::spin_some(node);
+    rclcpp::spin_some(rclcpp::node_interfaces::get_node_base_interface(std::forward<NodeT&&>(node)));
 }
 }  // namespace
 
-template<class Source, class Publisher, class Subscriber, class MessageCreator>
-void common_publisher_test_code(rclcpp::Node::SharedPtr& node, Source& src, Publisher& pub, Subscriber& sub,
-                                std::size_t& received_msgs, MessageCreator create)
+template<class Node, class Source, class Publisher, class Subscriber, class MessageCreator>
+void common_publisher_test_code(Node& node, Source& src, Publisher& pub, Subscriber& sub, std::size_t& received_msgs,
+                                MessageCreator create)
 {
     src.connect_to_sink(pub);
     ASSERT_EQ(0, get_publisher_count(sub));
@@ -76,6 +77,21 @@ TEST(fkie_message_filters, PublisherMessage)
                                []() -> std_msgs::msg::Empty { return std_msgs::msg::Empty(); });
 }
 
+TEST(fkie_message_filters, LifecyclePublisherMessage)
+{
+    std::size_t received_msgs = 0;
+    rclcpp_lifecycle::LifecycleNode::SharedPtr node =
+        std::make_shared<rclcpp_lifecycle::LifecycleNode>("lifecycle_publisher_message");
+    rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr sub = node->create_subscription<std_msgs::msg::Empty>(
+        "publisher_test", 1, [&received_msgs](const std_msgs::msg::Empty::ConstSharedPtr&) { ++received_msgs; });
+    mf::UserSource<std_msgs::msg::Empty> src;
+    mf::Publisher<std_msgs::msg::Empty, mf::RosMessage> pub;
+    node->configure();
+    node->activate();
+    common_publisher_test_code(node, src, pub, sub, received_msgs,
+                               []() -> std_msgs::msg::Empty { return std_msgs::msg::Empty(); });
+}
+
 TEST(fkie_message_filters, PublisherMessageUniquePtr)
 {
     std::size_t received_msgs = 0;
@@ -88,6 +104,21 @@ TEST(fkie_message_filters, PublisherMessageUniquePtr)
                                { return std::make_unique<std_msgs::msg::Empty>(); });
 }
 
+TEST(fkie_message_filters, LifecyclePublisherMessageUniquePtr)
+{
+    std::size_t received_msgs = 0;
+    rclcpp_lifecycle::LifecycleNode::SharedPtr node =
+        std::make_shared<rclcpp_lifecycle::LifecycleNode>("lifecycle_publisher_message_unique_ptr");
+    rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr sub = node->create_subscription<std_msgs::msg::Empty>(
+        "publisher_test", 1, [&received_msgs](const std_msgs::msg::Empty::ConstSharedPtr&) { ++received_msgs; });
+    mf::UserSource<std_msgs::msg::Empty::UniquePtr> src;
+    mf::Publisher<std_msgs::msg::Empty, mf::RosMessageUniquePtr> pub;
+    node->configure();
+    node->activate();
+    common_publisher_test_code(node, src, pub, sub, received_msgs, []() -> std_msgs::msg::Empty::UniquePtr
+                               { return std::make_unique<std_msgs::msg::Empty>(); });
+}
+
 TEST(fkie_message_filters, PublisherMessageSharedPtr)
 {
     std::size_t received_msgs = 0;
@@ -96,6 +127,21 @@ TEST(fkie_message_filters, PublisherMessageSharedPtr)
         "publisher_test", 1, [&received_msgs](const std_msgs::msg::Empty::ConstSharedPtr&) { ++received_msgs; });
     mf::UserSource<std_msgs::msg::Empty::ConstSharedPtr> src;
     mf::Publisher<std_msgs::msg::Empty, mf::RosMessageSharedPtr> pub;
+    common_publisher_test_code(node, src, pub, sub, received_msgs, []() -> std_msgs::msg::Empty::ConstSharedPtr
+                               { return std::make_shared<std_msgs::msg::Empty>(); });
+}
+
+TEST(fkie_message_filters, LifecyclePublisherMessageSharedPtr)
+{
+    std::size_t received_msgs = 0;
+    rclcpp_lifecycle::LifecycleNode::SharedPtr node =
+        std::make_shared<rclcpp_lifecycle::LifecycleNode>("lifecycle_publisher_message_shared_ptr");
+    rclcpp::Subscription<std_msgs::msg::Empty>::SharedPtr sub = node->create_subscription<std_msgs::msg::Empty>(
+        "publisher_test", 1, [&received_msgs](const std_msgs::msg::Empty::ConstSharedPtr&) { ++received_msgs; });
+    mf::UserSource<std_msgs::msg::Empty::ConstSharedPtr> src;
+    mf::Publisher<std_msgs::msg::Empty, mf::RosMessageSharedPtr> pub;
+    node->configure();
+    node->activate();
     common_publisher_test_code(node, src, pub, sub, received_msgs, []() -> std_msgs::msg::Empty::ConstSharedPtr
                                { return std::make_shared<std_msgs::msg::Empty>(); });
 }
@@ -201,9 +247,8 @@ TEST(fkie_message_filters, CameraPublisherMessageSharedPtr)
     camera_publisher_test_code<mf::RosMessageSharedPtr>(node, src, pub, sub, received_msgs);
 }
 
-template<class MessageT, class Publisher, class Subscriber, class Filter>
-void common_subscriber_test_code(rclcpp::Node::SharedPtr& node, Publisher& pub, Subscriber& sub, Filter& flt,
-                                 std::size_t& received_msgs)
+template<class MessageT, class Node, class Publisher, class Subscriber, class Filter>
+void common_subscriber_test_code(Node& node, Publisher& pub, Subscriber& sub, Filter& flt, std::size_t& received_msgs)
 {
     sub.connect_to_sink(flt);
     flt.set_processing_function(
@@ -234,6 +279,20 @@ TEST(fkie_message_filters, SubscriberMessage)
     common_subscriber_test_code<std_msgs::msg::Empty>(node, pub, sub, flt, received_msgs);
 }
 
+TEST(fkie_message_filters, LifecycleSubscriberMessage)
+{
+    std::size_t received_msgs = 0;
+    rclcpp_lifecycle::LifecycleNode::SharedPtr node =
+        std::make_shared<rclcpp_lifecycle::LifecycleNode>("lifecycle_subscriber_message");
+    rclcpp_lifecycle::LifecyclePublisher<std_msgs::msg::Empty>::SharedPtr pub =
+        node->create_publisher<std_msgs::msg::Empty>("subscriber_test", 1);
+    mf::Subscriber<std_msgs::msg::Empty, mf::RosMessage> sub;
+    mf::SimpleUserFilter<std_msgs::msg::Empty> flt;
+    node->configure();
+    node->activate();
+    common_subscriber_test_code<std_msgs::msg::Empty>(node, pub, sub, flt, received_msgs);
+}
+
 TEST(fkie_message_filters, SubscriberMessageUniquePtr)
 {
     std::size_t received_msgs = 0;
@@ -245,6 +304,20 @@ TEST(fkie_message_filters, SubscriberMessageUniquePtr)
     common_subscriber_test_code<std_msgs::msg::Empty>(node, pub, sub, flt, received_msgs);
 }
 
+TEST(fkie_message_filters, LifecycleSubscriberMessageUniquePtr)
+{
+    std::size_t received_msgs = 0;
+    rclcpp_lifecycle::LifecycleNode::SharedPtr node =
+        std::make_shared<rclcpp_lifecycle::LifecycleNode>("lifecycle_subscriber_message_unique_ptr");
+    rclcpp_lifecycle::LifecyclePublisher<std_msgs::msg::Empty>::SharedPtr pub =
+        node->create_publisher<std_msgs::msg::Empty>("subscriber_test", 1);
+    mf::Subscriber<std_msgs::msg::Empty, mf::RosMessageUniquePtr> sub;
+    mf::SimpleUserFilter<std_msgs::msg::Empty::UniquePtr> flt;
+    node->configure();
+    node->activate();
+    common_subscriber_test_code<std_msgs::msg::Empty>(node, pub, sub, flt, received_msgs);
+}
+
 TEST(fkie_message_filters, SubscriberMessageSharedPtr)
 {
     std::size_t received_msgs = 0;
@@ -253,6 +326,20 @@ TEST(fkie_message_filters, SubscriberMessageSharedPtr)
         node->create_publisher<std_msgs::msg::Empty>("subscriber_test", 1);
     mf::Subscriber<std_msgs::msg::Empty, mf::RosMessageSharedPtr> sub;
     mf::SimpleUserFilter<std_msgs::msg::Empty::ConstSharedPtr> flt;
+    common_subscriber_test_code<std_msgs::msg::Empty>(node, pub, sub, flt, received_msgs);
+}
+
+TEST(fkie_message_filters, LifecycleSubscriberMessageSharedPtr)
+{
+    std::size_t received_msgs = 0;
+    rclcpp_lifecycle::LifecycleNode::SharedPtr node =
+        std::make_shared<rclcpp_lifecycle::LifecycleNode>("lifecycle_subscriber_message_shared_ptr");
+    rclcpp_lifecycle::LifecyclePublisher<std_msgs::msg::Empty>::SharedPtr pub =
+        node->create_publisher<std_msgs::msg::Empty>("subscriber_test", 1);
+    mf::Subscriber<std_msgs::msg::Empty, mf::RosMessageSharedPtr> sub;
+    mf::SimpleUserFilter<std_msgs::msg::Empty::ConstSharedPtr> flt;
+    node->configure();
+    node->activate();
     common_subscriber_test_code<std_msgs::msg::Empty>(node, pub, sub, flt, received_msgs);
 }
 
