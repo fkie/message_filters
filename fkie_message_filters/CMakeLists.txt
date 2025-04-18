@@ -44,6 +44,7 @@ target_include_directories(
     ${PROJECT_NAME}
     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
            $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+           $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include/helpers>
            $<INSTALL_INTERFACE:include>
 )
 target_link_libraries(
@@ -76,6 +77,10 @@ math(
 
 configure_file(
     src/version.hpp.in ${CMAKE_CURRENT_BINARY_DIR}/include/version.hpp @ONLY
+)
+configure_file(
+    src/abi_namespace.hpp.in
+    ${CMAKE_CURRENT_BINARY_DIR}/include/helpers/abi_namespace.hpp @ONLY
 )
 
 # Testing
@@ -151,7 +156,7 @@ install(
 )
 
 install(DIRECTORY include/ DESTINATION include)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/include/version.hpp
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/
         DESTINATION include/${PROJECT_NAME}
 )
 

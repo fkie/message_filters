@@ -18,9 +18,7 @@
  *
  ****************************************************************************/
 #ifndef FKIE_MF_BEGIN_ABI_NAMESPACE
-#define FKIE_MF_BEGIN_ABI_NAMESPACE \
-    inline namespace abi2           \
-    {
+#define FKIE_MF_BEGIN_ABI_NAMESPACE inline namespace abi@FKIE_MF_ABI_VERSION@ {
 #endif
 #ifndef FKIE_MF_END_ABI_NAMESPACE
 #define FKIE_MF_END_ABI_NAMESPACE }
