@@ -2,6 +2,11 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Properly bump the abi namespace (and automate it)
+* Contributors: Timo Röhling
+
 3.1.0 (2025-04-17)
 ------------------
 * Support for alternative node implementations via node interfaces
