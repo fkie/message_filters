@@ -25,6 +25,7 @@
 #include <fkie_message_filters/simple_user_filter.hpp>
 #include <fkie_message_filters/user_source.hpp>
 #include <rclcpp/executors.hpp>
+#include <rclcpp_lifecycle/lifecycle_node.hpp>
 
 #include <chrono>
 
@@ -80,40 +81,41 @@ TEST(fkie_message_filters, BufferMoveConstructible)
     buffer_test_code<int_M>();
 }
 
-template<class Buffer, class Rep, class Period>
-bool wait_for_buffer_processing(rclcpp::Node::SharedPtr& node, Buffer& buffer,
-                                const std::chrono::duration<Rep, Period>& timeout)
+template<class Node, class Buffer, class Rep, class Period>
+bool wait_for_buffer_processing(Node&& node, Buffer& buffer, const std::chrono::duration<Rep, Period>& timeout)
 {
+    auto node_base = rclcpp::node_interfaces::get_node_base_interface(node);
 #if FKIE_MF_RCLCPP_VERSION >= FKIE_MF_VERSION_TUPLE(22, 1, 0)
     if (buffer.has_some())
     {
-        rclcpp::spin_all(node, std::chrono::duration_cast<std::chrono::nanoseconds>(timeout));
+        rclcpp::spin_all(node_base, std::chrono::duration_cast<std::chrono::nanoseconds>(timeout));
     }
 #else
     std::chrono::system_clock::time_point deadline = std::chrono::system_clock::now() + timeout;
     while (buffer.has_some() && std::chrono::system_clock::now() < deadline)
     {
-        rclcpp::spin_some(node);
+        rclcpp::spin_some(node_base);
     }
 #endif
     return !buffer.has_some();
 }
 
-TEST(fkie_message_filters, BufferCallbackGroup)
+template<typename int_T, class Node>
+void buffer_callback_group_test_code(const std::string& node_name)
 {
     using namespace std::chrono_literals;
-    using Source = mf::UserSource<int_C>;
-    using Buffer = mf::Buffer<int_C>;
-    using Sink = mf::SimpleUserFilter<int_C>;
+    using Source = mf::UserSource<int_T>;
+    using Buffer = mf::Buffer<int_T>;
+    using Sink = mf::SimpleUserFilter<int_T>;
 
     std::size_t callback_counts = 0;
     int last_value = 0;
-    rclcpp::Node::SharedPtr node = std::make_shared<rclcpp::Node>("buffer_callback_group");
+    auto node = std::make_shared<Node>("buffer_callback_group");
     Source src;
     Buffer buf(node, 3);
     Sink snk;
     snk.set_processing_function(
-        [&callback_counts, &last_value](const int_C& i) -> bool
+        [&callback_counts, &last_value](const int_T& i) -> bool
         {
             ++callback_counts;
             if (i < last_value)
@@ -122,17 +124,32 @@ TEST(fkie_message_filters, BufferCallbackGroup)
             return true;
         });
     mf::chain(src, buf, snk);
-    src(int_C(0));  // Note: this will be discarded before processing
-    src(int_C(1));
-    src(int_C(2));
-    src(int_C(3));
+    src(int_T(0));  // Note: this will be discarded before processing
+    src(int_T(1));
+    src(int_T(2));
+    src(int_T(3));
     ASSERT_TRUE(wait_for_buffer_processing(node, buf, 1s));
     ASSERT_EQ(3u, callback_counts);
     ASSERT_EQ(3, last_value);
-    src(int_C(4));
-    src(int_C(5));
-    src(int_C(6));
+    src(int_T(4));
+    src(int_T(5));
+    src(int_T(6));
     ASSERT_TRUE(wait_for_buffer_processing(node, buf, 1s));
     ASSERT_EQ(6u, callback_counts);
     ASSERT_EQ(6, last_value);
+    buf.set_node(nullptr);
+    src(int_T(-1));
+    ASSERT_FALSE(wait_for_buffer_processing(node, buf, 50ms));
+    ASSERT_EQ(6u, callback_counts);
+    ASSERT_EQ(6, last_value);
+}
+
+TEST(fkie_message_filters, BufferNodeCallbackGroup)
+{
+    buffer_callback_group_test_code<int_C, rclcpp::Node>("buffer_node_callback_group");
+}
+
+TEST(fkie_message_filters, BufferLifecycleNodeCallbackGroup)
+{
+    buffer_callback_group_test_code<int_C, rclcpp_lifecycle::LifecycleNode>("buffer_lifecycle_node_callback_group");
 }

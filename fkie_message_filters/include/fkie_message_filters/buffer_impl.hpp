@@ -144,28 +144,29 @@ struct Buffer<Inputs...>::Impl
     template<class NodeT>
     void set_node(std::unique_lock<std::mutex>& lock, NodeT&& node)
     {
-        if (node)
+        if constexpr (!std::is_same_v<NodeT, std::nullptr_t>)
         {
-            auto base = rclcpp::node_interfaces::get_node_base_interface(node);
-            auto timers = rclcpp::node_interfaces::get_node_timers_interface(node);
-            if (node_base_ != base || node_timers_ != timers)
+            if (node)
             {
-                timer_.reset();
-                callback_group_.reset();
-                node_base_ = base;
-                node_timers_ = timers;
-                callback_group_ = node_base_->create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
-                if (!queue_.empty())
-                    arm_rclcpp_timer(lock);
+                auto base = rclcpp::node_interfaces::get_node_base_interface(node);
+                auto timers = rclcpp::node_interfaces::get_node_timers_interface(node);
+                if (node_base_ != base || node_timers_ != timers)
+                {
+                    timer_.reset();
+                    callback_group_.reset();
+                    node_base_ = base;
+                    node_timers_ = timers;
+                    callback_group_ = node_base_->create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
+                    if (!queue_.empty())
+                        arm_rclcpp_timer(lock);
+                }
+                return;
             }
         }
-        else
-        {
-            timer_.reset();
-            callback_group_.reset();
-            node_base_.reset();
-            node_timers_.reset();
-        }
+        timer_.reset();
+        callback_group_.reset();
+        node_base_.reset();
+        node_timers_.reset();
     }
 
     Buffer* parent_;
