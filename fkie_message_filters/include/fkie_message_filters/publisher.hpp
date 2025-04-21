@@ -48,8 +48,8 @@ FKIE_MF_BEGIN_ABI_NAMESPACE
  *
  * \sa CameraPublisher, ImagePublisher
  */
-template<class M, template<typename> class Translate = RosMessageSharedPtr>
-class Publisher : public PublisherBase, public Sink<typename Translate<M>::FilterType>
+template<class M, template<typename, typename> class Translate = RosMessageSharedPtr, class A = std::allocator<void>>
+class Publisher : public PublisherBase, public Sink<typename Translate<M, A>::FilterType>
 {
 public:
     /** \brief Constructs an empty publisher.
@@ -68,7 +68,7 @@ public:
     template<class NodeT>
     Publisher(NodeT&& node, const std::string& topic,
               const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
-              const rclcpp::PublisherOptions& options = rclcpp::PublisherOptions());
+              const rclcpp::PublisherOptionsWithAllocator<A>& options = rclcpp::PublisherOptionsWithAllocator<A>());
     /** \brief Destructor. */
     virtual ~Publisher();
     /** \brief Check if the ROS publisher has at least one subscriber.
@@ -99,17 +99,18 @@ public:
      * \rmwthrow
      */
     template<class NodeT>
-    void advertise(NodeT&& node, const std::string& topic,
-                   const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
-                   const rclcpp::PublisherOptions& options = rclcpp::PublisherOptions());
+    void
+    advertise(NodeT&& node, const std::string& topic,
+              const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
+              const rclcpp::PublisherOptionsWithAllocator<A>& options = rclcpp::PublisherOptionsWithAllocator<A>());
 
 protected:
     /** \private */
-    virtual void receive(helpers::argument_t<typename Translate<M>::FilterType> m) override;
+    virtual void receive(helpers::argument_t<typename Translate<M, A>::FilterType> m) override;
 
 private:
-    using MessageType = typename Translate<M>::MessageType;
-    using PublisherROS = typename Translate<M>::Publisher;
+    using MessageType = typename Translate<M, A>::MessageType;
+    using PublisherROS = typename Translate<M, A>::Publisher;
     typename PublisherROS::SharedPtr pub_;
 };
 

@@ -35,29 +35,29 @@ namespace fkie_message_filters
 
 FKIE_MF_BEGIN_ABI_NAMESPACE
 
-template<class M, template<typename> class Translate>
-Subscriber<M, Translate>::Subscriber() noexcept
+template<class M, template<typename, typename> class Translate, class A>
+Subscriber<M, Translate, A>::Subscriber() noexcept
 {
 }
 
-template<class M, template<typename> class Translate>
+template<class M, template<typename, typename> class Translate, class A>
 template<class NodeT>
-Subscriber<M, Translate>::Subscriber(NodeT&& node, const std::string& topic, const rclcpp::QoS& qos,
-                                     const rclcpp::SubscriptionOptions& options)
+Subscriber<M, Translate, A>::Subscriber(NodeT&& node, const std::string& topic, const rclcpp::QoS& qos,
+                                        const rclcpp::SubscriptionOptionsWithAllocator<A>& options)
 {
     subscribe<NodeT>(std::forward<NodeT&&>(node), topic, qos, options);
 }
 
-template<class M, template<typename> class Translate>
-std::string Subscriber<M, Translate>::topic() const noexcept
+template<class M, template<typename, typename> class Translate, class A>
+std::string Subscriber<M, Translate, A>::topic() const noexcept
 {
     return sub_ ? sub_->get_topic_name() : std::string();
 }
 
-template<class M, template<typename> class Translate>
+template<class M, template<typename, typename> class Translate, class A>
 template<class NodeT>
-void Subscriber<M, Translate>::set_subscribe_options(NodeT&& node, const std::string& topic, const rclcpp::QoS& qos,
-                                                     const rclcpp::SubscriptionOptions& options)
+void Subscriber<M, Translate, A>::set_subscribe_options(NodeT&& node, const std::string& topic, const rclcpp::QoS& qos,
+                                                        const rclcpp::SubscriptionOptionsWithAllocator<A>& options)
 {
     unsubscribe();
     node_parameters_ = rclcpp::node_interfaces::get_node_parameters_interface(node);
@@ -67,34 +67,34 @@ void Subscriber<M, Translate>::set_subscribe_options(NodeT&& node, const std::st
     options_ = options;
 }
 
-template<class M, template<typename> class Translate>
+template<class M, template<typename, typename> class Translate, class A>
 template<class NodeT>
-void Subscriber<M, Translate>::subscribe(NodeT&& node, const std::string& topic, const rclcpp::QoS& qos,
-                                         const rclcpp::SubscriptionOptions& options)
+void Subscriber<M, Translate, A>::subscribe(NodeT&& node, const std::string& topic, const rclcpp::QoS& qos,
+                                            const rclcpp::SubscriptionOptionsWithAllocator<A>& options)
 {
     set_subscribe_options<NodeT>(std::forward<NodeT&&>(node), topic, qos, options);
     subscribe();
 }
 
-template<class M, template<typename> class Translate>
-bool Subscriber<M, Translate>::is_configured() const noexcept
+template<class M, template<typename, typename> class Translate, class A>
+bool Subscriber<M, Translate, A>::is_configured() const noexcept
 {
     return node_parameters_ && node_topics_ && !topic_.empty();
 }
 
-template<class M, template<typename> class Translate>
-void Subscriber<M, Translate>::subscribe_impl() noexcept
+template<class M, template<typename, typename> class Translate, class A>
+void Subscriber<M, Translate, A>::subscribe_impl() noexcept
 {
     if (!sub_)
     {
         sub_ = rclcpp::create_subscription<MessageType, SubscriptionCB>(
             node_parameters_, node_topics_, topic_, qos_,
-            [this](SubscriptionType message) { this->send(Translate<M>::subscriberToFilter(message)); }, options_);
+            [this](SubscriptionType message) { this->send(Translate<M, A>::subscriberToFilter(message)); }, options_);
     }
 }
 
-template<class M, template<typename> class Translate>
-void Subscriber<M, Translate>::unsubscribe_impl() noexcept
+template<class M, template<typename, typename> class Translate, class A>
+void Subscriber<M, Translate, A>::unsubscribe_impl() noexcept
 {
     sub_.reset();
 }
