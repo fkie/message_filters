@@ -180,6 +180,7 @@ public:
 
     void disconnect_all_slots() noexcept
     {
+        std::lock_guard<std::mutex> lock{slot_mutex_};
         for (Slot& slot : slots_)
         {
             slot.priv->owner = nullptr;
