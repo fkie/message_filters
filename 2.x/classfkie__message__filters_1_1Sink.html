@@ -104,7 +104,7 @@ Inheritance diagram for fkie_message_filters::Sink&lt; Inputs &gt;:</div>
 <area shape="poly" title=" " alt="" coords="382,471,416,476,415,481,381,476"/>
 <area shape="rect" href="classfkie__message__filters_1_1ImagePublisher.html" title="Publish consumed data to a ROS image topic." alt="" coords="421,540,641,580"/>
 <area shape="poly" title=" " alt="" coords="336,485,417,526,450,537,449,542,415,530,334,490"/>
-<area shape="rect" href="classfkie__message__filters_1_1Publisher.html" title="Publish consumed data on a ROS topic." alt="" coords="432,604,631,644"/>
+<area shape="rect" href="classfkie__message__filters_1_1Publisher.html" title="Publish consumed data on a ROS topic." alt="" coords="423,604,639,644"/>
 <area shape="poly" title=" " alt="" coords="315,490,359,541,387,568,417,590,441,601,439,606,415,594,383,572,355,545,310,493"/>
 <area shape="rect" href="classfkie__message__filters_1_1FilterBase.html" title="Base class for filters." alt="" coords="5,440,163,480"/>
 <area shape="poly" title=" " alt="" coords="177,457,210,457,210,463,177,463"/>
@@ -223,7 +223,7 @@ template&lt;typename... Inputs&gt; </div>
 </div><div class="memdoc">
 
 <p>Connect this sink to a source. </p>
-<p>Can be called multiple times to connect multiple sources; in that case, the sink receives data from all connected sources. This function does basically the same thing as <a class="el" href="classfkie__message__filters_1_1Source.html#a6fe2a1caab76c11260a357b89eb66320" title="Connect this source to a sink.">Source::connect_to_sink()</a>, only from the opposite point of view.</p>
+<p>Can be called multiple times to connect multiple sources; in that case, the sink receives data from all connected sources. This function does basically the same thing as <a class="el" href="classfkie__message__filters_1_1Source.html#a0c6c2d582e4103cede4babebdf417fa7" title="Connect this source to a sink.">Source::connect_to_sink()</a>, only from the opposite point of view.</p>
 <ul>
 <li><code>src</code> the source that is to be connected</li>
 </ul>
@@ -263,7 +263,7 @@ template&lt;typename... Inputs&gt; </div>
 
 <p>Implements <a class="el" href="classfkie__message__filters_1_1FilterBase.html#a99211f486f3569fa2138dde3172059b9">fkie_message_filters::FilterBase</a>.</p>
 
-<p>Reimplemented in <a class="el" href="classfkie__message__filters_1_1Divider.html#af173f0745c0c3175269d2ae755a43511">fkie_message_filters::Divider&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Filter.html#abedadd63a1d28286856069bcad86d798">fkie_message_filters::Filter&lt; In, Out &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Filter.html#abedadd63a1d28286856069bcad86d798">fkie_message_filters::Filter&lt; IO&lt; Inputs... &gt;, IO&lt; Inputs... &gt; &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Filter.html#abedadd63a1d28286856069bcad86d798">fkie_message_filters::Filter&lt; IO&lt; Inputs... &gt;, IO&lt; Inputs... &gt;::template Select&lt; Is... &gt; &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1Filter.html#abedadd63a1d28286856069bcad86d798">fkie_message_filters::Filter&lt; IO&lt; Inputs... &gt;, IO&lt; Outputs... &gt; &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classfkie__message__filters_1_1Divider.html#af173f0745c0c3175269d2ae755a43511">fkie_message_filters::Divider&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Filter.html#a00c8b3e031e124b804b63e1c10e6c8c7">fkie_message_filters::Filter&lt; In, Out &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Filter.html#a00c8b3e031e124b804b63e1c10e6c8c7">fkie_message_filters::Filter&lt; IO&lt; Inputs... &gt;, IO&lt; Inputs... &gt; &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Filter.html#a00c8b3e031e124b804b63e1c10e6c8c7">fkie_message_filters::Filter&lt; IO&lt; Inputs... &gt;, IO&lt; Inputs... &gt;::template Select&lt; Is... &gt; &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1Filter.html#a00c8b3e031e124b804b63e1c10e6c8c7">fkie_message_filters::Filter&lt; IO&lt; Inputs... &gt;, IO&lt; Outputs... &gt; &gt;</a>.</p>
 
 </div>
 </div>
@@ -328,7 +328,7 @@ template&lt;typename... Inputs&gt; </div>
 <p>Derived classes need to override this method to handle all data that is to be consumed by the sink.</p>
 <dl class="section user"><dt><b>Exceptions</b></dt><dd>Depends on the implementation. </dd></dl>
 
-<p>Implemented in <a class="el" href="classfkie__message__filters_1_1Buffer.html#a0fac6d6cb14177afe41c1341a50cf4b9">fkie_message_filters::Buffer&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Divider.html#a9dd611e2c79337575bfc9fdc9b9f3a65">fkie_message_filters::Divider&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Selector.html#ac86d3c6590788b380ad2b2fb5c39fcca">fkie_message_filters::Selector&lt; Inputs, Is &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Sequencer.html#a1eccff44cd83db8d79952e83dde4626b">fkie_message_filters::Sequencer&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1SimpleUserFilter.html#ae99a60eb5d166eef4c99eea5dee487a2">fkie_message_filters::SimpleUserFilter&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1TfFilter.html#a584ffd008dbb5ecc85282e558b1d3fa3">fkie_message_filters::TfFilter&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1TfFilter.html#a584ffd008dbb5ecc85282e558b1d3fa3">fkie_message_filters::TfFilter&lt; Inputs... &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1UserFilter.html#a220e1de651fd087f464f36fe7a16051e">fkie_message_filters::UserFilter&lt; Inputs, Outputs &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classfkie__message__filters_1_1Buffer.html#a0fac6d6cb14177afe41c1341a50cf4b9">fkie_message_filters::Buffer&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Divider.html#a9dd611e2c79337575bfc9fdc9b9f3a65">fkie_message_filters::Divider&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Selector.html#a4f7a0ced71514fdb340737ce5d760545">fkie_message_filters::Selector&lt; Inputs, Is &gt;</a>, <a class="el" href="classfkie__message__filters_1_1Sequencer.html#a1eccff44cd83db8d79952e83dde4626b">fkie_message_filters::Sequencer&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1SimpleUserFilter.html#ae99a60eb5d166eef4c99eea5dee487a2">fkie_message_filters::SimpleUserFilter&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1TfFilter.html#a584ffd008dbb5ecc85282e558b1d3fa3">fkie_message_filters::TfFilter&lt; Inputs &gt;</a>, <a class="el" href="classfkie__message__filters_1_1TfFilter.html#a584ffd008dbb5ecc85282e558b1d3fa3">fkie_message_filters::TfFilter&lt; Inputs... &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1UserFilter.html#a220e1de651fd087f464f36fe7a16051e">fkie_message_filters::UserFilter&lt; Inputs, Outputs &gt;</a>.</p>
 
 </div>
 </div>

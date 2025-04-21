@@ -1,5 +1,5 @@
-<map id="fkie_message_filters::Publisher&lt; M, Translate &gt;" name="fkie_message_filters::Publisher&lt; M, Translate &gt;">
-<area shape="rect" id="Node000001" title="Publish consumed data on a ROS topic." alt="" coords="75,181,274,221"/>
+<map id="fkie_message_filters::Publisher&lt; M, Translate, A &gt;" name="fkie_message_filters::Publisher&lt; M, Translate, A &gt;">
+<area shape="rect" id="Node000001" title="Publish consumed data on a ROS topic." alt="" coords="67,181,283,221"/>
 <area shape="rect" id="Node000002" href="$classfkie__message__filters_1_1PublisherBase.html" title="Base class for ROS publishers in a filter pipeline." alt="" coords="5,93,163,133"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,141,156,179,153,183,112,145"/>
 <area shape="rect" id="Node000003" href="$classfkie__message__filters_1_1Sink.html" title="Base class for data consumers." alt="" coords="187,93,344,133"/>

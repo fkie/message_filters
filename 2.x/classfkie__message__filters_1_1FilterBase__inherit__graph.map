@@ -1,81 +1,81 @@
 <map id="fkie_message_filters::FilterBase" name="fkie_message_filters::FilterBase">
-<area shape="rect" id="Node000001" title="Base class for filters." alt="" coords="5,651,163,691"/>
+<area shape="rect" id="Node000001" title="Base class for filters." alt="" coords="5,664,163,704"/>
 <area shape="rect" id="Node000002" href="$classfkie__message__filters_1_1Sink.html" title=" " alt="" coords="249,5,433,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,637,96,509,119,335,136,247,156,167,180,101,194,75,209,55,227,41,248,32,250,37,230,46,213,59,198,78,185,103,161,168,141,248,124,336,102,510,90,637"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,650,96,520,118,342,135,252,155,169,179,102,193,76,209,55,227,41,248,32,250,36,230,46,213,59,198,78,184,104,160,171,140,253,123,343,101,521,90,651"/>
 <area shape="rect" id="Node000003" href="$classfkie__message__filters_1_1Sink.html" title=" " alt="" coords="211,69,472,168"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="82,637,86,548,92,491,102,428,118,362,140,297,170,235,209,178,220,166,224,170,213,182,175,237,145,299,123,364,107,429,97,491,91,549,87,637"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="82,650,85,559,90,500,101,435,116,368,139,301,169,236,209,178,220,166,224,170,213,182,174,239,144,303,121,369,106,436,96,501,90,560,87,650"/>
 <area shape="rect" id="Node000004" href="$classfkie__message__filters_1_1Sink.html" title=" " alt="" coords="263,192,420,232"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="82,637,86,557,92,506,103,451,119,394,141,339,171,287,209,242,234,225,262,215,264,220,236,230,212,246,175,290,146,341,124,396,108,452,97,506,91,557,87,637"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="82,650,85,567,91,515,101,458,117,399,139,342,170,289,209,242,234,225,262,215,263,220,236,230,212,246,174,292,144,344,122,401,106,459,96,515,90,568,87,650"/>
 <area shape="rect" id="Node000006" href="$classfkie__message__filters_1_1Sink.html" title=" " alt="" coords="263,320,420,360"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="87,636,98,578,121,506,137,469,156,433,180,399,209,370,234,354,262,344,263,350,236,359,212,374,184,403,161,436,141,471,126,508,104,580,92,637"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="86,650,97,589,119,514,135,474,155,436,179,401,209,370,234,354,262,344,263,349,236,359,212,374,183,404,159,439,139,477,124,515,102,590,92,650"/>
 <area shape="rect" id="Node000008" href="$classfkie__message__filters_1_1Sink.html" title=" " alt="" coords="232,384,451,453"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="95,637,112,597,137,551,169,504,209,463,230,449,233,453,212,467,173,507,141,554,117,600,100,639"/>
-<area shape="rect" id="Node000009" href="$classfkie__message__filters_1_1Sink.html" title=" " alt="" coords="232,478,451,533"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="107,638,151,589,179,564,209,543,234,530,237,535,212,548,182,569,155,593,111,642"/>
-<area shape="rect" id="Node000010" href="$classfkie__message__filters_1_1Source.html" title=" " alt="" coords="241,557,441,597"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="132,642,210,607,248,595,249,600,212,612,134,647"/>
-<area shape="rect" id="Node000011" href="$classfkie__message__filters_1_1Source.html" title=" " alt="" coords="211,621,472,720"/>
-<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="176,668,210,668,210,673,176,673"/>
-<area shape="rect" id="Node000012" href="$classfkie__message__filters_1_1Source.html" title=" " alt="" coords="263,744,420,784"/>
-<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="134,695,212,730,263,745,262,750,210,734,132,700"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="93,650,110,608,135,558,168,507,209,463,230,449,233,453,212,467,172,511,139,561,115,610,98,652"/>
+<area shape="rect" id="Node000009" href="$classfkie__message__filters_1_1Sink.html" title=" " alt="" coords="232,477,451,547"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="107,652,152,603,179,578,209,556,230,545,233,549,212,561,183,582,155,607,111,655"/>
+<area shape="rect" id="Node000010" href="$classfkie__message__filters_1_1Source.html" title=" " alt="" coords="241,571,441,611"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="132,655,210,620,248,608,249,613,212,625,134,660"/>
+<area shape="rect" id="Node000011" href="$classfkie__message__filters_1_1Source.html" title=" " alt="" coords="211,635,472,733"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="176,681,210,681,210,687,176,687"/>
+<area shape="rect" id="Node000012" href="$classfkie__message__filters_1_1Source.html" title=" " alt="" coords="263,757,420,797"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="134,708,212,743,263,758,262,764,210,748,132,713"/>
 <area shape="rect" id="Node000014" href="$classfkie__message__filters_1_1Source.html" title=" " alt="" coords="263,256,420,296"/>
-<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="84,637,92,568,111,479,127,432,148,386,175,343,209,306,234,290,262,280,263,285,236,294,212,310,180,346,153,388,132,434,116,480,97,569,89,638"/>
-<area shape="rect" id="Node000015" href="$classfkie__message__filters_1_1Source.html" title=" " alt="" coords="224,808,459,877"/>
-<area shape="poly" id="edge15_Node000001_Node000015" title=" " alt="" coords="111,699,155,748,183,772,212,794,233,805,230,810,209,798,179,776,152,751,107,703"/>
-<area shape="rect" id="Node000016" href="$classfkie__message__filters_1_1Source.html" title=" " alt="" coords="233,902,449,957"/>
-<area shape="poly" id="edge16_Node000001_Node000016" title=" " alt="" coords="98,703,114,745,139,795,171,845,212,887,234,901,231,906,209,891,167,848,134,797,109,747,93,705"/>
-<area shape="rect" id="Node000017" href="$classfkie__message__filters_1_1Source.html" title=" " alt="" coords="224,981,459,1035"/>
-<area shape="poly" id="edge17_Node000001_Node000017" title=" " alt="" coords="93,704,105,761,127,831,162,904,185,937,212,966,229,978,226,983,209,970,181,940,158,906,122,833,100,762,87,705"/>
-<area shape="rect" id="Node000018" href="$classfkie__message__filters_1_1Source.html" title=" " alt="" coords="236,1060,447,1100"/>
-<area shape="poly" id="edge18_Node000001_Node000018" title=" " alt="" coords="89,704,96,776,115,868,131,916,152,963,179,1007,212,1045,237,1061,234,1066,209,1049,175,1010,147,965,126,918,110,869,91,776,84,705"/>
-<area shape="rect" id="Node000019" href="$classfkie__message__filters_1_1Source.html" title=" " alt="" coords="258,1124,425,1164"/>
-<area shape="poly" id="edge19_Node000001_Node000019" title=" " alt="" coords="87,704,90,787,96,839,106,896,122,954,144,1011,174,1064,212,1110,234,1125,259,1135,257,1140,231,1130,209,1114,170,1067,139,1013,117,956,101,897,91,840,85,787,82,704"/>
-<area shape="rect" id="Node000021" href="$classfkie__message__filters_1_1Sink.html" title="Base class for data consumers." alt="" coords="263,1397,420,1437"/>
-<area shape="poly" id="edge21_Node000001_Node000021" title=" " alt="" coords="91,704,101,799,123,934,159,1088,184,1165,213,1239,238,1285,268,1329,323,1396,319,1399,264,1332,234,1288,208,1241,178,1167,154,1089,117,935,96,800,85,705"/>
-<area shape="rect" id="Node000035" href="$classfkie__message__filters_1_1Source.html" title="Base class for data providers." alt="" coords="263,1188,420,1228"/>
-<area shape="poly" id="edge35_Node000001_Node000035" title=" " alt="" coords="92,704,106,811,132,952,148,1023,167,1087,189,1139,213,1174,236,1190,263,1200,262,1205,233,1195,209,1178,184,1142,162,1089,143,1024,126,953,101,812,87,705"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="84,650,91,578,110,485,126,437,147,389,174,345,209,306,234,289,262,280,264,285,236,294,212,310,179,348,152,391,131,439,115,487,96,579,89,650"/>
+<area shape="rect" id="Node000015" href="$classfkie__message__filters_1_1Source.html" title=" " alt="" coords="224,821,459,891"/>
+<area shape="poly" id="edge15_Node000001_Node000015" title=" " alt="" coords="111,713,155,761,183,786,212,807,233,819,230,823,209,812,179,790,152,765,107,716"/>
+<area shape="rect" id="Node000016" href="$classfkie__message__filters_1_1Source.html" title=" " alt="" coords="233,915,449,970"/>
+<area shape="poly" id="edge16_Node000001_Node000016" title=" " alt="" coords="98,716,114,758,139,808,171,858,212,901,234,915,231,919,209,905,167,861,134,811,109,761,93,718"/>
+<area shape="rect" id="Node000017" href="$classfkie__message__filters_1_1Source.html" title=" " alt="" coords="224,995,459,1064"/>
+<area shape="poly" id="edge17_Node000001_Node000017" title=" " alt="" coords="93,717,106,773,128,843,163,916,186,950,212,979,229,992,225,996,209,983,182,953,159,919,123,845,101,774,88,718"/>
+<area shape="rect" id="Node000018" href="$classfkie__message__filters_1_1Source.html" title=" " alt="" coords="236,1088,447,1128"/>
+<area shape="poly" id="edge18_Node000001_Node000018" title=" " alt="" coords="88,718,94,792,113,888,128,939,150,988,178,1034,212,1074,237,1090,234,1095,209,1078,173,1037,145,991,123,941,107,889,89,792,83,718"/>
+<area shape="rect" id="Node000019" href="$classfkie__message__filters_1_1Source.html" title=" " alt="" coords="258,1152,425,1192"/>
+<area shape="poly" id="edge19_Node000001_Node000019" title=" " alt="" coords="93,718,109,815,135,942,152,1004,170,1061,191,1107,213,1138,234,1153,259,1163,257,1168,231,1158,209,1142,186,1110,165,1063,147,1006,130,943,104,816,88,718"/>
+<area shape="rect" id="Node000021" href="$classfkie__message__filters_1_1Sink.html" title="Base class for data consumers." alt="" coords="263,1425,420,1465"/>
+<area shape="poly" id="edge21_Node000001_Node000021" title=" " alt="" coords="90,718,100,815,122,953,138,1031,158,1111,183,1191,213,1267,238,1314,268,1357,323,1424,319,1427,264,1360,234,1316,208,1269,178,1193,153,1113,132,1033,116,954,95,815,85,718"/>
+<area shape="rect" id="Node000035" href="$classfkie__message__filters_1_1Source.html" title="Base class for data providers." alt="" coords="263,1216,420,1256"/>
+<area shape="poly" id="edge35_Node000001_Node000035" title=" " alt="" coords="92,717,106,827,131,973,147,1046,166,1112,188,1166,213,1202,236,1219,263,1228,262,1233,233,1223,209,1206,184,1169,161,1114,142,1047,125,974,100,828,86,718"/>
 <area shape="rect" id="Node000005" href="$classfkie__message__filters_1_1Divider.html" title="Split an N&#45;ary source into N unary ones." alt="" coords="561,192,718,232"/>
 <area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="434,209,560,209,560,215,434,215"/>
 <area shape="rect" id="Node000007" href="$classfkie__message__filters_1_1Filter.html" title="Typed base class for filters." alt="" coords="561,288,718,328"/>
 <area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="433,327,560,314,561,319,434,333"/>
-<area shape="rect" id="Node000013" href="$classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one." alt="" coords="547,737,731,791"/>
-<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="434,761,547,761,547,767,434,767"/>
+<area shape="rect" id="Node000013" href="$classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one." alt="" coords="547,750,731,805"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="434,775,547,775,547,780,434,780"/>
 <area shape="poly" id="edge14_Node000014_Node000007" title=" " alt="" coords="434,283,561,297,560,302,433,289"/>
-<area shape="rect" id="Node000020" href="$classfkie__message__filters_1_1UserSource.html" title="Manually operated data source." alt="" coords="547,960,732,1000"/>
-<area shape="poly" id="edge20_Node000019_Node000020" title=" " alt="" coords="436,1129,470,1110,481,1098,488,1087,494,1062,499,1036,506,1023,518,1010,545,994,548,998,522,1014,511,1026,504,1037,499,1063,493,1089,486,1102,474,1114,439,1133"/>
-<area shape="rect" id="Node000022" href="$classfkie__message__filters_1_1Filter.html" title=" " alt="" coords="560,1217,719,1271"/>
-<area shape="poly" id="edge22_Node000021_Node000022" title=" " alt="" coords="373,1386,438,1334,477,1306,519,1282,559,1264,561,1269,521,1286,480,1311,441,1338,376,1390"/>
-<area shape="rect" id="Node000028" href="$classfkie__message__filters_1_1Filter.html" title=" " alt="" coords="535,1296,743,1365"/>
-<area shape="poly" id="edge28_Node000021_Node000028" title=" " alt="" coords="423,1391,534,1358,536,1363,425,1396"/>
-<area shape="rect" id="Node000030" href="$classfkie__message__filters_1_1Filter.html" title=" " alt="" coords="556,1390,723,1445"/>
-<area shape="poly" id="edge30_Node000021_Node000030" title=" " alt="" coords="434,1415,556,1415,556,1420,434,1420"/>
-<area shape="rect" id="Node000032" href="$classfkie__message__filters_1_1CameraPublisher.html" title="Publish consumed data to ROS camera topics." alt="" coords="524,1469,755,1509"/>
-<area shape="poly" id="edge32_Node000021_Node000032" title=" " alt="" coords="434,1437,556,1467,555,1472,433,1442"/>
-<area shape="rect" id="Node000033" href="$classfkie__message__filters_1_1ImagePublisher.html" title="Publish consumed data to a ROS image topic." alt="" coords="529,1533,749,1573"/>
-<area shape="poly" id="edge33_Node000021_Node000033" title=" " alt="" coords="384,1443,447,1482,521,1519,554,1531,552,1536,519,1524,444,1486,381,1447"/>
-<area shape="rect" id="Node000034" href="$classfkie__message__filters_1_1Publisher.html" title="Publish consumed data on a ROS topic." alt="" coords="540,1597,739,1637"/>
-<area shape="poly" id="edge34_Node000021_Node000034" title=" " alt="" coords="369,1446,433,1516,475,1552,521,1583,547,1595,545,1600,519,1588,472,1556,429,1519,365,1450"/>
-<area shape="rect" id="Node000023" href="$classfkie__message__filters_1_1TfFilter.html" title=" " alt="" coords="831,1288,990,1328"/>
-<area shape="poly" id="edge23_Node000022_Node000023" title=" " alt="" coords="732,1263,832,1287,830,1292,731,1268"/>
-<area shape="rect" id="Node000024" href="$classfkie__message__filters_1_1Buffer.html" title="Store and forward data." alt="" coords="832,1032,989,1072"/>
-<area shape="poly" id="edge24_Node000022_Node000024" title=" " alt="" coords="730,1220,757,1202,769,1188,775,1173,780,1143,785,1113,792,1097,805,1082,830,1066,833,1070,808,1086,796,1100,790,1114,785,1144,780,1175,773,1191,760,1206,733,1225"/>
-<area shape="rect" id="Node000025" href="$classfkie__message__filters_1_1Sequencer.html" title="Enforce correct temporal order." alt="" coords="827,1096,995,1136"/>
-<area shape="poly" id="edge25_Node000022_Node000025" title=" " alt="" coords="731,1216,757,1202,772,1188,780,1174,789,1160,805,1146,828,1134,830,1139,808,1150,793,1163,785,1177,776,1192,760,1206,733,1221"/>
-<area shape="rect" id="Node000026" href="$classfkie__message__filters_1_1SimpleUserFilter.html" title="Simplified filter with user&#45;defined callback function." alt="" coords="807,1160,1015,1200"/>
-<area shape="poly" id="edge26_Node000022_Node000026" title=" " alt="" coords="731,1220,824,1198,826,1203,732,1225"/>
-<area shape="rect" id="Node000027" href="$classfkie__message__filters_1_1TfFilter.html" title="Wait for TF transformations for incoming messages." alt="" coords="832,1224,989,1264"/>
-<area shape="poly" id="edge27_Node000022_Node000027" title=" " alt="" coords="732,1241,832,1241,832,1247,732,1247"/>
-<area shape="rect" id="Node000029" href="$classfkie__message__filters_1_1Selector.html" title="Reorder or reduce an N&#45;ary filter." alt="" coords="825,1352,997,1392"/>
-<area shape="poly" id="edge29_Node000028_Node000029" title=" " alt="" coords="757,1346,825,1356,824,1362,756,1351"/>
-<area shape="rect" id="Node000031" href="$classfkie__message__filters_1_1UserFilter.html" title="Generic filter with user&#45;defined callback function." alt="" coords="832,1417,989,1471"/>
-<area shape="poly" id="edge31_Node000030_Node000031" title=" " alt="" coords="737,1424,832,1434,832,1439,736,1429"/>
-<area shape="poly" id="edge36_Node000035_Node000022" title=" " alt="" coords="434,1216,560,1232,560,1237,433,1222"/>
-<area shape="poly" id="edge37_Node000035_Node000028" title=" " alt="" coords="404,1231,521,1280,553,1293,551,1298,519,1285,402,1236"/>
-<area shape="poly" id="edge38_Node000035_Node000030" title=" " alt="" coords="369,1237,434,1306,476,1343,521,1375,557,1392,555,1397,519,1380,472,1347,430,1310,365,1240"/>
-<area shape="rect" id="Node000036" href="$classfkie__message__filters_1_1CameraSubscriber.html" title="Subscribe to ROS camera topics as data provider." alt="" coords="520,1024,759,1064"/>
-<area shape="poly" id="edge39_Node000035_Node000036" title=" " alt="" coords="432,1194,452,1186,470,1174,481,1162,488,1151,494,1126,499,1100,506,1087,518,1074,537,1062,540,1066,522,1078,511,1090,504,1101,499,1127,493,1153,486,1166,474,1178,455,1190,434,1199"/>
-<area shape="rect" id="Node000037" href="$classfkie__message__filters_1_1ImageSubscriber.html" title="Subscribe to a ROS image topic as data provider." alt="" coords="525,1088,753,1128"/>
-<area shape="poly" id="edge40_Node000035_Node000037" title=" " alt="" coords="433,1188,471,1174,494,1156,519,1138,548,1126,550,1131,521,1142,498,1160,473,1178,434,1193"/>
-<area shape="rect" id="Node000038" href="$classfkie__message__filters_1_1Subscriber.html" title="Subscribe to a ROS topic as data provider." alt="" coords="536,1152,743,1192"/>
-<area shape="poly" id="edge41_Node000035_Node000038" title=" " alt="" coords="434,1194,536,1182,536,1187,434,1200"/>
+<area shape="rect" id="Node000020" href="$classfkie__message__filters_1_1UserSource.html" title="Manually operated data source." alt="" coords="547,988,732,1028"/>
+<area shape="poly" id="edge20_Node000019_Node000020" title=" " alt="" coords="436,1157,470,1138,481,1126,488,1115,494,1090,499,1064,506,1051,518,1038,545,1022,548,1026,522,1042,511,1054,504,1065,499,1091,493,1117,486,1130,474,1142,439,1161"/>
+<area shape="rect" id="Node000022" href="$classfkie__message__filters_1_1Filter.html" title=" " alt="" coords="560,1245,719,1299"/>
+<area shape="poly" id="edge22_Node000021_Node000022" title=" " alt="" coords="373,1414,438,1362,477,1334,519,1310,559,1292,561,1297,521,1314,480,1339,441,1366,376,1418"/>
+<area shape="rect" id="Node000028" href="$classfkie__message__filters_1_1Filter.html" title=" " alt="" coords="535,1324,743,1393"/>
+<area shape="poly" id="edge28_Node000021_Node000028" title=" " alt="" coords="423,1419,534,1386,536,1391,425,1424"/>
+<area shape="rect" id="Node000030" href="$classfkie__message__filters_1_1Filter.html" title=" " alt="" coords="556,1418,723,1473"/>
+<area shape="poly" id="edge30_Node000021_Node000030" title=" " alt="" coords="434,1443,556,1443,556,1448,434,1448"/>
+<area shape="rect" id="Node000032" href="$classfkie__message__filters_1_1CameraPublisher.html" title="Publish consumed data to ROS camera topics." alt="" coords="524,1497,755,1537"/>
+<area shape="poly" id="edge32_Node000021_Node000032" title=" " alt="" coords="434,1465,556,1495,555,1500,433,1470"/>
+<area shape="rect" id="Node000033" href="$classfkie__message__filters_1_1ImagePublisher.html" title="Publish consumed data to a ROS image topic." alt="" coords="529,1561,749,1601"/>
+<area shape="poly" id="edge33_Node000021_Node000033" title=" " alt="" coords="384,1471,447,1510,521,1547,554,1559,552,1564,519,1552,444,1514,381,1475"/>
+<area shape="rect" id="Node000034" href="$classfkie__message__filters_1_1Publisher.html" title="Publish consumed data on a ROS topic." alt="" coords="531,1625,747,1665"/>
+<area shape="poly" id="edge34_Node000021_Node000034" title=" " alt="" coords="369,1474,433,1544,475,1580,521,1611,547,1623,545,1628,519,1616,472,1584,429,1547,365,1478"/>
+<area shape="rect" id="Node000023" href="$classfkie__message__filters_1_1TfFilter.html" title=" " alt="" coords="831,1316,990,1356"/>
+<area shape="poly" id="edge23_Node000022_Node000023" title=" " alt="" coords="732,1291,832,1315,830,1320,731,1296"/>
+<area shape="rect" id="Node000024" href="$classfkie__message__filters_1_1Buffer.html" title="Store and forward data." alt="" coords="832,1060,989,1100"/>
+<area shape="poly" id="edge24_Node000022_Node000024" title=" " alt="" coords="730,1248,757,1230,769,1216,775,1201,780,1171,785,1141,792,1125,805,1110,830,1094,833,1098,808,1114,796,1128,790,1142,785,1172,780,1203,773,1219,760,1234,733,1253"/>
+<area shape="rect" id="Node000025" href="$classfkie__message__filters_1_1Sequencer.html" title="Enforce correct temporal order." alt="" coords="827,1124,995,1164"/>
+<area shape="poly" id="edge25_Node000022_Node000025" title=" " alt="" coords="731,1244,757,1230,772,1216,780,1202,789,1188,805,1174,828,1162,830,1167,808,1178,793,1191,785,1205,776,1220,760,1234,733,1249"/>
+<area shape="rect" id="Node000026" href="$classfkie__message__filters_1_1SimpleUserFilter.html" title="Simplified filter with user&#45;defined callback function." alt="" coords="807,1188,1015,1228"/>
+<area shape="poly" id="edge26_Node000022_Node000026" title=" " alt="" coords="731,1248,824,1226,826,1231,732,1253"/>
+<area shape="rect" id="Node000027" href="$classfkie__message__filters_1_1TfFilter.html" title="Wait for TF transformations for incoming messages." alt="" coords="832,1252,989,1292"/>
+<area shape="poly" id="edge27_Node000022_Node000027" title=" " alt="" coords="732,1269,832,1269,832,1275,732,1275"/>
+<area shape="rect" id="Node000029" href="$classfkie__message__filters_1_1Selector.html" title="Reorder or reduce an N&#45;ary filter." alt="" coords="825,1380,997,1420"/>
+<area shape="poly" id="edge29_Node000028_Node000029" title=" " alt="" coords="757,1374,825,1384,824,1390,756,1379"/>
+<area shape="rect" id="Node000031" href="$classfkie__message__filters_1_1UserFilter.html" title="Generic filter with user&#45;defined callback function." alt="" coords="832,1445,989,1499"/>
+<area shape="poly" id="edge31_Node000030_Node000031" title=" " alt="" coords="737,1452,832,1462,832,1467,736,1457"/>
+<area shape="poly" id="edge36_Node000035_Node000022" title=" " alt="" coords="434,1244,560,1260,560,1265,433,1250"/>
+<area shape="poly" id="edge37_Node000035_Node000028" title=" " alt="" coords="404,1259,521,1308,553,1321,551,1326,519,1313,402,1264"/>
+<area shape="poly" id="edge38_Node000035_Node000030" title=" " alt="" coords="369,1265,434,1334,476,1371,521,1403,557,1420,555,1425,519,1408,472,1375,430,1338,365,1268"/>
+<area shape="rect" id="Node000036" href="$classfkie__message__filters_1_1CameraSubscriber.html" title="Subscribe to ROS camera topics as data provider." alt="" coords="520,1052,759,1092"/>
+<area shape="poly" id="edge39_Node000035_Node000036" title=" " alt="" coords="432,1222,452,1214,470,1202,481,1190,488,1179,494,1154,499,1128,506,1115,518,1102,537,1090,540,1094,522,1106,511,1118,504,1129,499,1155,493,1181,486,1194,474,1206,455,1218,434,1227"/>
+<area shape="rect" id="Node000037" href="$classfkie__message__filters_1_1ImageSubscriber.html" title="Subscribe to a ROS image topic as data provider." alt="" coords="525,1116,753,1156"/>
+<area shape="poly" id="edge40_Node000035_Node000037" title=" " alt="" coords="433,1216,471,1202,494,1184,519,1166,548,1154,550,1159,521,1170,498,1188,473,1206,434,1221"/>
+<area shape="rect" id="Node000038" href="$classfkie__message__filters_1_1Subscriber.html" title="Subscribe to a ROS topic as data provider." alt="" coords="527,1180,751,1220"/>
+<area shape="poly" id="edge41_Node000035_Node000038" title=" " alt="" coords="433,1222,527,1211,527,1216,434,1228"/>
 </map>

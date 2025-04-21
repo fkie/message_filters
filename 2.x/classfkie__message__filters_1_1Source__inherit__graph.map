@@ -10,7 +10,7 @@
 <area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="382,471,416,476,415,481,381,476"/>
 <area shape="rect" id="Node000014" href="$classfkie__message__filters_1_1ImageSubscriber.html" title="Subscribe to a ROS image topic as data provider." alt="" coords="421,540,649,580"/>
 <area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="336,485,417,526,451,537,449,542,415,530,333,489"/>
-<area shape="rect" id="Node000015" href="$classfkie__message__filters_1_1Subscriber.html" title="Subscribe to a ROS topic as data provider." alt="" coords="432,604,639,644"/>
+<area shape="rect" id="Node000015" href="$classfkie__message__filters_1_1Subscriber.html" title="Subscribe to a ROS topic as data provider." alt="" coords="423,604,647,644"/>
 <area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="315,490,358,542,386,568,417,590,442,601,439,606,415,594,383,572,355,545,310,493"/>
 <area shape="rect" id="Node000002" href="$classfkie__message__filters_1_1FilterBase.html" title="Base class for filters." alt="" coords="5,440,163,480"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="177,457,210,457,210,463,177,463"/>

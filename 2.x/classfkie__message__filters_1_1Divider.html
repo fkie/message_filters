@@ -189,8 +189,8 @@ class fkie_message_filters::Divider&lt; Inputs &gt;</div><p>Split an N-ary sourc
 <div class="line">mf::Publisher&lt;M2, mf::RosMessage&gt; <a class="code hl_class" href="classfkie__message__filters_1_1Buffer.html">pub2</a>;</div>
 <div class="line">mf::chain(<a class="code hl_class" href="classfkie__message__filters_1_1Buffer.html">buf_in</a>, <a class="code hl_class" href="classfkie__message__filters_1_1Buffer.html">div</a>);</div>
 <div class="line"><a class="code hl_class" href="classfkie__message__filters_1_1Buffer.html">div</a>.connect_to_sinks(<a class="code hl_class" href="classfkie__message__filters_1_1Buffer.html">pub1</a>, <a class="code hl_class" href="classfkie__message__filters_1_1Buffer.html">pub2</a>);</div>
-<div class="ttc" id="aclassfkie__message__filters_1_1Buffer_html"><div class="ttname"><a href="classfkie__message__filters_1_1Buffer.html">fkie_message_filters::Buffer</a></div><div class="ttdoc">Store and forward data.</div><div class="ttdef"><b>Definition</b> buffer.hpp:100</div></div>
-<div class="ttc" id="anamespacefkie__message__filters_html"><div class="ttname"><a href="namespacefkie__message__filters.html">fkie_message_filters</a></div><div class="ttdoc">Primary namespace.</div><div class="ttdef"><b>Definition</b> buffer.hpp:34</div></div>
+<div class="ttc" id="aclassfkie__message__filters_1_1Buffer_html"><div class="ttname"><a href="classfkie__message__filters_1_1Buffer.html">fkie_message_filters::Buffer</a></div><div class="ttdoc">Store and forward data.</div><div class="ttdef"><b>Definition</b> buffer.hpp:99</div></div>
+<div class="ttc" id="anamespacefkie__message__filters_html"><div class="ttname"><a href="namespacefkie__message__filters.html">fkie_message_filters</a></div><div class="ttdoc">Primary namespace.</div><div class="ttdef"><b>Definition</b> buffer.hpp:33</div></div>
 </div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><a class="el" href="classfkie__message__filters_1_1Combiner.html" title="Combine multiple sources into a single one.">Combiner</a> </dd></dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a0f68fa081ebeca7074f24306762002f3" name="a0f68fa081ebeca7074f24306762002f3"></a>
@@ -275,7 +275,7 @@ template&lt;class... Inputs&gt; </div>
 </div><div class="memdoc">
 
 <p>Connect this sink to a source. </p>
-<p>Can be called multiple times to connect multiple sources; in that case, the sink receives data from all connected sources. This function does basically the same thing as <a class="el" href="classfkie__message__filters_1_1Source.html#a6fe2a1caab76c11260a357b89eb66320" title="Connect this source to a sink.">Source::connect_to_sink()</a>, only from the opposite point of view.</p>
+<p>Can be called multiple times to connect multiple sources; in that case, the sink receives data from all connected sources. This function does basically the same thing as <a class="el" href="classfkie__message__filters_1_1Source.html#a0c6c2d582e4103cede4babebdf417fa7" title="Connect this source to a sink.">Source::connect_to_sink()</a>, only from the opposite point of view.</p>
 <ul>
 <li><code>src</code> the source that is to be connected</li>
 </ul>

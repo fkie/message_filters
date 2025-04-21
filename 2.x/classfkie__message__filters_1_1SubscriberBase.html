@@ -96,7 +96,7 @@ Inheritance diagram for fkie_message_filters::SubscriberBase:</div>
 <area shape="poly" title=" " alt="" coords="174,63,252,43,253,48,175,68"/>
 <area shape="rect" href="classfkie__message__filters_1_1ImageSubscriber.html" title="Subscribe to a ROS image topic as data provider." alt="" coords="216,69,444,109"/>
 <area shape="poly" title=" " alt="" coords="177,87,216,87,216,92,177,92"/>
-<area shape="rect" href="classfkie__message__filters_1_1Subscriber.html" title="Subscribe to a ROS topic as data provider." alt="" coords="227,133,433,173"/>
+<area shape="rect" href="classfkie__message__filters_1_1Subscriber.html" title="Subscribe to a ROS topic as data provider." alt="" coords="218,133,442,173"/>
 <area shape="poly" title=" " alt="" coords="175,110,253,131,252,136,174,115"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
@@ -172,7 +172,7 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section user"><dt><b>Exceptions</b></dt><dd>Depends on the implementation. </dd></dl>
 
-<p>Implemented in <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#ac040819b7a17e1aac0492b83ac4ab948">fkie_message_filters::CameraSubscriber&lt; Translate &gt;</a>, <a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html#a2daae1a74020e4a6fa7e98be5e958c68">fkie_message_filters::ImageSubscriber&lt; Translate &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1Subscriber.html#a4da521ef4235cd76566b7bea302bd436">fkie_message_filters::Subscriber&lt; M, Translate &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#ac040819b7a17e1aac0492b83ac4ab948">fkie_message_filters::CameraSubscriber&lt; Translate &gt;</a>, <a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html#a2daae1a74020e4a6fa7e98be5e958c68">fkie_message_filters::ImageSubscriber&lt; Translate &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1Subscriber.html#a870c94160662244e79b2d2786cf3b3b0">fkie_message_filters::Subscriber&lt; M, Translate, A &gt;</a>.</p>
 
 </div>
 </div>
@@ -237,7 +237,7 @@ Protected Member Functions</h2></td></tr>
 <p>This method does nothing if no ROS topic was configured or if the subscriber is subscribed already. Cancels the effect of <a class="el" href="classfkie__message__filters_1_1SubscriberBase.html#aac1a0b28d5c2fa410cd95375fb83c049" title="Subscribe to the configured ROS topic whenever the given publisher is active.">subscribe_on_demand()</a>, i.e. the subscriber will remain subscribed permanently.</p>
 <dl class="section user"><dt><b>Exceptions</b></dt><dd>Propagates exceptions raised by the implementation of the abstract class methods. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a14efca1be5d7445af76ff9e43ec88e35">fkie_message_filters::CameraSubscriber&lt; Translate &gt;</a>, <a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html#a14efca1be5d7445af76ff9e43ec88e35">fkie_message_filters::ImageSubscriber&lt; Translate &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1Subscriber.html#a14efca1be5d7445af76ff9e43ec88e35">fkie_message_filters::Subscriber&lt; M, Translate &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a14efca1be5d7445af76ff9e43ec88e35">fkie_message_filters::CameraSubscriber&lt; Translate &gt;</a>, <a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html#a14efca1be5d7445af76ff9e43ec88e35">fkie_message_filters::ImageSubscriber&lt; Translate &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1Subscriber.html#a14efca1be5d7445af76ff9e43ec88e35">fkie_message_filters::Subscriber&lt; M, Translate, A &gt;</a>.</p>
 
 </div>
 </div>
@@ -268,7 +268,7 @@ Protected Member Functions</h2></td></tr>
 <p>This virtual method must be overridden in derived classes to actually subscribe to a topic. It should do nothing if it is subscribed to a topic already.</p>
 <dl class="section user"><dt><b>Exceptions</b></dt><dd>Depends on the implementation. </dd></dl>
 
-<p>Implemented in <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a49b156db23b6a7419b71788dccc03078">fkie_message_filters::CameraSubscriber&lt; Translate &gt;</a>, <a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html#a1b3c01728ebb7449cfe9cf79dd747f16">fkie_message_filters::ImageSubscriber&lt; Translate &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1Subscriber.html#a63d36dd88c4df37061de46472cfeb568">fkie_message_filters::Subscriber&lt; M, Translate &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classfkie__message__filters_1_1Subscriber.html#a7f5b4f47d8c10150a73abe2207fbe805">fkie_message_filters::Subscriber&lt; M, Translate, A &gt;</a>, <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a242ef16745c0b1326e2e74818c4520c8">fkie_message_filters::CameraSubscriber&lt; Translate &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html#ac6e421f7d2f2b303a344a880da2662fc">fkie_message_filters::ImageSubscriber&lt; Translate &gt;</a>.</p>
 
 </div>
 </div>
@@ -303,7 +303,7 @@ Protected Member Functions</h2></td></tr>
 </ul>
 <dl class="section user"><dt><b>Exceptions</b></dt><dd>Propagates exceptions raised by the implementation of the abstract class methods. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#aac1a0b28d5c2fa410cd95375fb83c049">fkie_message_filters::CameraSubscriber&lt; Translate &gt;</a>, <a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html#aac1a0b28d5c2fa410cd95375fb83c049">fkie_message_filters::ImageSubscriber&lt; Translate &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1Subscriber.html#aac1a0b28d5c2fa410cd95375fb83c049">fkie_message_filters::Subscriber&lt; M, Translate &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#aac1a0b28d5c2fa410cd95375fb83c049">fkie_message_filters::CameraSubscriber&lt; Translate &gt;</a>, <a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html#aac1a0b28d5c2fa410cd95375fb83c049">fkie_message_filters::ImageSubscriber&lt; Translate &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1Subscriber.html#aac1a0b28d5c2fa410cd95375fb83c049">fkie_message_filters::Subscriber&lt; M, Translate, A &gt;</a>.</p>
 
 </div>
 </div>
@@ -333,7 +333,7 @@ Protected Member Functions</h2></td></tr>
 <p>Return the subscribed topic name. </p>
 <dl class="section user"><dt><b>Exceptions</b></dt><dd>Depends on the implementation. </dd></dl>
 
-<p>Implemented in <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a2d26366a71cdf9aab3c79678710c7c99">fkie_message_filters::CameraSubscriber&lt; Translate &gt;</a>, <a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html#a51db677077b8c6f5c56b82efd8055833">fkie_message_filters::ImageSubscriber&lt; Translate &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1Subscriber.html#a0fe7c79bf6bdd2dd4e1dc676ddf1875f">fkie_message_filters::Subscriber&lt; M, Translate &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a2d26366a71cdf9aab3c79678710c7c99">fkie_message_filters::CameraSubscriber&lt; Translate &gt;</a>, <a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html#a51db677077b8c6f5c56b82efd8055833">fkie_message_filters::ImageSubscriber&lt; Translate &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1Subscriber.html#af1323615b6745af6a88ac801a57eaa31">fkie_message_filters::Subscriber&lt; M, Translate, A &gt;</a>.</p>
 
 </div>
 </div>
@@ -393,7 +393,7 @@ Protected Member Functions</h2></td></tr>
 <p>You can call <a class="el" href="classfkie__message__filters_1_1SubscriberBase.html#a14efca1be5d7445af76ff9e43ec88e35" title="Subscribe to the configured ROS topic.">subscribe()</a> afterwards to re-subscribe to the ROS topic. This method does nothing if the subscriber is not subscribed to any ROS topic. Cancels the effect of <a class="el" href="classfkie__message__filters_1_1SubscriberBase.html#aac1a0b28d5c2fa410cd95375fb83c049" title="Subscribe to the configured ROS topic whenever the given publisher is active.">subscribe_on_demand()</a>, i.e. the subscriber will remain unsubscribed permanently.</p>
 <dl class="section user"><dt><b>Exceptions</b></dt><dd>Propagates exceptions raised by the implementation of the abstract class methods. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a31ed43d01d97533d56f241cc3ae831ef">fkie_message_filters::CameraSubscriber&lt; Translate &gt;</a>, <a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html#a31ed43d01d97533d56f241cc3ae831ef">fkie_message_filters::ImageSubscriber&lt; Translate &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1Subscriber.html#a31ed43d01d97533d56f241cc3ae831ef">fkie_message_filters::Subscriber&lt; M, Translate &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a31ed43d01d97533d56f241cc3ae831ef">fkie_message_filters::CameraSubscriber&lt; Translate &gt;</a>, <a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html#a31ed43d01d97533d56f241cc3ae831ef">fkie_message_filters::ImageSubscriber&lt; Translate &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1Subscriber.html#a31ed43d01d97533d56f241cc3ae831ef">fkie_message_filters::Subscriber&lt; M, Translate, A &gt;</a>.</p>
 
 </div>
 </div>
@@ -424,7 +424,7 @@ Protected Member Functions</h2></td></tr>
 <p>This virtual method must be overridden in derived classes to actually unsubscribe from a topic. It should do nothing if it is not subscribed in the first place.</p>
 <dl class="section user"><dt><b>Exceptions</b></dt><dd>Depends on the implementation. </dd></dl>
 
-<p>Implemented in <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a200af0d6a704cac8710b2c4e1eeea760">fkie_message_filters::CameraSubscriber&lt; Translate &gt;</a>, <a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html#aa8afd3e3e02962993ee5dce9c6cce049">fkie_message_filters::ImageSubscriber&lt; Translate &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1Subscriber.html#ad0537e5e44aa57ecda6d7c562d350e8a">fkie_message_filters::Subscriber&lt; M, Translate &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classfkie__message__filters_1_1Subscriber.html#a83b4aef9b31b3d57d81296cc8c9dee0f">fkie_message_filters::Subscriber&lt; M, Translate, A &gt;</a>, <a class="el" href="classfkie__message__filters_1_1CameraSubscriber.html#a86b5dd3a5c665173a03c336ca15a24a0">fkie_message_filters::CameraSubscriber&lt; Translate &gt;</a>, and <a class="el" href="classfkie__message__filters_1_1ImageSubscriber.html#a8ed64fd4bf115d59a973d2dd0faf87a8">fkie_message_filters::ImageSubscriber&lt; Translate &gt;</a>.</p>
 
 </div>
 </div>
