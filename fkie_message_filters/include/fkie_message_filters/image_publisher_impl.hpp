@@ -34,7 +34,7 @@ FKIE_MF_BEGIN_ABI_NAMESPACE
 
 template<template<typename> class Translate>
 ImagePublisher<Translate>::ImagePublisher(rclcpp::Node::SharedPtr& node, const std::string& base_topic,
-                                          const rclcpp::QoS& qos, const rclcpp::PublisherOptions& options) noexcept
+                                          const rclcpp::QoS& qos, const rclcpp::PublisherOptions& options)
 {
     advertise(node, base_topic, qos, options);
 }
@@ -59,7 +59,7 @@ std::string ImagePublisher<Translate>::topic() const noexcept
 
 template<template<typename> class Translate>
 void ImagePublisher<Translate>::advertise(rclcpp::Node::SharedPtr& node, const std::string& base_topic,
-                                          const rclcpp::QoS& qos, const rclcpp::PublisherOptions& options) noexcept
+                                          const rclcpp::QoS& qos, const rclcpp::PublisherOptions& options)
 {
 #if FKIE_MF_IMAGE_TRANSPORT_VERSION >= FKIE_MF_VERSION_TUPLE(3, 2, 0)
     pub_ = image_transport::create_publisher(node.get(), base_topic, qos.get_rmw_qos_profile(), options);
@@ -72,7 +72,7 @@ void ImagePublisher<Translate>::advertise(rclcpp::Node::SharedPtr& node, const s
 
 template<template<typename> class Translate>
 void ImagePublisher<Translate>::receive(
-    helpers::argument_t<typename Translate<sensor_msgs::msg::Image>::FilterType> img) noexcept
+    helpers::argument_t<typename Translate<sensor_msgs::msg::Image>::FilterType> img)
 {
     Translate<sensor_msgs::msg::Image>::publish(pub_, img);
 }

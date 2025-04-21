@@ -142,7 +142,7 @@ public:
      *
      * \arg \c node the ROS node or \c nullptr to disable ROS callbacks.
      *
-     * \nothrow
+     * \rmwthrow
      *
      * \code
      * namespace mf = fkie_message_filters;
@@ -155,7 +155,7 @@ public:
      * \endcode
      */
     template<class NodeT>
-    void set_node(NodeT&& node) noexcept;
+    void set_node(NodeT&& node);
     /** \brief Check if the buffer has pending data.
      *
      * \retval true if the current policy is BufferPolicy::Queue and a subsequent call to process_one() or spin_once()

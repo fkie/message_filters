@@ -43,7 +43,7 @@ Subscriber<M, Translate>::Subscriber() noexcept
 template<class M, template<typename> class Translate>
 template<class NodeT>
 Subscriber<M, Translate>::Subscriber(NodeT&& node, const std::string& topic, const rclcpp::QoS& qos,
-                                     const rclcpp::SubscriptionOptions& options) noexcept
+                                     const rclcpp::SubscriptionOptions& options)
 {
     subscribe<NodeT>(std::forward<NodeT&&>(node), topic, qos, options);
 }
@@ -57,7 +57,7 @@ std::string Subscriber<M, Translate>::topic() const noexcept
 template<class M, template<typename> class Translate>
 template<class NodeT>
 void Subscriber<M, Translate>::set_subscribe_options(NodeT&& node, const std::string& topic, const rclcpp::QoS& qos,
-                                                     const rclcpp::SubscriptionOptions& options) noexcept
+                                                     const rclcpp::SubscriptionOptions& options)
 {
     unsubscribe();
     node_parameters_ = rclcpp::node_interfaces::get_node_parameters_interface(node);
@@ -70,7 +70,7 @@ void Subscriber<M, Translate>::set_subscribe_options(NodeT&& node, const std::st
 template<class M, template<typename> class Translate>
 template<class NodeT>
 void Subscriber<M, Translate>::subscribe(NodeT&& node, const std::string& topic, const rclcpp::QoS& qos,
-                                         const rclcpp::SubscriptionOptions& options) noexcept
+                                         const rclcpp::SubscriptionOptions& options)
 {
     set_subscribe_options<NodeT>(std::forward<NodeT&&>(node), topic, qos, options);
     subscribe();

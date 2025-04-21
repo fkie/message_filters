@@ -286,7 +286,8 @@ TAB_SIZE               = 4
 ALIASES                = "nothrow=@par <b>Exceptions</b>^^ Does not throw any exceptions." \
                          "filterthrow=@par <b>Exceptions</b>^^ Does not throw any exceptions, but will propagate uncaught exceptions from filter callbacks." \
                          "implthrow=@par <b>Exceptions</b>^^ Propagates exceptions raised by the implementation of the abstract class methods." \
-                         "abstractthrow=@par <b>Exceptions</b>^^ Depends on the implementation."
+                         "abstractthrow=@par <b>Exceptions</b>^^ Depends on the implementation." \
+                         "rmwthrow=@par <b>Exceptions</b>^^ Does not throw any exceptions, but will propagate exceptions from the ROS middleware layer."
 
 # Set the OPTIMIZE_OUTPUT_FOR_C tag to YES if your project consists of C sources
 # only. Doxygen will then generate output that is more tailored for C. For

@@ -231,7 +231,7 @@ void Buffer<Inputs...>::set_policy(BufferPolicy policy, std::size_t max_queue_si
 
 template<class... Inputs>
 template<class NodeT>
-void Buffer<Inputs...>::set_node(NodeT&& node) noexcept
+void Buffer<Inputs...>::set_node(NodeT&& node)
 {
     std::unique_lock<std::mutex> lock{impl_->mutex_};
     impl_->template set_node<NodeT>(lock, std::forward<NodeT&&>(node));

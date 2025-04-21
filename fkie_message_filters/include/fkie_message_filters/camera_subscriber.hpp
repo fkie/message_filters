@@ -76,7 +76,7 @@ public:
      * \arg \c transport_hints transport hints for the ROS image_transport framework
      * \arg \c options ROS subscription options (currently ignored by image_transport)
      *
-     * \nothrow
+     * \rmwthrow
      */
     CameraSubscriber(const rclcpp::Node::SharedPtr& node, const std::string& base_topic,
                      const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
@@ -109,12 +109,12 @@ public:
      * \arg \c transport_hints transport hints for the ROS image_transport framework
      * \arg \c options ROS subscription options (currently ignored by image_transport)
      *
-     * \nothrow
+     * \rmwthrow
      */
     void subscribe(const rclcpp::Node::SharedPtr& node, const std::string& base_topic,
                    const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
                    const std::optional<image_transport::TransportHints>& transport_hints = std::nullopt,
-                   const rclcpp::SubscriptionOptions& options = rclcpp::SubscriptionOptions()) noexcept;
+                   const rclcpp::SubscriptionOptions& options = rclcpp::SubscriptionOptions());
     using SubscriberBase::subscribe;
     using SubscriberBase::subscribe_on_demand;
     using SubscriberBase::unsubscribe;
@@ -134,12 +134,12 @@ protected:
      *
      * \nothrow
      */
-    virtual void subscribe_impl() noexcept override;
+    virtual void subscribe_impl() override;
     /** \brief Shut the ROS subscriber down.
      *
      * \nothrow
      */
-    virtual void unsubscribe_impl() noexcept override;
+    virtual void unsubscribe_impl() override;
 
 private:
     static_assert(!std::is_same_v<Translate<sensor_msgs::msg::Image>, RosMessageUniquePtr<sensor_msgs::msg::Image>>,

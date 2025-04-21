@@ -47,7 +47,7 @@ Publisher<M, Translate>::~Publisher()
 template<class M, template<typename> class Translate>
 template<class NodeT>
 Publisher<M, Translate>::Publisher(NodeT&& node, const std::string& topic, const rclcpp::QoS& qos,
-                                   const rclcpp::PublisherOptions& options) noexcept
+                                   const rclcpp::PublisherOptions& options)
 {
     advertise<NodeT>(std::forward<NodeT&&>(node), topic, qos, options);
 }
@@ -67,7 +67,7 @@ std::string Publisher<M, Translate>::topic() const noexcept
 template<class M, template<typename> class Translate>
 template<class NodeT>
 void Publisher<M, Translate>::advertise(NodeT&& node, const std::string& topic, const rclcpp::QoS& qos,
-                                        const rclcpp::PublisherOptions& options) noexcept
+                                        const rclcpp::PublisherOptions& options)
 {
     pub_ = rclcpp::create_publisher<MessageType, std::allocator<void>, PublisherROS, NodeT>(std::forward<NodeT&&>(node),
                                                                                             topic, qos, options);
@@ -76,7 +76,7 @@ void Publisher<M, Translate>::advertise(NodeT&& node, const std::string& topic, 
 }
 
 template<class M, template<typename> class Translate>
-void Publisher<M, Translate>::receive(helpers::argument_t<typename Translate<M>::FilterType> m) noexcept
+void Publisher<M, Translate>::receive(helpers::argument_t<typename Translate<M>::FilterType> m)
 {
     Translate<M>::publish(*pub_, m);
 }

@@ -70,11 +70,11 @@ public:
      *
      * The constructor calls advertise() for you.
      *
-     * \nothrow
+     * \rmwthrow
      */
     CameraPublisher(rclcpp::Node::SharedPtr& node, const std::string& topic,
                     const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
-                    const rclcpp::PublisherOptions& options = rclcpp::PublisherOptions()) noexcept;
+                    const rclcpp::PublisherOptions& options = rclcpp::PublisherOptions());
     /** \brief Destructor. */
     virtual ~CameraPublisher();
     /** \brief Check if the ROS publisher has at least one subscriber.
@@ -97,16 +97,16 @@ public:
      * \arg \c qos the ROS quality of service specification
      * \arg \c options ROS publisher options
      *
-     * \nothrow
+     * \rmwthrow
      */
     void advertise(rclcpp::Node::SharedPtr& node, const std::string& base_topic,
                    const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
-                   const rclcpp::PublisherOptions& options = rclcpp::PublisherOptions()) noexcept;
+                   const rclcpp::PublisherOptions& options = rclcpp::PublisherOptions());
 
 protected:
     /** \private */
     void receive(helpers::argument_t<typename Translate<sensor_msgs::msg::Image>::FilterType>,
-                 helpers::argument_t<typename Translate<sensor_msgs::msg::CameraInfo>::FilterType>) noexcept override;
+                 helpers::argument_t<typename Translate<sensor_msgs::msg::CameraInfo>::FilterType>) override;
 
 private:
     image_transport::CameraPublisher pub_;

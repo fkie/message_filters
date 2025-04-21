@@ -75,12 +75,12 @@ public:
      * \arg \c transport_hints transport hints for the ROS image_transport framework
      * \arg \c options ROS subscription options
      *
-     * \nothrow
+     * \rmwthrow
      */
     ImageSubscriber(const rclcpp::Node::SharedPtr& node, const std::string& base_topic,
                     const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
                     const std::optional<image_transport::TransportHints>& transport_hints = std::nullopt,
-                    const rclcpp::SubscriptionOptions& options = rclcpp::SubscriptionOptions()) noexcept;
+                    const rclcpp::SubscriptionOptions& options = rclcpp::SubscriptionOptions());
     /** \brief Configure ROS topic that is to be subscribed.
      *
      * All arguments are passed to the ROS client library; see the ROS documentation for further information. Calling
@@ -92,12 +92,12 @@ public:
      * \arg \c transport_hints transport hints for the ROS image_transport framework
      * \arg \c options ROS subscription options
      *
-     * \nothrow
+     * \rmwthrow
      */
     void set_subscribe_options(const rclcpp::Node::SharedPtr& node, const std::string& base_topic,
                                const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
                                const std::optional<image_transport::TransportHints>& transport_hints = std::nullopt,
-                               const rclcpp::SubscriptionOptions& options = rclcpp::SubscriptionOptions()) noexcept;
+                               const rclcpp::SubscriptionOptions& options = rclcpp::SubscriptionOptions());
     /** \brief Convenience function to subscribe to a ROS topic.
      *
      * This function is equivalent to calling set_subscribe_options() and then subscribe().
@@ -108,12 +108,12 @@ public:
      * \arg \c transport_hints transport hints for the ROS image_transport framework
      * \arg \c options ROS subscription options
      *
-     * \nothrow
+     * \rmwthrow
      */
     void subscribe(const rclcpp::Node::SharedPtr& node, const std::string& base_topic,
                    const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
                    const std::optional<image_transport::TransportHints>& transport_hints = std::nullopt,
-                   const rclcpp::SubscriptionOptions& options = rclcpp::SubscriptionOptions()) noexcept;
+                   const rclcpp::SubscriptionOptions& options = rclcpp::SubscriptionOptions());
     using SubscriberBase::subscribe;
     using SubscriberBase::subscribe_on_demand;
     using SubscriberBase::unsubscribe;
@@ -129,12 +129,12 @@ protected:
      *
      * \nothrow
      */
-    virtual void subscribe_impl() noexcept override;
+    virtual void subscribe_impl() override;
     /** \brief Shut the ROS subscriber down.
      *
      * \nothrow
      */
-    virtual void unsubscribe_impl() noexcept override;
+    virtual void unsubscribe_impl() override;
 
 private:
     static_assert(!std::is_same_v<Translate<sensor_msgs::msg::Image>, RosMessageUniquePtr<sensor_msgs::msg::Image>>,

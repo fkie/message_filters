@@ -63,12 +63,12 @@ public:
      *
      * The constructor calls advertise() for you.
      *
-     * \nothrow
+     * \rmwthrow
      */
     template<class NodeT>
     Publisher(NodeT&& node, const std::string& topic,
               const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
-              const rclcpp::PublisherOptions& options = rclcpp::PublisherOptions()) noexcept;
+              const rclcpp::PublisherOptions& options = rclcpp::PublisherOptions());
     /** \brief Destructor. */
     virtual ~Publisher();
     /** \brief Check if the ROS publisher has at least one subscriber.
@@ -96,16 +96,16 @@ public:
      * \arg \c qos the ROS quality of service specification
      * \arg \c options ROS publisher options
      *
-     * \nothrow
+     * \rmwthrow
      */
     template<class NodeT>
     void advertise(NodeT&& node, const std::string& topic,
                    const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
-                   const rclcpp::PublisherOptions& options = rclcpp::PublisherOptions()) noexcept;
+                   const rclcpp::PublisherOptions& options = rclcpp::PublisherOptions());
 
 protected:
     /** \private */
-    virtual void receive(helpers::argument_t<typename Translate<M>::FilterType> m) noexcept override;
+    virtual void receive(helpers::argument_t<typename Translate<M>::FilterType> m) override;
 
 private:
     using MessageType = typename Translate<M>::MessageType;

@@ -35,7 +35,7 @@ template<template<typename> class Translate>
 ImageSubscriber<Translate>::ImageSubscriber(const rclcpp::Node::SharedPtr& node, const std::string& base_topic,
                                             const rclcpp::QoS& qos,
                                             const std::optional<image_transport::TransportHints>& transport_hints,
-                                            const rclcpp::SubscriptionOptions& options) noexcept
+                                            const rclcpp::SubscriptionOptions& options)
 {
     set_subscribe_options(node, base_topic, transport_hints, qos, options);
     subscribe();
@@ -44,8 +44,7 @@ ImageSubscriber<Translate>::ImageSubscriber(const rclcpp::Node::SharedPtr& node,
 template<template<typename> class Translate>
 void ImageSubscriber<Translate>::set_subscribe_options(
     const rclcpp::Node::SharedPtr& node, const std::string& base_topic, const rclcpp::QoS& qos,
-    const std::optional<image_transport::TransportHints>& transport_hints,
-    const rclcpp::SubscriptionOptions& options) noexcept
+    const std::optional<image_transport::TransportHints>& transport_hints, const rclcpp::SubscriptionOptions& options)
 {
     node_ = node;
     base_topic_ = base_topic;
@@ -59,7 +58,7 @@ template<template<typename> class Translate>
 void ImageSubscriber<Translate>::subscribe(const rclcpp::Node::SharedPtr& node, const std::string& base_topic,
                                            const rclcpp::QoS& qos,
                                            const std::optional<image_transport::TransportHints>& transport_hints,
-                                           const rclcpp::SubscriptionOptions& options) noexcept
+                                           const rclcpp::SubscriptionOptions& options)
 {
     set_subscribe_options(node, base_topic, qos, transport_hints, options);
     subscribe();
@@ -78,7 +77,7 @@ bool ImageSubscriber<Translate>::is_configured() const noexcept
 }
 
 template<template<typename> class Translate>
-void ImageSubscriber<Translate>::subscribe_impl() noexcept
+void ImageSubscriber<Translate>::subscribe_impl()
 {
     if (!sub_)
     {
@@ -90,7 +89,7 @@ void ImageSubscriber<Translate>::subscribe_impl() noexcept
 }
 
 template<template<typename> class Translate>
-void ImageSubscriber<Translate>::unsubscribe_impl() noexcept
+void ImageSubscriber<Translate>::unsubscribe_impl()
 {
     if (sub_)
         sub_.shutdown();
