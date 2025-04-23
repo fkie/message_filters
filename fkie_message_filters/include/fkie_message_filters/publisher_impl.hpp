@@ -69,8 +69,8 @@ template<class NodeT>
 void Publisher<M, Translate, A>::advertise(NodeT&& node, const std::string& topic, const rclcpp::QoS& qos,
                                            const rclcpp::PublisherOptionsWithAllocator<A>& options)
 {
-    pub_ = rclcpp::create_publisher<MessageType, std::allocator<void>, PublisherROS, NodeT>(std::forward<NodeT&&>(node),
-                                                                                            topic, qos, options);
+    pub_ =
+        rclcpp::create_publisher<MessageType, A, PublisherROS, NodeT>(std::forward<NodeT&&>(node), topic, qos, options);
     start_monitor<NodeT>(std::forward<NodeT&&>(node));
     update_subscriber_state();
 }

@@ -87,7 +87,7 @@ void Subscriber<M, Translate, A>::subscribe_impl() noexcept
 {
     if (!sub_)
     {
-        sub_ = rclcpp::create_subscription<MessageType, SubscriptionCB>(
+        sub_ = rclcpp::create_subscription<MessageType, SubscriptionCB, A>(
             node_parameters_, node_topics_, topic_, qos_,
             [this](SubscriptionType message) { this->send(Translate<M, A>::subscriberToFilter(message)); }, options_);
     }
