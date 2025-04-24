@@ -2,8 +2,8 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+3.2.0 (2025-04-24)
+------------------
 * Add Publisher/Subscriber support for custom allocators
 * Add tests with rclcpp_lifecycle nodes
 * Fix overzealous noexcept declarations
