@@ -2,6 +2,15 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Add Publisher/Subscriber support for custom allocators
+* Add tests with rclcpp_lifecycle nodes
+* Fix overzealous noexcept declarations
+* REUSE 3.3 compliance
+* Migrate to ROS manifest version 3 (REP-149)
+* Contributors: Timo Röhling
+
 3.1.1 (2025-04-18)
 ------------------
 * Properly bump the abi namespace (and automate it)
