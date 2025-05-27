@@ -31,6 +31,9 @@
 #ifndef FKIE_MF_IMAGE_TRANSPORT_VERSION
 #    define FKIE_MF_IMAGE_TRANSPORT_VERSION @computed_image_transport_version@
 #endif
+#ifndef FKIE_MF_RCLCPP_VERSION
+#    define FKIE_MF_RCLCPP_VERSION @computed_rclcpp_version@
+#endif
 
 #define FKIE_MF_VERSION_TUPLE(major, minor, patch) (65536 * (major) + 256 * (minor) + (patch))
 
