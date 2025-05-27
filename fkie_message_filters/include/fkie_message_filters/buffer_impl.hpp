@@ -32,6 +32,7 @@
 
 #include "buffer.hpp"
 #include "helpers/tuple.hpp"
+#include "version.hpp"
 #ifndef FKIE_MF_IGNORE_RCLCPP_OK
 #    include <rclcpp/utilities.hpp>
 #endif
@@ -83,27 +84,47 @@ struct Buffer<Inputs...>::Impl
                 throw std::runtime_error("failed to trigger rcl guard condition");
         }
 
+#if FKIE_MF_RCLCPP_VERSION >= FKIE_MF_VERSION_TUPLE(29, 6, 0)
+        void add_to_wait_set(rcl_wait_set_t& wait_set) override
+        {
+            if (rcl_wait_set_add_guard_condition(&wait_set, &cond_, nullptr) != RCL_RET_OK)
+                throw std::runtime_error("failed to add rcl guard condition to wait set");
+        }
+
+        bool is_ready(const rcl_wait_set_t&) override
+        {
+            std::lock_guard<std::mutex> lock{impl_->mutex_};
+            return !impl_->queue_.empty();
+        }
+
+        void execute(const std::shared_ptr<void>&) override
+        {
+            std::unique_lock<std::mutex> lock{impl_->mutex_};
+            impl_->parent_->process_some(lock);
+        }
+#else
         void add_to_wait_set(rcl_wait_set_t* wait_set) override
         {
             if (rcl_wait_set_add_guard_condition(wait_set, &cond_, nullptr) != RCL_RET_OK)
                 throw std::runtime_error("failed to add rcl guard condition to wait set");
         }
 
-        bool is_ready(rcl_wait_set_t* wait_set) override
+        bool is_ready(rcl_wait_set_t*) override
         {
             std::lock_guard<std::mutex> lock{impl_->mutex_};
             return !impl_->queue_.empty();
-        }
-
-        std::shared_ptr<void> take_data() override
-        {
-            return nullptr;
         }
 
         void execute(std::shared_ptr<void>&) override
         {
             std::unique_lock<std::mutex> lock{impl_->mutex_};
             impl_->parent_->process_some(lock);
+        }
+#endif
+
+        std::shared_ptr<void> take_data() override
+        {
+            return nullptr;
         }
 
     private:
