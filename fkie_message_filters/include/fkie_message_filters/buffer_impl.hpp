@@ -36,9 +36,9 @@
 #    include <rclcpp/utilities.hpp>
 #endif
 
-#include <rclcpp/create_timer.hpp>
 #include <rclcpp/node_interfaces/get_node_base_interface.hpp>
-#include <rclcpp/node_interfaces/get_node_timers_interface.hpp>
+#include <rclcpp/node_interfaces/get_node_waitables_interface.hpp>
+#include <rclcpp/waitable.hpp>
 
 #include <condition_variable>
 #include <deque>
@@ -52,6 +52,65 @@ FKIE_MF_BEGIN_ABI_NAMESPACE
 template<class... Inputs>
 struct Buffer<Inputs...>::Impl
 {
+    class BufferCB : public rclcpp::Waitable
+    {
+    public:
+        using SharedPtr = std::shared_ptr<BufferCB>;
+
+        explicit BufferCB(Impl* impl) : impl_(impl), cond_(rcl_get_zero_initialized_guard_condition())
+        {
+            rclcpp::Context::SharedPtr ctx = rclcpp::contexts::get_global_default_context();
+            rcl_guard_condition_options_t options = rcl_guard_condition_get_default_options();
+            if (rcl_guard_condition_init(&cond_, ctx->get_rcl_context().get(), options) != RCL_RET_OK)
+                throw std::runtime_error("failed to initialize rcl guard condition");
+        }
+
+        ~BufferCB()
+        {
+            if (rcl_guard_condition_fini(&cond_) != RCL_RET_OK)
+            { /* ignore */
+            }
+        }
+
+        std::size_t get_number_of_ready_guard_conditions() override
+        {
+            return 1;
+        }
+
+        void trigger()
+        {
+            if (rcl_trigger_guard_condition(&cond_) != RCL_RET_OK)
+                throw std::runtime_error("failed to trigger rcl guard condition");
+        }
+
+        void add_to_wait_set(rcl_wait_set_t* wait_set) override
+        {
+            if (rcl_wait_set_add_guard_condition(wait_set, &cond_, nullptr) != RCL_RET_OK)
+                throw std::runtime_error("failed to add rcl guard condition to wait set");
+        }
+
+        bool is_ready(rcl_wait_set_t* wait_set) override
+        {
+            std::lock_guard<std::mutex> lock{impl_->mutex_};
+            return !impl_->queue_.empty();
+        }
+
+        std::shared_ptr<void> take_data() override
+        {
+            return nullptr;
+        }
+
+        void execute(std::shared_ptr<void>&) override
+        {
+            std::unique_lock<std::mutex> lock{impl_->mutex_};
+            impl_->parent_->process_some(lock);
+        }
+
+    private:
+        Impl* impl_;
+        rcl_guard_condition_t cond_;
+    };
+
     Impl(Buffer* parent, BufferPolicy policy, std::size_t max_queue_size) noexcept
         : parent_(parent), policy_(policy), max_queue_size_(max_queue_size)
     {
@@ -95,36 +154,6 @@ struct Buffer<Inputs...>::Impl
 #endif
     }
 
-    void rclcpp_timer_callback()
-    {
-        std::unique_lock<std::mutex> lock{mutex_};
-        if (!queue_.empty())
-        {
-            QueueElement e{std::move(queue_.front())};
-            queue_.pop_front();
-            if (queue_.empty())
-                timer_.reset();
-            lock.unlock();
-            parent_->send_queue_element(e);
-            lock.lock();
-        }
-        else
-        {
-            timer_.reset();
-        }
-    }
-
-    void arm_rclcpp_timer(std::unique_lock<std::mutex>& lock)
-    {
-        using namespace std::chrono_literals;
-        if (node_base_ && node_timers_ && !timer_)
-        {
-            timer_ = rclcpp::create_wall_timer(
-                0ns, static_cast<rclcpp::VoidCallbackType>([this]() { this->rclcpp_timer_callback(); }),
-                callback_group_, node_base_.get(), node_timers_.get());
-        }
-    }
-
     void adjust_capacity(std::size_t max_queue_size)
     {
         std::lock_guard<std::mutex> lock{mutex_};
@@ -138,7 +167,8 @@ struct Buffer<Inputs...>::Impl
         queue_.push_back(std::move(e));
         while (queue_.size() > max_queue_size_)
             queue_.pop_front();
-        arm_rclcpp_timer(lock);
+        if (callback_)
+            callback_->trigger();
     }
 
     template<class NodeT>
@@ -148,33 +178,33 @@ struct Buffer<Inputs...>::Impl
         {
             if (node)
             {
-                auto base = rclcpp::node_interfaces::get_node_base_interface(node);
-                auto timers = rclcpp::node_interfaces::get_node_timers_interface(node);
-                if (node_base_ != base || node_timers_ != timers)
+                auto node_base = rclcpp::node_interfaces::get_node_base_interface(node);
+                auto node_waitable = rclcpp::node_interfaces::get_node_waitables_interface(node);
+                if (node_waitable_ != node_waitable || node_base_ != node_base)
                 {
-                    timer_.reset();
+                    callback_.reset();
                     callback_group_.reset();
-                    node_base_ = base;
-                    node_timers_ = timers;
+                    node_base_ = node_base;
+                    node_waitable_ = node_waitable;
                     callback_group_ = node_base_->create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
-                    if (!queue_.empty())
-                        arm_rclcpp_timer(lock);
+                    callback_ = std::make_shared<BufferCB>(this);
+                    node_waitable_->add_waitable(callback_, callback_group_);
                 }
                 return;
             }
         }
-        timer_.reset();
+        callback_.reset();
         callback_group_.reset();
         node_base_.reset();
-        node_timers_.reset();
+        node_waitable_.reset();
     }
 
     Buffer* parent_;
     BufferPolicy policy_;
     rclcpp::node_interfaces::NodeBaseInterface::SharedPtr node_base_;
-    rclcpp::node_interfaces::NodeTimersInterface::SharedPtr node_timers_;
+    rclcpp::node_interfaces::NodeWaitablesInterface::SharedPtr node_waitable_;
+    typename BufferCB::SharedPtr callback_;
     rclcpp::CallbackGroup::SharedPtr callback_group_;
-    rclcpp::WallTimer<rclcpp::VoidCallbackType>::SharedPtr timer_;
     std::deque<QueueElement> queue_;
     std::size_t max_queue_size_;
     std::mutex mutex_;
@@ -212,7 +242,6 @@ void Buffer<Inputs...>::set_policy(BufferPolicy policy, std::size_t max_queue_si
     {
         case BufferPolicy::Discard:
             impl_->queue_.clear();
-            impl_->timer_.reset();
             lock.unlock();
             break;
         case BufferPolicy::Queue:
@@ -221,7 +250,6 @@ void Buffer<Inputs...>::set_policy(BufferPolicy policy, std::size_t max_queue_si
             lock.unlock();
             break;
         case BufferPolicy::Passthru:
-            impl_->timer_.reset();
             process_some(lock);
             // lock is unlocked now
             break;
@@ -249,7 +277,6 @@ void Buffer<Inputs...>::reset() noexcept
 {
     std::lock_guard<std::mutex> lock{impl_->mutex_};
     impl_->queue_.clear();
-    impl_->timer_.reset();
 }
 
 template<class... Inputs>
