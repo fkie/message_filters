@@ -102,6 +102,11 @@ struct Buffer<Inputs...>::Impl
             std::unique_lock<std::mutex> lock{impl_->mutex_};
             impl_->parent_->process_some(lock);
         }
+
+        std::vector<std::shared_ptr<rclcpp::TimerBase>> get_timers() const override
+        {
+            return {};
+        }
 #else
         void add_to_wait_set(rcl_wait_set_t* wait_set) override
         {
@@ -126,6 +131,15 @@ struct Buffer<Inputs...>::Impl
         {
             return nullptr;
         }
+
+        std::shared_ptr<void> take_data_by_entity_id(std::size_t id) override
+        {
+            return nullptr;
+        }
+
+        void set_on_ready_callback(std::function<void(std::size_t, int)>) override {}
+
+        void clear_on_ready_callback() override {}
 
     private:
         Impl* impl_;
