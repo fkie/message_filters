@@ -2,8 +2,8 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+3.2.1 (2025-06-03)
+------------------
 * Replace rclcpp::Timer hack with proper waitable rcl_guard_condition (`#3 <https://github.com/fkie/message_filters/issues/3>`_)
 * Contributors: Timo Röhling
 
