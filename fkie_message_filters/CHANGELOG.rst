@@ -2,6 +2,11 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Replace rclcpp::Timer hack with proper waitable rcl_guard_condition (`#3 <https://github.com/fkie/message_filters/issues/3>`_)
+* Contributors: Timo Röhling
+
 3.2.0 (2025-04-24)
 ------------------
 * Add Publisher/Subscriber support for custom allocators
