@@ -226,17 +226,7 @@ bool ApproximateTime<IOs...>::can_still_improve_at() noexcept
 template<typename... IOs>
 bool ApproximateTime<IOs...>::can_still_improve() noexcept
 {
-    bool result = false;
-    helpers::for_each_apply<NUM_SLOTS>(
-        [&](auto I)
-        {
-            if (I != pivot_)
-            {
-                if (this->can_still_improve_at<I>())
-                    result = true;
-            }
-        });
-    return result;
+    return helpers::any_true<NUM_SLOTS>([this](auto I) { return I != pivot_ && this->can_still_improve_at<I>(); });
 }
 
 template<typename... IOs>

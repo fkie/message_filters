@@ -85,6 +85,18 @@ bool all_true(Predicate p)
     return all_true_impl(p, std::make_index_sequence<N>{});
 }
 
+template<class Predicate, std::size_t... Is>
+bool any_true_impl(Predicate p, std::index_sequence<Is...>)
+{
+    return (p(std::integral_constant<std::size_t, Is>{}) || ...);
+}
+
+template<std::size_t N, class Predicate>
+bool any_true(Predicate p)
+{
+    return any_true_impl(p, std::make_index_sequence<N>{});
+}
+
 }  // namespace helpers
 FKIE_MF_END_ABI_NAMESPACE
 }  // namespace fkie_message_filters
