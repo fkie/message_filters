@@ -96,6 +96,7 @@ if(BUILD_TESTING)
         test/test_combiner_approximate_time.cpp
         test/test_combiner_exact_time.cpp
         test/test_combiner_fifo.cpp
+        test/test_combiner_latch.cpp
         test/test_divider.cpp
         test/test_filter_loop.cpp
         test/test_helpers.cpp
