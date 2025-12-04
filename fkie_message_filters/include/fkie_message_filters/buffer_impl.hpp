@@ -84,7 +84,7 @@ struct Buffer<Inputs...>::Impl
                 throw std::runtime_error("failed to trigger rcl guard condition");
         }
 
-#if FKIE_MF_RCLCPP_VERSION >= FKIE_MF_VERSION_TUPLE(29, 6, 0)
+#if FKIE_MF_RCLCPP_VERSION >= FKIE_MF_VERSION_TUPLE(29, 4, 0)
         void add_to_wait_set(rcl_wait_set_t& wait_set) override
         {
             if (rcl_wait_set_add_guard_condition(&wait_set, &cond_, nullptr) != RCL_RET_OK)
