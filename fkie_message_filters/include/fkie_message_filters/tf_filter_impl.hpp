@@ -87,8 +87,7 @@ struct TfFilter<Inputs...>::Impl
     {
         for (const tf2::TransformableRequestHandle& h : info->handles)
         {
-            // FIXME: see https://github.com/ros2/geometry2/pull/475#issuecomment-2724836575
-            // bc_.cancelTransformableRequest(h);
+            bc_.cancelTransformableRequest(h);
             requests_.erase(h);
         }
         info->handles.clear();
