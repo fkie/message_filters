@@ -101,7 +101,7 @@ bool wait_for_buffer_processing(Node&& node, Buffer& buffer, const std::chrono::
 }
 
 template<typename int_T, class Node>
-void buffer_callback_group_test_code(const std::string& node_name)
+void buffer_callback_group_test_code(const std::shared_ptr<Node>& node)
 {
     using namespace std::chrono_literals;
     using Source = mf::UserSource<int_T>;
@@ -110,7 +110,6 @@ void buffer_callback_group_test_code(const std::string& node_name)
 
     std::size_t callback_counts = 0;
     int last_value = 0;
-    auto node = std::make_shared<Node>("buffer_callback_group");
     Source src;
     Buffer buf(node, 3);
     Sink snk;
@@ -146,10 +145,16 @@ void buffer_callback_group_test_code(const std::string& node_name)
 
 TEST(fkie_message_filters, BufferNodeCallbackGroup)
 {
-    buffer_callback_group_test_code<int_C, rclcpp::Node>("buffer_node_callback_group");
+    auto node = std::make_shared<rclcpp::Node>("buffer_callback_group");
+    buffer_callback_group_test_code<int_C, rclcpp::Node>(node);
 }
 
 TEST(fkie_message_filters, BufferLifecycleNodeCallbackGroup)
 {
-    buffer_callback_group_test_code<int_C, rclcpp_lifecycle::LifecycleNode>("buffer_lifecycle_node_callback_group");
+    auto node = std::make_shared<rclcpp_lifecycle::LifecycleNode>("lifecycle_buffer_callback_group");
+    node->configure();
+    node->activate();
+    buffer_callback_group_test_code<int_C, rclcpp_lifecycle::LifecycleNode>(node);
+    node->deactivate();
+    node->shutdown();
 }

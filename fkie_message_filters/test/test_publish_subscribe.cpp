@@ -91,6 +91,8 @@ TEST(fkie_message_filters, LifecyclePublisherMessage)
     node->activate();
     common_publisher_test_code(node, src, pub, sub, received_msgs,
                                []() -> std_msgs::msg::Empty { return std_msgs::msg::Empty(); });
+    node->deactivate();
+    node->shutdown();
 }
 
 TEST(fkie_message_filters, PublisherMessageUniquePtr)
@@ -118,6 +120,8 @@ TEST(fkie_message_filters, LifecyclePublisherMessageUniquePtr)
     node->activate();
     common_publisher_test_code(node, src, pub, sub, received_msgs, []() -> std_msgs::msg::Empty::UniquePtr
                                { return std::make_unique<std_msgs::msg::Empty>(); });
+    node->deactivate();
+    node->shutdown();
 }
 
 TEST(fkie_message_filters, PublisherMessageSharedPtr)
@@ -145,6 +149,8 @@ TEST(fkie_message_filters, LifecyclePublisherMessageSharedPtr)
     node->activate();
     common_publisher_test_code(node, src, pub, sub, received_msgs, []() -> std_msgs::msg::Empty::ConstSharedPtr
                                { return std::make_shared<std_msgs::msg::Empty>(); });
+    node->deactivate();
+    node->shutdown();
 }
 
 TEST(fkie_message_filters, ImagePublisherMessage)
@@ -292,6 +298,8 @@ TEST(fkie_message_filters, LifecycleSubscriberMessage)
     node->configure();
     node->activate();
     common_subscriber_test_code<std_msgs::msg::Empty>(node, pub, sub, flt, received_msgs);
+    node->deactivate();
+    node->shutdown();
 }
 
 TEST(fkie_message_filters, SubscriberMessageUniquePtr)
@@ -317,6 +325,8 @@ TEST(fkie_message_filters, LifecycleSubscriberMessageUniquePtr)
     node->configure();
     node->activate();
     common_subscriber_test_code<std_msgs::msg::Empty>(node, pub, sub, flt, received_msgs);
+    node->deactivate();
+    node->shutdown();
 }
 
 TEST(fkie_message_filters, SubscriberMessageSharedPtr)
@@ -342,6 +352,8 @@ TEST(fkie_message_filters, LifecycleSubscriberMessageSharedPtr)
     node->configure();
     node->activate();
     common_subscriber_test_code<std_msgs::msg::Empty>(node, pub, sub, flt, received_msgs);
+    node->deactivate();
+    node->shutdown();
 }
 
 TEST(fkie_message_filters, ImageSubscriberMessage)
