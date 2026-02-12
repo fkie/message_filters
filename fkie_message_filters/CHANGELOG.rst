@@ -2,6 +2,14 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Properly shutdown lifecycle nodes to avoid warnings in tests
+* Fix build failure with ROS Kilted
+* Revert workaround for tf2 cancellation bug
+* Add Latch combiner policy
+* Contributors: Timo Röhling
+
 3.2.1 (2025-06-03)
 ------------------
 * Replace rclcpp::Timer hack with proper waitable rcl_guard_condition (`#3 <https://github.com/fkie/message_filters/issues/3>`_)
