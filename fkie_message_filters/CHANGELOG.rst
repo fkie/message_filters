@@ -2,8 +2,8 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+3.3.0 (2026-02-12)
+------------------
 * Properly shutdown lifecycle nodes to avoid warnings in tests
 * Fix build failure with ROS Kilted
 * Revert workaround for tf2 cancellation bug
