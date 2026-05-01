@@ -24,6 +24,7 @@
 
 #include "abi_namespace.hpp"
 
+#include <algorithm>
 #include <functional>
 #include <list>
 #include <memory>
