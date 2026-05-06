@@ -2,6 +2,11 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fix missing include for std::find_if
+* Contributors: Timo Röhling
+
 3.3.0 (2026-02-12)
 ------------------
 * Properly shutdown lifecycle nodes to avoid warnings in tests
