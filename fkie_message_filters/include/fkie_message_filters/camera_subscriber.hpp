@@ -26,6 +26,7 @@
 #include "message_translate.hpp"
 #include "source.hpp"
 #include "subscriber_base.hpp"
+#include "version.hpp"
 
 #include <image_transport/image_transport.hpp>
 
@@ -78,7 +79,8 @@ public:
      *
      * \rmwthrow
      */
-    CameraSubscriber(const rclcpp::Node::SharedPtr& node, const std::string& base_topic,
+    template<class NodeT>
+    CameraSubscriber(NodeT&& node, const std::string& base_topic,
                      const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
                      const std::optional<image_transport::TransportHints>& transport_hints = std::nullopt,
                      const rclcpp::SubscriptionOptions& options = rclcpp::SubscriptionOptions()) noexcept;
@@ -95,7 +97,8 @@ public:
      *
      * \nothrow
      */
-    void set_subscribe_options(const rclcpp::Node::SharedPtr& node, const std::string& base_topic,
+    template<class NodeT>
+    void set_subscribe_options(NodeT&& node, const std::string& base_topic,
                                const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
                                const std::optional<image_transport::TransportHints>& transport_hints = std::nullopt,
                                const rclcpp::SubscriptionOptions& options = rclcpp::SubscriptionOptions()) noexcept;
@@ -111,7 +114,8 @@ public:
      *
      * \rmwthrow
      */
-    void subscribe(const rclcpp::Node::SharedPtr& node, const std::string& base_topic,
+    template<class NodeT>
+    void subscribe(NodeT&& node, const std::string& base_topic,
                    const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
                    const std::optional<image_transport::TransportHints>& transport_hints = std::nullopt,
                    const rclcpp::SubscriptionOptions& options = rclcpp::SubscriptionOptions());
@@ -144,7 +148,12 @@ protected:
 private:
     static_assert(!std::is_same_v<Translate<sensor_msgs::msg::Image>, RosMessageUniquePtr<sensor_msgs::msg::Image>>,
                   "CameraSubscriber cannot be used with RosMessageUniquePtr");
+
+#if FKIE_MF_IMAGE_TRANSPORT_VERSION >= FKIE_MF_VERSION_TUPLE(6, 4, 0)
+    image_transport::RequiredInterfaces node_;
+#else
     rclcpp::Node::SharedPtr node_;
+#endif
     std::string base_topic_;
     std::string transport_;
     rclcpp::QoS qos_{rclcpp::KeepLast(10), rmw_qos_profile_default};

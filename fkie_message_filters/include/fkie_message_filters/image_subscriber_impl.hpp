@@ -24,6 +24,8 @@
 
 // IWYU pragma: private; include "image_subscriber.hpp"
 
+#include "helpers/argument.hpp"
+#include "helpers/image_transport.hpp"
 #include "image_subscriber.hpp"
 
 namespace fkie_message_filters
@@ -32,35 +34,36 @@ namespace fkie_message_filters
 FKIE_MF_BEGIN_ABI_NAMESPACE
 
 template<template<typename> class Translate>
-ImageSubscriber<Translate>::ImageSubscriber(const rclcpp::Node::SharedPtr& node, const std::string& base_topic,
-                                            const rclcpp::QoS& qos,
+template<class NodeT>
+ImageSubscriber<Translate>::ImageSubscriber(NodeT&& node, const std::string& base_topic, const rclcpp::QoS& qos,
                                             const std::optional<image_transport::TransportHints>& transport_hints,
                                             const rclcpp::SubscriptionOptions& options)
 {
-    set_subscribe_options(node, base_topic, transport_hints, qos, options);
+    set_subscribe_options<NodeT>(node, base_topic, transport_hints, qos, options);
     subscribe();
 }
 
 template<template<typename> class Translate>
+template<class NodeT>
 void ImageSubscriber<Translate>::set_subscribe_options(
-    const rclcpp::Node::SharedPtr& node, const std::string& base_topic, const rclcpp::QoS& qos,
+    NodeT&& node, const std::string& base_topic, const rclcpp::QoS& qos,
     const std::optional<image_transport::TransportHints>& transport_hints, const rclcpp::SubscriptionOptions& options)
 {
-    node_ = node;
+    node_ = FKIE_MF_IMAGE_TRANSPORT_NODE_COPY(node);
     base_topic_ = base_topic;
-    transport_ =
-        transport_hints ? transport_hints->getTransport() : image_transport::TransportHints(node.get()).getTransport();
+    transport_ = transport_hints ? transport_hints->getTransport()
+                                 : image_transport::TransportHints(FKIE_MF_IMAGE_TRANSPORT_NODE(node)).getTransport();
     qos_ = qos;
     options_ = options;
 }
 
 template<template<typename> class Translate>
-void ImageSubscriber<Translate>::subscribe(const rclcpp::Node::SharedPtr& node, const std::string& base_topic,
-                                           const rclcpp::QoS& qos,
+template<class NodeT>
+void ImageSubscriber<Translate>::subscribe(NodeT&& node, const std::string& base_topic, const rclcpp::QoS& qos,
                                            const std::optional<image_transport::TransportHints>& transport_hints,
                                            const rclcpp::SubscriptionOptions& options)
 {
-    set_subscribe_options(node, base_topic, qos, transport_hints, options);
+    set_subscribe_options<NodeT>(node, base_topic, qos, transport_hints, options);
     subscribe();
 }
 
@@ -73,7 +76,7 @@ std::string ImageSubscriber<Translate>::topic() const noexcept
 template<template<typename> class Translate>
 bool ImageSubscriber<Translate>::is_configured() const noexcept
 {
-    return node_ && !transport_.empty() && !base_topic_.empty();
+    return !transport_.empty() && !base_topic_.empty();
 }
 
 template<template<typename> class Translate>
@@ -82,9 +85,10 @@ void ImageSubscriber<Translate>::subscribe_impl()
     if (!sub_)
     {
         sub_ = image_transport::create_subscription(
-            node_.get(), base_topic_, [this](const sensor_msgs::msg::Image::ConstSharedPtr& message)
+            FKIE_MF_IMAGE_TRANSPORT_NODE(node_), base_topic_,
+            [this](const sensor_msgs::msg::Image::ConstSharedPtr& message)
             { this->send(Translate<sensor_msgs::msg::Image>::subscriberToFilter(message)); }, transport_,
-            qos_.get_rmw_qos_profile(), options_);
+            FKIE_MF_IMAGE_TRANSPORT_QOS(qos_), options_);
     }
 }
 

@@ -72,7 +72,8 @@ public:
      *
      * \rmwthrow
      */
-    CameraPublisher(rclcpp::Node::SharedPtr& node, const std::string& topic,
+    template<class NodeT>
+    CameraPublisher(NodeT&& node, const std::string& topic,
                     const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
                     const rclcpp::PublisherOptions& options = rclcpp::PublisherOptions());
     /** \brief Destructor. */
@@ -99,7 +100,8 @@ public:
      *
      * \rmwthrow
      */
-    void advertise(rclcpp::Node::SharedPtr& node, const std::string& base_topic,
+    template<class NodeT>
+    void advertise(NodeT&& node, const std::string& base_topic,
                    const rclcpp::QoS& qos = rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default),
                    const rclcpp::PublisherOptions& options = rclcpp::PublisherOptions());
 

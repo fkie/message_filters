@@ -25,6 +25,7 @@
 // IWYU pragma: private; include "camera_publisher.hpp"
 
 #include "camera_publisher.hpp"
+#include "helpers/image_transport.hpp"
 #include "version.hpp"
 
 namespace fkie_message_filters
@@ -33,10 +34,11 @@ namespace fkie_message_filters
 FKIE_MF_BEGIN_ABI_NAMESPACE
 
 template<template<typename> class Translate>
-CameraPublisher<Translate>::CameraPublisher(rclcpp::Node::SharedPtr& node, const std::string& base_topic,
-                                            const rclcpp::QoS& qos, const rclcpp::PublisherOptions& options)
+template<class NodeT>
+CameraPublisher<Translate>::CameraPublisher(NodeT&& node, const std::string& base_topic, const rclcpp::QoS& qos,
+                                            const rclcpp::PublisherOptions& options)
 {
-    advertise(node, base_topic, qos, options);
+    advertise<NodeT>(node, base_topic, qos, options);
 }
 
 template<template<typename> class Translate>
@@ -58,13 +60,16 @@ std::string CameraPublisher<Translate>::topic() const noexcept
 }
 
 template<template<typename> class Translate>
-void CameraPublisher<Translate>::advertise(rclcpp::Node::SharedPtr& node, const std::string& base_topic,
-                                           const rclcpp::QoS& qos, const rclcpp::PublisherOptions& options)
+template<class NodeT>
+void CameraPublisher<Translate>::advertise(NodeT&& node, const std::string& base_topic, const rclcpp::QoS& qos,
+                                           const rclcpp::PublisherOptions& options)
 {
 #if FKIE_MF_IMAGE_TRANSPORT_VERSION >= FKIE_MF_VERSION_TUPLE(4, 4, 0)
-    pub_ = image_transport::create_camera_publisher(node.get(), base_topic, qos.get_rmw_qos_profile(), options);
+    pub_ = image_transport::create_camera_publisher(FKIE_MF_IMAGE_TRANSPORT_NODE(node), base_topic,
+                                                    FKIE_MF_IMAGE_TRANSPORT_QOS(qos), options);
 #else
-    pub_ = image_transport::create_camera_publisher(node.get(), base_topic, qos.get_rmw_qos_profile());
+    pub_ = image_transport::create_camera_publisher(FKIE_MF_IMAGE_TRANSPORT_NODE(node), base_topic,
+                                                    FKIE_MF_IMAGE_TRANSPORT_QOS(qos));
 #endif
     start_monitor(node);
     update_subscriber_state();

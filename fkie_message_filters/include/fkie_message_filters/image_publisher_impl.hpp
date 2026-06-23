@@ -24,6 +24,7 @@
 
 // IWYU pragma: private; include "image_publisher.hpp"
 
+#include "helpers/image_transport.hpp"
 #include "image_publisher.hpp"
 #include "version.hpp"
 
@@ -33,10 +34,11 @@ namespace fkie_message_filters
 FKIE_MF_BEGIN_ABI_NAMESPACE
 
 template<template<typename> class Translate>
-ImagePublisher<Translate>::ImagePublisher(rclcpp::Node::SharedPtr& node, const std::string& base_topic,
-                                          const rclcpp::QoS& qos, const rclcpp::PublisherOptions& options)
+template<class NodeT>
+ImagePublisher<Translate>::ImagePublisher(NodeT&& node, const std::string& base_topic, const rclcpp::QoS& qos,
+                                          const rclcpp::PublisherOptions& options)
 {
-    advertise(node, base_topic, qos, options);
+    advertise<NodeT>(node, base_topic, qos, options);
 }
 
 template<template<typename> class Translate>
@@ -58,13 +60,16 @@ std::string ImagePublisher<Translate>::topic() const noexcept
 }
 
 template<template<typename> class Translate>
-void ImagePublisher<Translate>::advertise(rclcpp::Node::SharedPtr& node, const std::string& base_topic,
-                                          const rclcpp::QoS& qos, const rclcpp::PublisherOptions& options)
+template<class NodeT>
+void ImagePublisher<Translate>::advertise(NodeT&& node, const std::string& base_topic, const rclcpp::QoS& qos,
+                                          const rclcpp::PublisherOptions& options)
 {
 #if FKIE_MF_IMAGE_TRANSPORT_VERSION >= FKIE_MF_VERSION_TUPLE(3, 2, 0)
-    pub_ = image_transport::create_publisher(node.get(), base_topic, qos.get_rmw_qos_profile(), options);
+    pub_ = image_transport::create_publisher(FKIE_MF_IMAGE_TRANSPORT_NODE(node), base_topic,
+                                             FKIE_MF_IMAGE_TRANSPORT_QOS(qos), options);
 #else
-    pub_ = image_transport::create_publisher(node.get(), base_topic, qos.get_rmw_qos_profile());
+    pub_ = image_transport::create_publisher(FKIE_MF_IMAGE_TRANSPORT_NODE(node), base_topic,
+                                             FKIE_MF_IMAGE_TRANSPORT_QOS(qos));
 #endif
     start_monitor(node);
     update_subscriber_state();

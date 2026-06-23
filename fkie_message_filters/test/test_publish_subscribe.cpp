@@ -35,6 +35,14 @@
 #include <rclcpp_lifecycle/lifecycle_node.hpp>
 #include <std_msgs/msg/empty.hpp>
 
+#include <utility>
+
+#if FKIE_MF_IMAGE_TRANSPORT_VERSION >= FKIE_MF_VERSION_TUPLE(6, 4, 0)
+#    define FKIE_MF_IMAGE_TRANSPORT_QOS_ARG , rclcpp::QoS(rclcpp::KeepLast(10), rmw_qos_profile_default)
+#else
+#    define FKIE_MF_IMAGE_TRANSPORT_QOS_ARG
+#endif
+
 namespace mf = fkie_message_filters;
 
 namespace
@@ -45,6 +53,7 @@ void process_pending_events(NodeT&& node)
 {
     rclcpp::spin_some(rclcpp::node_interfaces::get_node_base_interface(std::forward<NodeT&&>(node)));
 }
+
 }  // namespace
 
 template<class Node, class Source, class Publisher, class Subscriber, class MessageCreator>
@@ -158,8 +167,9 @@ TEST(fkie_message_filters, ImagePublisherMessage)
     std::size_t received_msgs = 0;
     rclcpp::Node::SharedPtr node = std::make_shared<rclcpp::Node>("image_publisher_message");
     image_transport::Subscriber sub = image_transport::create_subscription(
-        node.get(), "publisher_test",
-        [&received_msgs](const sensor_msgs::msg::Image::ConstSharedPtr&) { ++received_msgs; }, "raw");
+        FKIE_MF_IMAGE_TRANSPORT_NODE(node), "publisher_test",
+        [&received_msgs](const sensor_msgs::msg::Image::ConstSharedPtr&) { ++received_msgs; },
+        "raw" FKIE_MF_IMAGE_TRANSPORT_QOS_ARG);
     mf::UserSource<sensor_msgs::msg::Image> src;
     mf::ImagePublisher<mf::RosMessage> pub;
     common_publisher_test_code(node, src, pub, sub, received_msgs,
@@ -171,8 +181,9 @@ TEST(fkie_message_filters, ImagePublisherMessageUniquePtr)
     std::size_t received_msgs = 0;
     rclcpp::Node::SharedPtr node = std::make_shared<rclcpp::Node>("image_publisher_message_unique_ptr");
     image_transport::Subscriber sub = image_transport::create_subscription(
-        node.get(), "publisher_test",
-        [&received_msgs](const sensor_msgs::msg::Image::ConstSharedPtr&) { ++received_msgs; }, "raw");
+        FKIE_MF_IMAGE_TRANSPORT_NODE(node), "publisher_test",
+        [&received_msgs](const sensor_msgs::msg::Image::ConstSharedPtr&) { ++received_msgs; },
+        "raw" FKIE_MF_IMAGE_TRANSPORT_QOS_ARG);
     mf::UserSource<sensor_msgs::msg::Image::UniquePtr> src;
     mf::ImagePublisher<mf::RosMessageUniquePtr> pub;
     common_publisher_test_code(node, src, pub, sub, received_msgs, []() -> sensor_msgs::msg::Image::UniquePtr
@@ -184,17 +195,17 @@ TEST(fkie_message_filters, ImagePublisherMessageSharedPtr)
     std::size_t received_msgs = 0;
     rclcpp::Node::SharedPtr node = std::make_shared<rclcpp::Node>("image_publisher_message_shared_ptr");
     image_transport::Subscriber sub = image_transport::create_subscription(
-        node.get(), "publisher_test",
-        [&received_msgs](const sensor_msgs::msg::Image::ConstSharedPtr&) { ++received_msgs; }, "raw");
+        FKIE_MF_IMAGE_TRANSPORT_NODE(node), "publisher_test",
+        [&received_msgs](const sensor_msgs::msg::Image::ConstSharedPtr&) { ++received_msgs; },
+        "raw" FKIE_MF_IMAGE_TRANSPORT_QOS_ARG);
     mf::UserSource<sensor_msgs::msg::Image::ConstSharedPtr> src;
     mf::ImagePublisher<mf::RosMessageSharedPtr> pub;
     common_publisher_test_code(node, src, pub, sub, received_msgs, []() -> sensor_msgs::msg::Image::ConstSharedPtr
                                { return std::make_shared<sensor_msgs::msg::Image>(); });
 }
 
-template<template<class> class MessageCreator, class Source, class Publisher, class Subscriber>
-void camera_publisher_test_code(rclcpp::Node::SharedPtr& node, Source& src, Publisher& pub, Subscriber& sub,
-                                std::size_t& received_msgs)
+template<template<class> class MessageCreator, class Node, class Source, class Publisher, class Subscriber>
+void camera_publisher_test_code(Node&& node, Source& src, Publisher& pub, Subscriber& sub, std::size_t& received_msgs)
 {
     src.connect_to_sink(pub);
     ASSERT_EQ(0, get_publisher_count(sub));
@@ -217,10 +228,10 @@ TEST(fkie_message_filters, CameraPublisherMessage)
     std::size_t received_msgs = 0;
     rclcpp::Node::SharedPtr node = std::make_shared<rclcpp::Node>("camera_publisher_message");
     image_transport::CameraSubscriber sub = image_transport::create_camera_subscription(
-        node.get(), "publisher_test",
+        FKIE_MF_IMAGE_TRANSPORT_NODE(node), "publisher_test",
         [&received_msgs](const sensor_msgs::msg::Image::ConstSharedPtr&,
                          const sensor_msgs::msg::CameraInfo::ConstSharedPtr&) { ++received_msgs; },
-        "raw");
+        "raw" FKIE_MF_IMAGE_TRANSPORT_QOS_ARG);
     mf::UserSource<sensor_msgs::msg::Image, sensor_msgs::msg::CameraInfo> src;
     mf::CameraPublisher<mf::RosMessage> pub;
     camera_publisher_test_code<mf::RosMessage>(node, src, pub, sub, received_msgs);
@@ -231,10 +242,10 @@ TEST(fkie_message_filters, CameraPublisherMessageUniquePtr)
     std::size_t received_msgs = 0;
     rclcpp::Node::SharedPtr node = std::make_shared<rclcpp::Node>("camera_publisher_message_unique_ptr");
     image_transport::CameraSubscriber sub = image_transport::create_camera_subscription(
-        node.get(), "publisher_test",
+        FKIE_MF_IMAGE_TRANSPORT_NODE(node), "publisher_test",
         [&received_msgs](const sensor_msgs::msg::Image::ConstSharedPtr&,
                          const sensor_msgs::msg::CameraInfo::ConstSharedPtr&) { ++received_msgs; },
-        "raw");
+        "raw" FKIE_MF_IMAGE_TRANSPORT_QOS_ARG);
     mf::UserSource<sensor_msgs::msg::Image::UniquePtr, sensor_msgs::msg::CameraInfo::UniquePtr> src;
     mf::CameraPublisher<mf::RosMessageUniquePtr> pub;
     camera_publisher_test_code<mf::RosMessageUniquePtr>(node, src, pub, sub, received_msgs);
@@ -245,14 +256,73 @@ TEST(fkie_message_filters, CameraPublisherMessageSharedPtr)
     std::size_t received_msgs = 0;
     rclcpp::Node::SharedPtr node = std::make_shared<rclcpp::Node>("camera_publisher_message_shared_ptr");
     image_transport::CameraSubscriber sub = image_transport::create_camera_subscription(
-        node.get(), "publisher_test",
+        FKIE_MF_IMAGE_TRANSPORT_NODE(node), "publisher_test",
         [&received_msgs](const sensor_msgs::msg::Image::ConstSharedPtr&,
                          const sensor_msgs::msg::CameraInfo::ConstSharedPtr&) { ++received_msgs; },
-        "raw");
+        "raw" FKIE_MF_IMAGE_TRANSPORT_QOS_ARG);
     mf::UserSource<sensor_msgs::msg::Image::ConstSharedPtr, sensor_msgs::msg::CameraInfo::ConstSharedPtr> src;
     mf::CameraPublisher<mf::RosMessageSharedPtr> pub;
     camera_publisher_test_code<mf::RosMessageSharedPtr>(node, src, pub, sub, received_msgs);
 }
+
+#if FKIE_MF_IMAGE_TRANSPORT_VERSION >= FKIE_MF_VERSION_TUPLE(6, 4, 0)
+TEST(fkie_message_filters, LifecycleCameraPublisherMessage)
+{
+    std::size_t received_msgs = 0;
+    rclcpp_lifecycle::LifecycleNode::SharedPtr node =
+        std::make_shared<rclcpp_lifecycle::LifecycleNode>("lifecycle_camera_publisher_message");
+    image_transport::CameraSubscriber sub = image_transport::create_camera_subscription(
+        FKIE_MF_IMAGE_TRANSPORT_NODE(node), "publisher_test",
+        [&received_msgs](const sensor_msgs::msg::Image::ConstSharedPtr&,
+                         const sensor_msgs::msg::CameraInfo::ConstSharedPtr&) { ++received_msgs; },
+        "raw" FKIE_MF_IMAGE_TRANSPORT_QOS_ARG);
+    mf::UserSource<sensor_msgs::msg::Image, sensor_msgs::msg::CameraInfo> src;
+    mf::CameraPublisher<mf::RosMessage> pub;
+    node->configure();
+    node->activate();
+    camera_publisher_test_code<mf::RosMessage>(node, src, pub, sub, received_msgs);
+    node->deactivate();
+    node->shutdown();
+}
+
+TEST(fkie_message_filters, LifecycleCameraPublisherMessageUniquePtr)
+{
+    std::size_t received_msgs = 0;
+    rclcpp_lifecycle::LifecycleNode::SharedPtr node =
+        std::make_shared<rclcpp_lifecycle::LifecycleNode>("lifecycle_camera_publisher_message_unique_ptr");
+    image_transport::CameraSubscriber sub = image_transport::create_camera_subscription(
+        FKIE_MF_IMAGE_TRANSPORT_NODE(node), "publisher_test",
+        [&received_msgs](const sensor_msgs::msg::Image::ConstSharedPtr&,
+                         const sensor_msgs::msg::CameraInfo::ConstSharedPtr&) { ++received_msgs; },
+        "raw" FKIE_MF_IMAGE_TRANSPORT_QOS_ARG);
+    mf::UserSource<sensor_msgs::msg::Image::UniquePtr, sensor_msgs::msg::CameraInfo::UniquePtr> src;
+    mf::CameraPublisher<mf::RosMessageUniquePtr> pub;
+    node->configure();
+    node->activate();
+    camera_publisher_test_code<mf::RosMessageUniquePtr>(node, src, pub, sub, received_msgs);
+    node->deactivate();
+    node->shutdown();
+}
+
+TEST(fkie_message_filters, LifecycleCameraPublisherMessageSharedPtr)
+{
+    std::size_t received_msgs = 0;
+    rclcpp_lifecycle::LifecycleNode::SharedPtr node =
+        std::make_shared<rclcpp_lifecycle::LifecycleNode>("lifecycle_camera_publisher_message_shared_ptr");
+    image_transport::CameraSubscriber sub = image_transport::create_camera_subscription(
+        FKIE_MF_IMAGE_TRANSPORT_NODE(node), "publisher_test",
+        [&received_msgs](const sensor_msgs::msg::Image::ConstSharedPtr&,
+                         const sensor_msgs::msg::CameraInfo::ConstSharedPtr&) { ++received_msgs; },
+        "raw" FKIE_MF_IMAGE_TRANSPORT_QOS_ARG);
+    mf::UserSource<sensor_msgs::msg::Image::ConstSharedPtr, sensor_msgs::msg::CameraInfo::ConstSharedPtr> src;
+    mf::CameraPublisher<mf::RosMessageSharedPtr> pub;
+    node->configure();
+    node->activate();
+    camera_publisher_test_code<mf::RosMessageSharedPtr>(node, src, pub, sub, received_msgs);
+    node->deactivate();
+    node->shutdown();
+}
+#endif
 
 template<class MessageT, class Node, class Publisher, class Subscriber, class Filter>
 void common_subscriber_test_code(Node& node, Publisher& pub, Subscriber& sub, Filter& flt, std::size_t& received_msgs)
@@ -378,9 +448,8 @@ TEST(fkie_message_filters, ImageSubscriberMessageSharedPtr)
     common_subscriber_test_code<sensor_msgs::msg::Image>(node, pub, sub, flt, received_msgs);
 }
 
-template<class Publisher, class Subscriber, class Filter>
-void camera_subscriber_test_code(rclcpp::Node::SharedPtr& node, Publisher& pub, Subscriber& sub, Filter& flt,
-                                 std::size_t& received_msgs)
+template<class Node, class Publisher, class Subscriber, class Filter>
+void camera_subscriber_test_code(Node&& node, Publisher& pub, Subscriber& sub, Filter& flt, std::size_t& received_msgs)
 {
     sub.connect_to_sink(flt);
     flt.set_processing_function(
@@ -404,7 +473,8 @@ TEST(fkie_message_filters, CameraSubscriberMessage)
 {
     std::size_t received_msgs = 0;
     rclcpp::Node::SharedPtr node = std::make_shared<rclcpp::Node>("camera_subscriber_message");
-    image_transport::CameraPublisher pub = image_transport::create_camera_publisher(node.get(), "subscriber_test");
+    image_transport::CameraPublisher pub = image_transport::create_camera_publisher(
+        FKIE_MF_IMAGE_TRANSPORT_NODE(node), "subscriber_test" FKIE_MF_IMAGE_TRANSPORT_QOS_ARG);
     mf::CameraSubscriber<mf::RosMessage> sub;
     mf::SimpleUserFilter<sensor_msgs::msg::Image, sensor_msgs::msg::CameraInfo> flt;
     camera_subscriber_test_code(node, pub, sub, flt, received_msgs);
@@ -414,8 +484,43 @@ TEST(fkie_message_filters, CameraSubscriberMessageSharedPtr)
 {
     std::size_t received_msgs = 0;
     rclcpp::Node::SharedPtr node = std::make_shared<rclcpp::Node>("camera_subscriber_message_shared_ptr");
-    image_transport::CameraPublisher pub = image_transport::create_camera_publisher(node.get(), "subscriber_test");
+    image_transport::CameraPublisher pub = image_transport::create_camera_publisher(
+        FKIE_MF_IMAGE_TRANSPORT_NODE(node), "subscriber_test" FKIE_MF_IMAGE_TRANSPORT_QOS_ARG);
     mf::CameraSubscriber<mf::RosMessageSharedPtr> sub;
     mf::SimpleUserFilter<sensor_msgs::msg::Image::ConstSharedPtr, sensor_msgs::msg::CameraInfo::ConstSharedPtr> flt;
     camera_subscriber_test_code(node, pub, sub, flt, received_msgs);
 }
+
+#if FKIE_MF_IMAGE_TRANSPORT_VERSION >= FKIE_MF_VERSION_TUPLE(6, 4, 0)
+TEST(fkie_message_filters, LifecycleCameraSubscriberMessage)
+{
+    std::size_t received_msgs = 0;
+    rclcpp_lifecycle::LifecycleNode::SharedPtr node =
+        std::make_shared<rclcpp_lifecycle::LifecycleNode>("lifecycle_camera_subscriber_message");
+    image_transport::CameraPublisher pub = image_transport::create_camera_publisher(
+        FKIE_MF_IMAGE_TRANSPORT_NODE(node), "subscriber_test" FKIE_MF_IMAGE_TRANSPORT_QOS_ARG);
+    mf::CameraSubscriber<mf::RosMessage> sub;
+    mf::SimpleUserFilter<sensor_msgs::msg::Image, sensor_msgs::msg::CameraInfo> flt;
+    node->configure();
+    node->activate();
+    camera_subscriber_test_code(node, pub, sub, flt, received_msgs);
+    node->deactivate();
+    node->shutdown();
+}
+
+TEST(fkie_message_filters, LifecycleCameraSubscriberMessageSharedPtr)
+{
+    std::size_t received_msgs = 0;
+    rclcpp_lifecycle::LifecycleNode::SharedPtr node =
+        std::make_shared<rclcpp_lifecycle::LifecycleNode>("lifecycle_camera_subscriber_message_shared_ptr");
+    image_transport::CameraPublisher pub = image_transport::create_camera_publisher(
+        FKIE_MF_IMAGE_TRANSPORT_NODE(node), "subscriber_test" FKIE_MF_IMAGE_TRANSPORT_QOS_ARG);
+    mf::CameraSubscriber<mf::RosMessageSharedPtr> sub;
+    mf::SimpleUserFilter<sensor_msgs::msg::Image::ConstSharedPtr, sensor_msgs::msg::CameraInfo::ConstSharedPtr> flt;
+    node->configure();
+    node->activate();
+    camera_subscriber_test_code(node, pub, sub, flt, received_msgs);
+    node->deactivate();
+    node->shutdown();
+}
+#endif
