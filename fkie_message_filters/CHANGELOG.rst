@@ -2,8 +2,8 @@
 Changelog for package fkie_message_filters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+3.4.0 (2026-06-23)
+------------------
 * Compatibility fixes for image_transport 6.4
   - This enables full support for alternative node implementations
 * Contributors: Timo Röhling
